@@ -1,6 +1,13 @@
 retdec package
 ==============
 
+Subpackages
+-----------
+
+.. toctree::
+
+    retdec.tools
+
 Submodules
 ----------
 
