@@ -27,7 +27,7 @@ clean-pyc:
 	@find . -name '*.py[co]' -exec rm -f {} +
 
 docs:
-	@sphinx-apidoc -o docs retdec
+	@sphinx-apidoc -f -o docs retdec
 	@$(MAKE) -C docs html
 
 docs-coverage:
