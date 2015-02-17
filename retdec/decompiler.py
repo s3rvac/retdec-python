@@ -10,15 +10,7 @@
 
 import os
 
-
-class MissingAPIKeyError(Exception):
-    """Exception raised when an API key is missing."""
-
-    def __init__(self):
-        super().__init__(
-            'no explicit API key given'
-            ' and environment variable RETDEC_API_KEY is not set'
-        )
+from retdec.exceptions import MissingAPIKeyError
 
 
 class Decompiler:

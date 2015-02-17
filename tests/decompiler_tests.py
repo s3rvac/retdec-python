@@ -12,7 +12,7 @@ import os
 import unittest
 
 from retdec.decompiler import Decompiler
-from retdec.decompiler import MissingAPIKeyError
+from retdec.exceptions import MissingAPIKeyError
 
 
 class DecompilerTests(unittest.TestCase):
