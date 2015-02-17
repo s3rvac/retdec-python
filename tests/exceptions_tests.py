@@ -14,7 +14,7 @@ from retdec.exceptions import MissingAPIKeyError
 
 
 class MissingAPIKeyErrorTests(unittest.TestCase):
-    """Tests for the :class:`retdec.exceptions.MissingAPIKeyError` class."""
+    """Tests for :class:`retdec.exceptions.MissingAPIKeyError`."""
 
     def test_has_correct_description(self):
         ex = MissingAPIKeyError()

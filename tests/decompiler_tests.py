@@ -16,7 +16,7 @@ from retdec.exceptions import MissingAPIKeyError
 
 
 class DecompilerTests(unittest.TestCase):
-    """Tests for the :class:`retdec.decompiler.Decompiler` class."""
+    """Tests for :class:`retdec.decompiler.Decompiler`."""
 
     def test_raises_exception_if_api_key_is_not_given_or_available(self):
         with self.assertRaises(MissingAPIKeyError):
