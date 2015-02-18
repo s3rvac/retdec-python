@@ -10,14 +10,12 @@
 
 import os
 
+from retdec import DEFAULT_API_URL
 from retdec.exceptions import MissingAPIKeyError
 
 
 class Decompiler:
     """Access to the decompiler (decompilation of files)."""
-
-    #: Default API URL.
-    DEFAULT_API_URL = 'https://retdec.com/service/api'
 
     def __init__(self, *, api_key=None, api_url=None):
         """Initializes the decompiler.
@@ -59,7 +57,7 @@ class Decompiler:
         variables.
         """
         if api_url is None:
-            api_url = os.environ.get('RETDEC_API_URL', Decompiler.DEFAULT_API_URL)
+            api_url = os.environ.get('RETDEC_API_URL', DEFAULT_API_URL)
 
         # Ensure that the URL does not end with a slash.
         return api_url.rstrip('/')

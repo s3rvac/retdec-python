@@ -9,3 +9,6 @@
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
     :license: MIT, see the ``LICENSE`` file for more details
 """
+
+#: Default API URL.
+DEFAULT_API_URL = 'https://retdec.com/service/api'
