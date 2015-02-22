@@ -19,6 +19,22 @@ retdec.decompiler module
     :undoc-members:
     :show-inheritance:
 
+retdec.exceptions module
+------------------------
+
+.. automodule:: retdec.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+retdec.file module
+------------------
+
+.. automodule:: retdec.file
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
