@@ -11,8 +11,8 @@ Welcome To retdec-python's Documentation!
 .. toctree::
    :maxdepth: 2
 
-Indices and Tables
-==================
+Indices
+=======
 
 * :ref:`genindex`
 * :ref:`modindex`
