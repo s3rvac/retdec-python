@@ -15,6 +15,43 @@ from unittest import mock
 from retdec.file import File
 
 
+class AnyFile:
+    """A matcher that matches any :class:`retdec.file.File`.
+    """
+
+    def __eq__(self, other):
+        return isinstance(other, File)
+
+    def __neq__(self, other):
+        return not self == other
+
+    def __repr__(self):
+        return '<{}>'.format(
+            self.__class__.__qualname__
+        )
+
+
+class AnyFileNamed:
+    """A matcher that matches any :class:`retdec.file.File` that has the given
+    name.
+    """
+
+    def __init__(self, name):
+        self.name = name
+
+    def __eq__(self, other):
+        return (isinstance(other, File) and other.name == self.name)
+
+    def __neq__(self, other):
+        return not self == other
+
+    def __repr__(self):
+        return '<{} name={!r}>'.format(
+            self.__class__.__qualname__,
+            self.name
+        )
+
+
 class FileTests(unittest.TestCase):
     """Tests for :class:`retdec.file.File`."""
 
