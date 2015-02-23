@@ -11,6 +11,14 @@ Subpackages
 Submodules
 ----------
 
+retdec.conn module
+------------------
+
+.. automodule:: retdec.conn
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 retdec.decompiler module
 ------------------------
 
