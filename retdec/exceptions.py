@@ -18,3 +18,14 @@ class MissingAPIKeyError(RetdecError):
             'no explicit API key given'
             ' and environment variable RETDEC_API_KEY is not set'
         )
+
+
+class AuthenticationError(RetdecError):
+    """Exception raised when authentication with the provided API key fails."""
+
+    def __init__(self, reason=None):
+        if reason is None:
+            reason = (
+                'failed to authenticate with the provided API key (is it valid?)'
+            )
+        super().__init__(reason)

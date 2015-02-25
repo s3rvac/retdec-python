@@ -12,6 +12,7 @@ import unittest
 import responses
 
 from retdec.conn import APIConnection
+from retdec.exceptions import AuthenticationError
 
 
 class APIConnectionTests(unittest.TestCase):
@@ -116,6 +117,19 @@ class APIConnectionTests(unittest.TestCase):
         response = conn.send_get_request()
 
         self.assertEqual(response, {'key': 'value'})
+
+    @responses.activate
+    def test_send_get_request_raises_exception_when_authentication_fails(self):
+        self.setup_responses(
+            url='https://retdec.com/service/api',
+            status=401,
+            body='{"code": 401, "description": "auth failed"}',
+        )
+        conn = APIConnection('https://retdec.com/service/api', 'KEY')
+
+        with self.assertRaises(AuthenticationError) as cm:
+            conn.send_get_request()
+        self.assertEqual(str(cm.exception), 'auth failed')
 
     @responses.activate
     def test_send_post_request_sends_post_request(self):

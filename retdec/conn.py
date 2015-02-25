@@ -10,11 +10,17 @@ import re
 
 import requests
 
+from retdec.exceptions import AuthenticationError
 from retdec.file import File
 
 
 class APIConnection:
-    """Connection to the API."""
+    """Connection to the API.
+
+    The methods of this class may raise the following exceptions:
+
+    * ``AuthenticationError``: When the authentication fails.
+    """
 
     def __init__(self, base_url, api_key):
         """Initializes an API connection.
@@ -106,6 +112,11 @@ class APIConnection:
         """Sends a request through the given method with the given arguments.
 
         :returns: Response from the request.
+
+        :raises AuthenticationError: When the authentication fails.
         """
         url = self._base_url + path
-        return getattr(self._session, method)(url, **kwargs)
+        response = getattr(self._session, method)(url, **kwargs)
+        if response.status_code == 401:
+            raise AuthenticationError(response.json()['description'])
+        return response
