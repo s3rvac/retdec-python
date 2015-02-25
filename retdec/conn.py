@@ -5,6 +5,7 @@
     :license: MIT, see the ``LICENSE`` file for more details
 """
 
+import platform
 import re
 
 import requests
@@ -92,6 +93,12 @@ class APIConnection:
         # should be left empty.
         # https://retdec.com/api/docs/essential_information.html#authentication
         session.auth = (self._api_key, '')
+
+        # Set a custom user agent to identify the library in API requests.
+        # Otherwise, the 'requests' module would use its default user agent,
+        # which is e.g. "python-requests/2.5.0 CPython/3.4.2
+        # Linux/3.18.6-1-ARCH".
+        session.headers['User-Agent'] = 'retdec-python/' + platform.system()
 
         return session
 

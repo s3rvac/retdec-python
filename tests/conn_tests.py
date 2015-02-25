@@ -6,6 +6,7 @@
 """
 
 import io
+import platform
 import unittest
 
 import responses
@@ -78,6 +79,18 @@ class APIConnectionTests(unittest.TestCase):
         self.assertEqual(
             responses.calls[0].request.headers['Authorization'],
             'Basic S0VZOg=='  # base64-encoded string "KEY:"
+        )
+
+    @responses.activate
+    def test_send_get_request_sends_correct_user_agent_header(self):
+        self.setup_responses(url='https://retdec.com/service/api')
+        conn = APIConnection('https://retdec.com/service/api', 'KEY')
+
+        conn.send_get_request()
+
+        self.assertEqual(
+            responses.calls[0].request.headers['User-Agent'],
+            'retdec-python/' + platform.system()
         )
 
     @responses.activate
