@@ -25,7 +25,11 @@ class TestTests(BaseServiceTests):
         self.conn_mock.send_get_request.assert_called_once_with()
 
     def test_auth_raises_exception_when_authentication_fails(self):
-        self.conn_mock.send_get_request.side_effect = AuthenticationError
+        self.conn_mock.send_get_request.side_effect = AuthenticationError(
+            code=401,
+            message='Unauthorized by API Key',
+            description='API key authentication failed.'
+        )
         test = Test(api_key='INVALID-API-KEY')
         with self.assertRaises(AuthenticationError) as cm:
             test.auth()

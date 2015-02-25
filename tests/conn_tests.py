@@ -123,13 +123,15 @@ class APIConnectionTests(unittest.TestCase):
         self.setup_responses(
             url='https://retdec.com/service/api',
             status=401,
-            body='{"code": 401, "description": "auth failed"}',
+            body='{"code": 401, "message": "failure", "description": "auth failed"}',
         )
         conn = APIConnection('https://retdec.com/service/api', 'KEY')
 
         with self.assertRaises(AuthenticationError) as cm:
             conn.send_get_request()
-        self.assertEqual(str(cm.exception), 'auth failed')
+        self.assertEqual(cm.exception.code, 401)
+        self.assertEqual(cm.exception.message, 'failure')
+        self.assertEqual(cm.exception.description, 'auth failed')
 
     @responses.activate
     def test_send_post_request_sends_post_request(self):

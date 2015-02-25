@@ -7,7 +7,7 @@
 
 
 class RetdecError(Exception):
-    """A base class for all custom exceptions raised by the library."""
+    """Base class of all custom exceptions raised by the library."""
 
 
 class MissingAPIKeyError(RetdecError):
@@ -20,12 +20,27 @@ class MissingAPIKeyError(RetdecError):
         )
 
 
-class AuthenticationError(RetdecError):
-    """Exception raised when authentication with the provided API key fails."""
+class APIError(RetdecError):
+    """Base class of exceptions reflecting errors reported by the API.
 
-    def __init__(self, reason=None):
-        if reason is None:
-            reason = (
-                'failed to authenticate with the provided API key (is it valid?)'
-            )
-        super().__init__(reason)
+    :ivar int code: Error code.
+    :ivar str message: Short message of what went wrong.
+    :ivar str description: Longer description of what went wrong.
+    """
+
+    def __init__(self, code, message, description):
+        """Initializes the exception.
+
+        :param int code: Error code.
+        :param str message: Short message describing what went wrong.
+        :param str description: Longer description of what went wrong.
+        """
+        super().__init__(description)
+
+        self.code = code
+        self.message = message
+        self.description = description
+
+
+class AuthenticationError(APIError):
+    """Exception raised when authentication with the provided API key fails."""

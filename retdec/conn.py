@@ -112,11 +112,14 @@ class APIConnection:
         """Sends a request through the given method with the given arguments.
 
         :returns: Response from the request.
-
-        :raises AuthenticationError: When the authentication fails.
         """
         url = self._base_url + path
         response = getattr(self._session, method)(url, **kwargs)
         if response.status_code == 401:
-            raise AuthenticationError(response.json()['description'])
+            json = response.json()
+            raise AuthenticationError(
+                int(json['code']),
+                json['message'],
+                json['description']
+            )
         return response
