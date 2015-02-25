@@ -1,0 +1,11 @@
+[report]
+exclude_lines =
+    # Have to re-enable the standard pragma.
+    pragma: no cover
+
+    # Defensive assertion code.
+    raise AssertionError
+    raise NotImplementedError
+
+    # Code that is run only when a script is executed directly.
+    if __name__ == .__main__.:
