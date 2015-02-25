@@ -11,6 +11,11 @@
 
 import sys
 
+# Allow running the script from the root repository path, i.e. by executing
+# `scripts/decompile.sh`. If we did not include the current working
+# directory into the path, the 'retdec' package would not be found.
+sys.path.append('.')
+
 from retdec.tools import decompile
 
 if __name__ == '__main__':
