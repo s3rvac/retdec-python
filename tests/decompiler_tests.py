@@ -5,86 +5,22 @@
     :license: MIT, see the ``LICENSE`` file for more details
 """
 
-import io
-import os
 import unittest
 from unittest import mock
 
 from retdec.conn import APIConnection
 from retdec.decompiler import Decompilation
 from retdec.decompiler import Decompiler
-from retdec.exceptions import MissingAPIKeyError
 from retdec.file import File
 from tests.file_tests import AnyFile
-from tests.file_tests import AnyFileNamed
+from tests.service_tests import BaseServiceTests
 
 
-class DecompilerInitializationTests(unittest.TestCase):
-    """Tests for the initialization part of
-    :class:`retdec.decompiler.Decompiler`.
-    """
-
-    def test_raises_exception_if_api_key_is_not_given_or_available(self):
-        with self.assertRaises(MissingAPIKeyError):
-            Decompiler()
-
-    def test_api_key_returns_given_key_if_explicitly_given(self):
-        decompiler = Decompiler(api_key='API-KEY')
-        self.assertEqual(decompiler.api_key, 'API-KEY')
-
-    def test_api_key_returns_key_from_environment_if_available(self):
-        try:
-            os.environ['RETDEC_API_KEY'] = 'API-KEY'
-
-            decompiler = Decompiler()
-
-            self.assertEqual(decompiler.api_key, 'API-KEY')
-        finally:
-            # Restore the original state.
-            del os.environ['RETDEC_API_KEY']
-
-    def test_api_url_returns_default_url_when_no_url_was_given(self):
-        decompiler = Decompiler(api_key='API-KEY')
-        self.assertEqual(decompiler.api_url, 'https://retdec.com/service/api')
-
-    def test_api_url_returns_given_url_if_explicitly_given(self):
-        decompiler = Decompiler(api_key='API-KEY', api_url='API-URL')
-        self.assertEqual(decompiler.api_url, 'API-URL')
-
-    def test_api_url_returns_url_from_environment_if_available(self):
-        try:
-            os.environ['RETDEC_API_URL'] = 'API-URL'
-
-            decompiler = Decompiler(api_key='API-KEY')
-
-            self.assertEqual(decompiler.api_url, 'API-URL')
-        finally:
-            # Restore the original state.
-            del os.environ['RETDEC_API_URL']
-
-    def test_api_url_returns_url_without_trailing_slash_if_present(self):
-        decompiler = Decompiler(
-            api_key='API-KEY',
-            api_url='https://retdec.com/service/api/'
-        )
-        self.assertEqual(decompiler.api_url, 'https://retdec.com/service/api')
-
-
-class DecompilerRunDecompilationTests(unittest.TestCase):
-    """Tests for :func:`retdec.decompiler.Decompiler.run_decompilation()`."""
+class DecompilerTests(BaseServiceTests):
+    """Tests for :class:`retdec.decompiler.Decompiler`."""
 
     def setUp(self):
-        # Mock APIConnection so that when it is instantiated, it returns our
-        # connection that can be used in the tests.
-        self.conn_mock = mock.MagicMock(spec_set=APIConnection)
-        self.APIConnectionMock = mock.Mock()
-        self.APIConnectionMock.return_value = self.conn_mock
-        patcher = mock.patch(
-            'retdec.decompiler.APIConnection',
-            self.APIConnectionMock
-        )
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        super().setUp()
 
         self.input_file_mock = mock.MagicMock(spec_set=File)
 

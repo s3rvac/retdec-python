@@ -6,47 +6,22 @@
 """
 
 import contextlib
-import os
 import shutil
 import time
 
-from retdec import DEFAULT_API_URL
-from retdec.conn import APIConnection
-from retdec.exceptions import MissingAPIKeyError
 from retdec.file import File
+from retdec.service import Service
 
 
-class Decompiler:
-    """Access to the decompiler (decompilation of files)."""
-
-    def __init__(self, *, api_key=None, api_url=None):
-        """Initializes the decompiler.
-
-        :param str api_key: API key to be used for authentication.
-        :param str api_url: URL to the API.
-        """
-        self._api_key = self._get_api_key_to_use(api_key)
-        self._api_url = self._get_api_url_to_use(api_url)
-
-    @property
-    def api_key(self):
-        """API key that is being used for authentication (`str`)."""
-        return self._api_key
-
-    @property
-    def api_url(self):
-        """URL to the API (`str`)."""
-        return self._api_url
+class Decompiler(Service):
+    """Access to the decompilation service."""
 
     def run_decompilation(self, **kwargs):
         """Starts a decompilation with the given arguments.
 
         :returns: Decompilation Started decompilation.
         """
-        conn = APIConnection(
-            self.api_url + '/decompiler/decompilations',
-            self.api_key
-        )
+        conn = self._create_new_api_connection('/decompiler/decompilations')
         id = self._start_decompilation(conn, **kwargs)
         return Decompilation(id, conn)
 
@@ -84,38 +59,6 @@ class Decompiler:
         """Returns an input file from the given arguments (`dict`)."""
         if 'input_file' in kwargs:
             return File(kwargs['input_file'])
-
-    @staticmethod
-    def _get_api_key_to_use(api_key):
-        """Returns an API key to be used based on the given key and environment
-        variables.
-
-        :raises MissingAPIKeyError: When no API key is available.
-        """
-        if api_key is not None:
-            return api_key
-
-        try:
-            return os.environ['RETDEC_API_KEY']
-        except KeyError:
-            raise MissingAPIKeyError from None
-
-    @staticmethod
-    def _get_api_url_to_use(api_url):
-        """Returns an API URL to be used based on the given URL and environment
-        variables.
-        """
-        if api_url is None:
-            api_url = os.environ.get('RETDEC_API_URL', DEFAULT_API_URL)
-
-        # Ensure that the URL does not end with a slash.
-        return api_url.rstrip('/')
-
-    def __repr__(self):
-        return '<{} api_url={!r}>'.format(
-            self.__class__.__qualname__,
-            self.api_url
-        )
 
 
 class Decompilation:

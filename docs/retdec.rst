@@ -43,6 +43,14 @@ retdec.file module
     :undoc-members:
     :show-inheritance:
 
+retdec.service module
+---------------------
+
+.. automodule:: retdec.service
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
