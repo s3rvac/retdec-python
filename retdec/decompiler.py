@@ -1,7 +1,4 @@
 """
-    retdec.decompiler
-    ~~~~~~~~~~~~~~~~~
-
     Access to the decompiler (decompilation of files).
 
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors

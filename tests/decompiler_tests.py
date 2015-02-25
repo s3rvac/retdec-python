@@ -1,7 +1,4 @@
 """
-    tests.decompiler
-    ~~~~~~~~~~~~~~~~
-
     Tests for the :mod:`retdec.decompiler` module.
 
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors

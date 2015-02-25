@@ -1,7 +1,4 @@
 """
-    tests.exceptions
-    ~~~~~~~~~~~~~~~~
-
     Tests for the :mod:`retdec.exceptions` module.
 
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors

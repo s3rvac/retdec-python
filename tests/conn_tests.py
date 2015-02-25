@@ -1,7 +1,4 @@
 """
-    tests.conn
-    ~~~~~~~~~~
-
     Tests for the :mod:`retdec.conn` module.
 
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors

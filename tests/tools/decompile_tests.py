@@ -1,7 +1,4 @@
 """
-    tests.tools.decompile
-    ~~~~~~~~~~~~~~~~~~~~~
-
     Tests for the :mod:`retdec.tools.decompile` module.
 
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors

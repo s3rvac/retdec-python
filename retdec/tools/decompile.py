@@ -1,7 +1,4 @@
 """
-    retdec.tools.decompile
-    ~~~~~~~~~~~~~~~~~~~~~~
-
     A tool for decompiling files. It uses the library.
 
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors

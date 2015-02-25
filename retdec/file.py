@@ -1,7 +1,4 @@
 """
-    retdec.file
-    ~~~~~~~~~~~
-
     Representation of a file.
 
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors

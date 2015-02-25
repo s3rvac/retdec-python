@@ -1,7 +1,4 @@
 """
-    tests.file
-    ~~~~~~~~~~
-
     Tests for the :mod:`retdec.file` module.
 
     :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
