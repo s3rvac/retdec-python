@@ -64,7 +64,8 @@ class Service:
         if api_url is None:
             api_url = os.environ.get('RETDEC_API_URL', DEFAULT_API_URL)
 
-        # Ensure that the URL does not end with a slash.
+        # Ensure that the URL does not end with a slash because the API does
+        # not use trailing slashes.
         return api_url.rstrip('/')
 
     def __repr__(self):
