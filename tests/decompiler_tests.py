@@ -8,7 +8,6 @@
 import unittest
 from unittest import mock
 
-from retdec.conn import APIConnection
 from retdec.decompiler import Decompilation
 from retdec.decompiler import Decompiler
 from retdec.file import File
@@ -97,7 +96,3 @@ class DecompilerTests(BaseServiceTests):
 
 class DecompilationTests(unittest.TestCase):
     """Tests for :class:`retdec.decompiler.Decompilation`."""
-
-    def test_id_returns_passed_id(self):
-        d = Decompilation('ID', mock.Mock(spec_set=APIConnection))
-        self.assertEqual(d.id, 'ID')

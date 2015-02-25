@@ -11,6 +11,7 @@ import time
 
 from retdec.file import File
 from retdec.service import Service
+from retdec.resource import Resource
 
 
 class Decompiler(Service):
@@ -61,23 +62,8 @@ class Decompiler(Service):
             return File(kwargs['input_file'])
 
 
-class Decompilation:
+class Decompilation(Resource):
     """A representation of a decompilation."""
-
-    def __init__(self, id, conn):
-        """Initializes a decompilation.
-
-        :param str id: Unique identifier of the decompilation.
-        :param retdec.conn.APIConnection conn: Connection to the API to be used
-                                               for sending API requests.
-        """
-        self._id = id
-        self._conn = conn
-
-    @property
-    def id(self):
-        """Unique identifier of the decompilation."""
-        return self._id
 
     def wait_until_finished(self):
         """Waits until the decompilation finishes."""
