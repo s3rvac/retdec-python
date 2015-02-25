@@ -59,6 +59,14 @@ retdec.service module
     :undoc-members:
     :show-inheritance:
 
+retdec.test module
+------------------
+
+.. automodule:: retdec.test
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
