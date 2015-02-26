@@ -15,8 +15,8 @@ class MissingAPIKeyError(RetdecError):
 
     def __init__(self):
         super().__init__(
-            'no explicit API key given'
-            ' and environment variable RETDEC_API_KEY is not set'
+            'No explicit API key given'
+            ' and environment variable RETDEC_API_KEY is not set.'
         )
 
 
