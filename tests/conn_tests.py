@@ -12,6 +12,7 @@ import unittest
 import responses
 
 from retdec.conn import APIConnection
+from retdec.exceptions import APIError
 from retdec.exceptions import AuthenticationError
 
 
@@ -119,7 +120,7 @@ class APIConnectionTests(unittest.TestCase):
         self.assertEqual(response, {'key': 'value'})
 
     @responses.activate
-    def test_send_get_request_raises_exception_when_authentication_fails(self):
+    def test_send_get_request_raises_authentication_error_when_authentication_fails(self):
         self.setup_responses(
             url='https://retdec.com/service/api',
             status=401,
@@ -132,6 +133,24 @@ class APIConnectionTests(unittest.TestCase):
         self.assertEqual(cm.exception.code, 401)
         self.assertEqual(cm.exception.message, 'failure')
         self.assertEqual(cm.exception.description, 'auth failed')
+
+    @responses.activate
+    def test_send_get_request_raises_api_error_when_api_returns_unknown_api_error(self):
+        self.setup_responses(
+            url='https://retdec.com/service/api',
+            status=408,
+            body=(
+                '{"code": 408, "message": "Request Timeout", '
+                '"description": "The request timeouted."}'
+            ),
+        )
+        conn = APIConnection('https://retdec.com/service/api', 'KEY')
+
+        with self.assertRaises(APIError) as cm:
+            conn.send_get_request()
+        self.assertEqual(cm.exception.code, 408)
+        self.assertEqual(cm.exception.message, 'Request Timeout')
+        self.assertEqual(cm.exception.description, 'The request timeouted.')
 
     @responses.activate
     def test_send_post_request_sends_post_request(self):
