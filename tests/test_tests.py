@@ -31,5 +31,5 @@ class TestTests(BaseServiceTests):
             description='API key authentication failed.'
         )
         test = Test(api_key='INVALID-API-KEY')
-        with self.assertRaises(AuthenticationError) as cm:
+        with self.assertRaises(AuthenticationError):
             test.auth()
