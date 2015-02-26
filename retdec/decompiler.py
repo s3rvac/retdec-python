@@ -46,7 +46,7 @@ class Decompiler(Service):
         return response['id']
 
     def _get_mode(self, input_file, kwargs):
-        """Returns a mode from the given arguments (`dict`)."""
+        """Returns a mode from the given arguments (``dict``)."""
         if 'mode' in kwargs:
             return kwargs['mode'].lower()
 
@@ -56,7 +56,7 @@ class Decompiler(Service):
         return 'bin'
 
     def _get_input_file(self, kwargs):
-        """Returns an input file from the given arguments (`dict`)."""
+        """Returns an input file from the given arguments (``dict``)."""
         if 'input_file' in kwargs:
             return File(kwargs['input_file'])
 
