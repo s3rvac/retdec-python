@@ -5,6 +5,8 @@
     :license: MIT, see the ``LICENSE`` file for more details
 """
 
+import time
+
 
 class Resource:
     """Base class of all resources."""
@@ -23,3 +25,14 @@ class Resource:
     def id(self):
         """Unique identifier of the resource."""
         return self._id
+
+    def wait_until_finished(self):
+        """Waits until the resource is finished."""
+        # Currently, the retdec.com API does not support push notifications, so
+        # we have to do polling.
+        while True:
+            response = self._conn.send_get_request('/{}/status'.format(self.id))
+            if response['finished']:
+                break
+            # Sleep a bit to prevent abuse of the API.
+            time.sleep(0.5)

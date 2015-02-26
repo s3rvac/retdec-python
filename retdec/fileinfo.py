@@ -6,7 +6,6 @@
 """
 
 import contextlib
-import time
 
 from retdec.file import File
 from retdec.service import Service
@@ -47,17 +46,6 @@ class Fileinfo(Service):
 
 class Analysis(Resource):
     """A representation of a analysis."""
-
-    def wait_until_finished(self):
-        """Waits until the analysis finishes."""
-        # Currently, the retdec.com API does not support push notifications, so
-        # we have to do polling.
-        while True:
-            response = self._conn.send_get_request('/{}/status'.format(self.id))
-            if response['finished']:
-                break
-            # Sleep a bit to prevent abuse of the API.
-            time.sleep(0.5)
 
     def get_output(self):
         """Obtains and returns the output from the analysis."""
