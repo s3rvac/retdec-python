@@ -15,8 +15,8 @@ from tests.file_tests import AnyFile
 from tests.service_tests import BaseServiceTests
 
 
-class DecompilerTests(BaseServiceTests):
-    """Tests for :class:`retdec.decompiler.Decompiler`."""
+class DecompilerRunDecompilationTests(BaseServiceTests):
+    """Tests for :func:`retdec.decompiler.Decompiler.run_decompilation()`."""
 
     def setUp(self):
         super().setUp()
