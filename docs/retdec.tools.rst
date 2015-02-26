@@ -12,6 +12,14 @@ retdec.tools.decompile module
     :undoc-members:
     :show-inheritance:
 
+retdec.tools.fileinfo module
+----------------------------
+
+.. automodule:: retdec.tools.fileinfo
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
