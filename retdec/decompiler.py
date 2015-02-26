@@ -20,7 +20,7 @@ class Decompiler(Service):
     def run_decompilation(self, **kwargs):
         """Starts a decompilation with the given arguments.
 
-        :returns: Decompilation Started decompilation.
+        :returns: Started decompilation (:class:`Decompilation`).
         """
         conn = self._create_new_api_connection('/decompiler/decompilations')
         id = self._start_decompilation(conn, **kwargs)
