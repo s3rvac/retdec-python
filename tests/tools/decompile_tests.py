@@ -5,22 +5,12 @@
     :license: MIT, see the ``LICENSE`` file for more details
 """
 
-import io
-import unittest
-from unittest import mock
-
 from retdec.tools.decompile import parse_args
+from tests.tools import ParseArgsBaseTests
 
 
-class ParseArgsTests(unittest.TestCase):
+class ParseArgsTests(ParseArgsBaseTests):
     """Tests for :func:`retdec.tools.decompile.parse_args()`."""
-
-    def setUp(self):
-        # Patch sys.stderr (argparse prints error messages to it).
-        self.stderr = io.StringIO()
-        patcher = mock.patch('sys.stderr', self.stderr)
-        patcher.start()
-        self.addCleanup(patcher.stop)
 
     def test_file_is_required(self):
         with self.assertRaises(SystemExit) as cm:
