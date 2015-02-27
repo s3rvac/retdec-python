@@ -25,13 +25,19 @@ def parse_args(argv):
         metavar='FILE',
         help='file to analyze'
     )
+    parser.add_argument(
+        '-v', '--verbose',
+        dest='verbose',
+        action='store_true',
+        help='print all available information about the file'
+    )
     return parser.parse_args(argv[1:])
 
 
 def main():
     args = parse_args(sys.argv)
     fileinfo = Fileinfo(api_url=args.api_url, api_key=args.api_key)
-    analysis = fileinfo.run_analysis(input_file=args.file)
+    analysis = fileinfo.run_analysis(input_file=args.file, verbose=args.verbose)
     analysis.wait_until_finished()
     sys.stdout.write(analysis.get_output())
     return 0

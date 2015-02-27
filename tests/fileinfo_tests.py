@@ -10,8 +10,9 @@ import unittest
 from unittest import mock
 
 from retdec.file import File
-from retdec.fileinfo import Fileinfo
 from retdec.fileinfo import Analysis
+from retdec.fileinfo import Fileinfo
+from tests.file_tests import AnyFile
 from tests.service_tests import BaseServiceTests
 
 
@@ -31,6 +32,39 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
         self.APIConnectionMock.assert_called_once_with(
             'https://retdec.com/service/api/fileinfo/analyses',
             self.fileinfo.api_key
+        )
+
+    def test_verbose_is_set_to_0_when_not_given(self):
+        self.fileinfo.run_analysis(input_file=self.input_file_mock)
+
+        self.conn_mock.send_post_request.assert_called_once_with(
+            '',
+            params={'verbose': 0},
+            files={'input': AnyFile()}
+        )
+
+    def test_verbose_is_set_to_0_when_given_but_false(self):
+        self.fileinfo.run_analysis(
+            input_file=self.input_file_mock,
+            verbose=False
+        )
+
+        self.conn_mock.send_post_request.assert_called_once_with(
+            '',
+            params={'verbose': 0},
+            files={'input': AnyFile()}
+        )
+
+    def test_verbose_is_set_to_1_when_given_and_true(self):
+        self.fileinfo.run_analysis(
+            input_file=self.input_file_mock,
+            verbose=True
+        )
+
+        self.conn_mock.send_post_request.assert_called_once_with(
+            '',
+            params={'verbose': 1},
+            files={'input': AnyFile()}
         )
 
     def test_uses_returned_id_to_initialize_analysis(self):

@@ -37,3 +37,11 @@ class ParseArgsTests(ParseArgsBaseTests):
     def test_api_url_is_parsed_correctly_long_form(self):
         args = parse_args(['fileinfo.py', '--api-url', 'URL', 'prog.exe'])
         self.assertEqual(args.api_url, 'URL')
+
+    def test_verbose_is_parsed_correctly_short_form(self):
+        args = parse_args(['fileinfo.py', '-v', 'prog.exe'])
+        self.assertTrue(args.verbose)
+
+    def test_verbose_is_parsed_correctly_long_form(self):
+        args = parse_args(['fileinfo.py', '--verbose', 'prog.exe'])
+        self.assertTrue(args.verbose)

@@ -19,6 +19,11 @@ class Fileinfo(Service):
     def run_analysis(self, **kwargs):
         """Starts an analysis with the given arguments.
 
+        :param input_file: File to be analyzed (**required**).
+        :type input_file: str or file-like object
+        :param verbose: Should the analysis produce a detailed output?
+        :type verbose: bool
+
         :returns: Started analysis (:class:`Analysis`).
         """
         conn = self._create_new_api_connection('/fileinfo/analyses')
@@ -33,11 +38,20 @@ class Fileinfo(Service):
 
         :returns: Unique identifier of the analysis.
         """
-        files = {
-            'input': self._get_input_file(kwargs)
+        params = {
+            'verbose': self._get_verbose_param(kwargs)
         }
-        response = conn.send_post_request('', files=files)
+        files = {
+            'input': self._get_input_file(kwargs),
+        }
+        response = conn.send_post_request('', params=params, files=files)
         return response['id']
+
+    def _get_verbose_param(self, kwargs):
+        """Returns the value of the ``verbose`` parameter to be used when
+        starting an analysis.
+        """
+        return kwargs.get('verbose', False)
 
     def _get_input_file(self, kwargs):
         """Returns an input file from the given arguments (``dict``)."""
