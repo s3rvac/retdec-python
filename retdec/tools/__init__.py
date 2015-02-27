@@ -1,9 +1,10 @@
-"""
-    Tools that use the library to analyze and decompile files.
+#
+# Project:   retdec-python
+# Copyright: (c) 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
+# License:   MIT, see the LICENSE file for more details
+#
 
-    :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
-    :license: MIT, see the ``LICENSE`` file for more details
-"""
+"""Tools that use the library to analyze and decompile files."""
 
 from retdec import DEFAULT_API_URL
 

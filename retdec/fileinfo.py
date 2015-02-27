@@ -1,9 +1,10 @@
-"""
-    Access to the file-analyzing service (fileinfo).
+#
+# Project:   retdec-python
+# Copyright: (c) 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
+# License:   MIT, see the LICENSE file for more details
+#
 
-    :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
-    :license: MIT, see the ``LICENSE`` file for more details
-"""
+"""Access to the file-analyzing service (fileinfo)."""
 
 import contextlib
 

@@ -1,8 +1,9 @@
 #
-# A GNU Makefile for the project.
-#
+# Project:   retdec-python
 # Copyright: (c) 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
-# License: MIT, see the LICENSE file for more details
+# License:   MIT, see the LICENSE file for more details
+#
+# A GNU Makefile for the project.
 #
 
 .PHONY: clean clean-pyc docs docs-coverage help lint tests tests-coverage tests-timings

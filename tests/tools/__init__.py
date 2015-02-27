@@ -1,9 +1,10 @@
-"""
-    Tests for the :mod:`retdec.tools` package.
+#
+# Project:   retdec-python
+# Copyright: (c) 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
+# License:   MIT, see the LICENSE file for more details
+#
 
-    :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
-    :license: MIT, see the ``LICENSE`` file for more details
-"""
+"""Tests for the :mod:`retdec.tools` package."""
 
 import io
 import unittest

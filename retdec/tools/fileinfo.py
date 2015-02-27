@@ -1,9 +1,10 @@
-"""
-    A tool for analysis of binary files. It uses the library.
+#
+# Project:   retdec-python
+# Copyright: (c) 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
+# License:   MIT, see the LICENSE file for more details
+#
 
-    :copyright: © 2015 by Petr Zemek <s3rvac@gmail.com> and contributors
-    :license: MIT, see the ``LICENSE`` file for more details
-"""
+"""A tool for analysis of binary files. It uses the library."""
 
 import argparse
 import sys
