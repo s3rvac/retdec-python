@@ -8,8 +8,8 @@
 import argparse
 import sys
 
-from retdec import DEFAULT_API_URL
 from retdec.fileinfo import Fileinfo
+from retdec.tools import _add_arguments_shared_by_all_tools
 
 
 def parse_args(argv):
@@ -18,23 +18,11 @@ def parse_args(argv):
         description=('Analyzes the given file through the retdec.com '
                      'decompilation service by using their public REST API.')
     )
+    _add_arguments_shared_by_all_tools(parser)
     parser.add_argument(
         'file',
         metavar='FILE',
         help='file to analyze'
-    )
-    parser.add_argument(
-        '-k', '--api-key',
-        dest='api_key',
-        metavar='KEY',
-        help='API key to be used'
-    )
-    parser.add_argument(
-        '-u', '--api-url',
-        dest='api_url',
-        metavar='URL',
-        default=DEFAULT_API_URL,
-        help='URL to the API (default: {})'.format(DEFAULT_API_URL)
     )
     return parser.parse_args(argv[1:])
 
