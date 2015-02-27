@@ -17,7 +17,7 @@ class Fileinfo(Service):
     """Access to the file-analyzing service."""
 
     def run_analysis(self, **kwargs):
-        """Starts a analysis with the given arguments.
+        """Starts an analysis with the given arguments.
 
         :returns: Started analysis (:class:`Analysis`).
         """
@@ -26,7 +26,7 @@ class Fileinfo(Service):
         return Analysis(id, conn)
 
     def _start_analysis(self, conn, **kwargs):
-        """Starts a analysis with the given arguments.
+        """Starts an analysis with the given arguments.
 
         :param retdec.conn.APIConnection conn: Connection to the API to be used
                                                for sending API requests.
@@ -46,7 +46,7 @@ class Fileinfo(Service):
 
 
 class Analysis(Resource):
-    """A representation of a analysis."""
+    """A representation of an analysis."""
 
     def get_output(self):
         """Obtains and returns the output from the analysis."""
