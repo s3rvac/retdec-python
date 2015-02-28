@@ -4,10 +4,10 @@ retdec.tools package
 Submodules
 ----------
 
-retdec.tools.decompile module
------------------------------
+retdec.tools.decompiler module
+------------------------------
 
-.. automodule:: retdec.tools.decompile
+.. automodule:: retdec.tools.decompiler
     :members:
     :undoc-members:
     :show-inheritance:

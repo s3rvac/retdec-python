@@ -12,12 +12,12 @@
 import sys
 
 # Allow running the script from the root repository path, i.e. by executing
-# `scripts/decompile.py`. If we did not include the current working
+# `scripts/decompiler.py`. If we did not include the current working
 # directory into the path, the 'retdec' package would not be found.
 sys.path.append('.')
 
 try:
-    from retdec.tools import decompile
+    from retdec.tools import decompiler
 except ImportError:
     sys.stderr.write(
         "error: Failed to import 'retdec'."
@@ -28,7 +28,7 @@ except ImportError:
 
 if __name__ == '__main__':
     try:
-        sys.exit(decompile.main())
+        sys.exit(decompiler.main())
     except Exception as ex:
         sys.stderr.write('error: {}\n'.format(str(ex)))
         sys.exit(1)
