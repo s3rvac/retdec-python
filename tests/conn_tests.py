@@ -13,7 +13,7 @@ import unittest
 import responses
 
 from retdec.conn import APIConnection
-from retdec.exceptions import APIError
+from retdec.exceptions import UnknownAPIError
 from retdec.exceptions import AuthenticationError
 
 
@@ -129,14 +129,11 @@ class APIConnectionTests(unittest.TestCase):
         )
         conn = APIConnection('https://retdec.com/service/api', 'KEY')
 
-        with self.assertRaises(AuthenticationError) as cm:
+        with self.assertRaises(AuthenticationError):
             conn.send_get_request()
-        self.assertEqual(cm.exception.code, 401)
-        self.assertEqual(cm.exception.message, 'failure')
-        self.assertEqual(cm.exception.description, 'auth failed')
 
     @responses.activate
-    def test_send_get_request_raises_api_error_when_api_returns_unknown_api_error(self):
+    def test_send_get_request_raises_unknown_api_error_when_api_returns_unknown_error(self):
         self.setup_responses(
             url='https://retdec.com/service/api',
             status=408,
@@ -147,7 +144,7 @@ class APIConnectionTests(unittest.TestCase):
         )
         conn = APIConnection('https://retdec.com/service/api', 'KEY')
 
-        with self.assertRaises(APIError) as cm:
+        with self.assertRaises(UnknownAPIError) as cm:
             conn.send_get_request()
         self.assertEqual(cm.exception.code, 408)
         self.assertEqual(cm.exception.message, 'Request Timeout')

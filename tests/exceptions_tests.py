@@ -8,8 +8,9 @@
 
 import unittest
 
-from retdec.exceptions import APIError
+from retdec.exceptions import AuthenticationError
 from retdec.exceptions import MissingAPIKeyError
+from retdec.exceptions import UnknownAPIError
 
 
 class MissingAPIKeyErrorTests(unittest.TestCase):
@@ -21,15 +22,24 @@ class MissingAPIKeyErrorTests(unittest.TestCase):
         self.assertIn('RETDEC_API_KEY', str(ex))
 
 
-class APIErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.APIError`."""
+class AuthenticationErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.AuthenticationError`."""
+
+    def test_has_correct_description(self):
+        ex = AuthenticationError()
+        self.assertIn('API key', str(ex))
+        self.assertIn('failed', str(ex))
+
+
+class UnknownAPIErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.UnknownAPIError`."""
 
     def test_has_correct_attributes(self):
-        ex = APIError(401, 'message', 'description')
+        ex = UnknownAPIError(401, 'message', 'description')
         self.assertEqual(ex.code, 401)
         self.assertEqual(ex.message, 'message')
         self.assertEqual(ex.description, 'description')
 
     def test_str_gives_description(self):
-        ex = APIError(401, 'message', 'description')
+        ex = UnknownAPIError(401, 'message', 'description')
         self.assertEqual(str(ex), 'description')

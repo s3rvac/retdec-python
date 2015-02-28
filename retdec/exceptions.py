@@ -21,8 +21,17 @@ class MissingAPIKeyError(RetdecError):
         )
 
 
-class APIError(RetdecError):
-    """Base class of exceptions reflecting errors reported by the API.
+class AuthenticationError(RetdecError):
+    """Exception raised when authentication with the provided API key fails."""
+
+    def __init__(self):
+        super().__init__(
+            'Authentication with the given API key failed (is the key valid?).'
+        )
+
+
+class UnknownAPIError(RetdecError):
+    """Exception raised when there is an unknown API error.
 
     :ivar int code: Error code.
     :ivar str message: Short message of what went wrong.
@@ -41,7 +50,3 @@ class APIError(RetdecError):
         self.code = code
         self.message = message
         self.description = description
-
-
-class AuthenticationError(APIError):
-    """Exception raised when authentication with the provided API key fails."""

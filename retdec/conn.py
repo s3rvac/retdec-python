@@ -11,7 +11,7 @@ import re
 
 import requests
 
-from retdec.exceptions import APIError
+from retdec.exceptions import UnknownAPIError
 from retdec.exceptions import AuthenticationError
 from retdec.file import File
 
@@ -22,7 +22,7 @@ class APIConnection:
     The methods of this class may raise the following exceptions:
 
     * ``AuthenticationError``: When the authentication fails.
-    * ``APIError``: When there is an API error other than failed
+    * ``UnknownAPIError``: When there is an API error other than failed
       authentication.
     """
 
@@ -122,14 +122,12 @@ class APIConnection:
         if response.ok:
             return response
 
-        # There was an error, so raise a proper exception. By default, we raise
-        # APIError, but when there is a preferable subclass, raise it instead.
-        errors_for_codes = {
-            401: AuthenticationError
-        }
+        # There was an error, so raise a proper exception.
         json = response.json()
-        error_type = errors_for_codes.get(response.status_code, APIError)
-        raise error_type(
+        if response.status_code == 401:
+            raise AuthenticationError
+
+        raise UnknownAPIError(
             int(json['code']),
             json['message'],
             json['description']
