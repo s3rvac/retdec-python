@@ -30,8 +30,13 @@ def parse_args(argv):
 
 def main():
     args = parse_args(sys.argv)
-    decompiler = Decompiler(api_url=args.api_url, api_key=args.api_key)
-    decompilation = decompiler.run_decompilation(input_file=args.file)
+    decompiler = Decompiler(
+        api_url=args.api_url,
+        api_key=args.api_key
+    )
+    decompilation = decompiler.run_decompilation(
+        input_file=args.file
+    )
     decompilation.wait_until_finished()
     decompilation.save_output_hll()
     return 0

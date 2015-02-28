@@ -36,8 +36,14 @@ def parse_args(argv):
 
 def main():
     args = parse_args(sys.argv)
-    fileinfo = Fileinfo(api_url=args.api_url, api_key=args.api_key)
-    analysis = fileinfo.run_analysis(input_file=args.file, verbose=args.verbose)
+    fileinfo = Fileinfo(
+        api_url=args.api_url,
+        api_key=args.api_key
+    )
+    analysis = fileinfo.run_analysis(
+        input_file=args.file,
+        verbose=args.verbose
+    )
     analysis.wait_until_finished()
     sys.stdout.write(analysis.get_output())
     return 0
