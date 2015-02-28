@@ -20,6 +20,11 @@ class Decompiler(Service):
     def run_decompilation(self, **kwargs):
         """Starts a decompilation with the given arguments.
 
+        :param input_file: File to be analyzed (**required**).
+        :type input_file: str or file-like object
+        :param mode: Decompilation mode.
+        :type mode: str
+
         :returns: Started decompilation (:class:`Decompilation`).
         """
         conn = self._create_new_api_connection('/decompiler/decompilations')
