@@ -217,7 +217,7 @@ class APIConnectionTests(unittest.TestCase):
             method=responses.GET,
             url='https://retdec.com/service/api',
             body='data',
-            adding_headers={'Content-Disposition': 'filename=test.c'},
+            adding_headers={'Content-Disposition': 'attachment; filename=test.c'},
             stream=True
         )
         conn = APIConnection('https://retdec.com/service/api', 'KEY')

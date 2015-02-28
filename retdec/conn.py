@@ -78,7 +78,10 @@ class APIConnection:
         """
         response = self._send_request('get', path, params=params, stream=True)
         # File responses contain the Content-Disposition header, which includes
-        # the name of the file in "filename=name-of-file".
+        # the name of the file. Example:
+        #
+        #     Content-Disposition: attachment; filename=prog.out.c
+        #
         # https://retdec.com/api/docs/essential_information.html#id3
         m = re.search('filename=(\S+)', response.headers['Content-Disposition'])
         return File(response.raw, m.group(1))
