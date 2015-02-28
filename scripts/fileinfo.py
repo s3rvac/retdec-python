@@ -27,4 +27,8 @@ except ImportError:
     sys.exit(1)
 
 if __name__ == '__main__':
-    sys.exit(fileinfo.main())
+    try:
+        sys.exit(fileinfo.main())
+    except Exception as ex:
+        sys.stderr.write('error: {}\n'.format(str(ex)))
+        sys.exit(1)
