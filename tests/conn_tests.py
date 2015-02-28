@@ -226,3 +226,32 @@ class APIConnectionTests(unittest.TestCase):
 
         self.assertEqual(file.name, 'test.c')
         self.assertEqual(file.read(), b'data')
+
+    @responses.activate
+    def test_get_file_sets_no_name_when_response_does_not_provide_header(self):
+        self.setup_responses(
+            method=responses.GET,
+            url='https://retdec.com/service/api',
+            body='data',
+            stream=True
+        )
+        conn = APIConnection('https://retdec.com/service/api', 'KEY')
+
+        file = conn.get_file()
+
+        self.assertIsNone(file.name)
+
+    @responses.activate
+    def test_get_file_sets_no_name_when_response_header_does_not_contain_name(self):
+        self.setup_responses(
+            method=responses.GET,
+            url='https://retdec.com/service/api',
+            body='data',
+            adding_headers={'Content-Disposition': 'attachment'},
+            stream=True
+        )
+        conn = APIConnection('https://retdec.com/service/api', 'KEY')
+
+        file = conn.get_file()
+
+        self.assertIsNone(file.name)

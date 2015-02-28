@@ -77,14 +77,7 @@ class APIConnection:
         from which the connection was initialized.
         """
         response = self._send_request('get', path, params=params, stream=True)
-        # File responses contain the Content-Disposition header, which includes
-        # the name of the file. Example:
-        #
-        #     Content-Disposition: attachment; filename=prog.out.c
-        #
-        # https://retdec.com/api/docs/essential_information.html#id3
-        m = re.search('filename=(\S+)', response.headers['Content-Disposition'])
-        return File(response.raw, m.group(1))
+        return File(response.raw, self._get_file_name(response.headers))
 
     @property
     def _session(self):
@@ -135,3 +128,20 @@ class APIConnection:
             json['message'],
             json['description']
         )
+
+    def _get_file_name(self, headers):
+        """Returns the name of the file from the given response headers.
+
+        If the name cannot be determined, it returns ``None``.
+        """
+        # File responses contain the Content-Disposition header, which includes
+        # the name of the file. Example:
+        #
+        #     Content-Disposition: attachment; filename=prog.out.c
+        #
+        # https://retdec.com/api/docs/essential_information.html#id3
+        if 'Content-Disposition' not in headers:
+            return None
+
+        m = re.search('filename=(\S+)', headers['Content-Disposition'])
+        return m.group(1) if m is not None else None
