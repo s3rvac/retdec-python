@@ -228,6 +228,21 @@ class APIConnectionTests(unittest.TestCase):
         self.assertEqual(file.read(), b'data')
 
     @responses.activate
+    def test_get_file_returns_file_with_correct_name_when_header_has_quotes(self):
+        self.setup_responses(
+            method=responses.GET,
+            url='https://retdec.com/service/api',
+            body='data',
+            adding_headers={'Content-Disposition': 'attachment; filename="test.c"'},
+            stream=True
+        )
+        conn = APIConnection('https://retdec.com/service/api', 'KEY')
+
+        file = conn.get_file()
+
+        self.assertEqual(file.name, 'test.c')
+
+    @responses.activate
     def test_get_file_sets_no_name_when_response_does_not_provide_header(self):
         self.setup_responses(
             method=responses.GET,

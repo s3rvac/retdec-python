@@ -6,8 +6,8 @@
 
 """API connection."""
 
+import cgi
 import platform
-import re
 
 import requests
 
@@ -140,8 +140,5 @@ class APIConnection:
         #     Content-Disposition: attachment; filename=prog.out.c
         #
         # https://retdec.com/api/docs/essential_information.html#id3
-        if 'Content-Disposition' not in headers:
-            return None
-
-        m = re.search('filename=(\S+)', headers['Content-Disposition'])
-        return m.group(1) if m is not None else None
+        _, params = cgi.parse_header(headers.get('Content-Disposition', ''))
+        return params.get('filename', None)
