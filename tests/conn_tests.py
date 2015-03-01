@@ -9,12 +9,15 @@
 import io
 import platform
 import unittest
+from unittest import mock
 
+import requests
 import responses
 
 from retdec.conn import APIConnection
-from retdec.exceptions import UnknownAPIError
 from retdec.exceptions import AuthenticationError
+from retdec.exceptions import ConnectionError
+from retdec.exceptions import UnknownAPIError
 
 
 class APIConnectionTests(unittest.TestCase):
@@ -149,6 +152,21 @@ class APIConnectionTests(unittest.TestCase):
         self.assertEqual(cm.exception.code, 408)
         self.assertEqual(cm.exception.message, 'Request Timeout')
         self.assertEqual(cm.exception.description, 'The request timeouted.')
+
+    # For the following test, we need to mock requests.Session, not just
+    # requests. The reason is that HTTP requests are sent through a Session
+    # instance, not directly through requests.{get,post}().
+    @mock.patch('retdec.conn.requests.Session')
+    def test_send_get_request_raises_connection_error_when_there_is_connection_error(
+            self, requests_session_mock):
+        requests_session_mock.side_effect = requests.exceptions.ConnectionError(
+            'Connection refused.'
+        )
+        conn = APIConnection('https://retdec.com/service/api', 'KEY')
+
+        with self.assertRaises(ConnectionError) as cm:
+            conn.send_get_request()
+        self.assertIn('Connection refused.', str(cm.exception))
 
     @responses.activate
     def test_send_post_request_sends_post_request(self):

@@ -9,6 +9,7 @@
 import unittest
 
 from retdec.exceptions import AuthenticationError
+from retdec.exceptions import ConnectionError
 from retdec.exceptions import MissingAPIKeyError
 from retdec.exceptions import UnknownAPIError
 
@@ -29,6 +30,18 @@ class AuthenticationErrorTests(unittest.TestCase):
         ex = AuthenticationError()
         self.assertIn('API key', str(ex))
         self.assertIn('failed', str(ex))
+
+
+class ConnectionErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.ConnectionError`."""
+
+    def test_does_not_include_reason_when_not_given(self):
+        ex = ConnectionError()
+        self.assertNotIn('reason', str(ex))
+
+    def test_includes_reason_when_given(self):
+        ex = ConnectionError('REASON')
+        self.assertIn('REASON', str(ex))
 
 
 class UnknownAPIErrorTests(unittest.TestCase):

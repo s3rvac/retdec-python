@@ -11,8 +11,9 @@ import platform
 
 import requests
 
-from retdec.exceptions import UnknownAPIError
 from retdec.exceptions import AuthenticationError
+from retdec.exceptions import ConnectionError
+from retdec.exceptions import UnknownAPIError
 from retdec.file import File
 
 
@@ -21,6 +22,7 @@ class APIConnection:
 
     The methods of this class may raise the following exceptions:
 
+    * ``ConnectionError``: When there is a connection error.
     * ``AuthenticationError``: When the authentication fails.
     * ``UnknownAPIError``: When there is an API error other than failed
       authentication.
@@ -114,7 +116,13 @@ class APIConnection:
         :returns: Response from the request.
         """
         url = self._base_url + path
-        response = getattr(self._session, method)(url, **kwargs)
+
+        try:
+            response = getattr(self._session, method)(url, **kwargs)
+        except (requests.exceptions.Timeout,
+                requests.exceptions.ConnectionError) as ex:
+            raise ConnectionError(str(ex))
+
         if response.ok:
             return response
 

@@ -30,6 +30,16 @@ class AuthenticationError(RetdecError):
         )
 
 
+class ConnectionError(RetdecError):
+    """Exception raised when there is a connection error."""
+
+    def __init__(self, reason=None):
+        message = 'Connection to the API failed.'
+        if reason is not None:
+            message += ' Reason: {}'.format(reason)
+        super().__init__(message)
+
+
 class UnknownAPIError(RetdecError):
     """Exception raised when there is an unknown API error.
 
