@@ -51,7 +51,11 @@ class Fileinfo(Service):
         """Returns the value of the ``verbose`` parameter to be used when
         starting an analysis.
         """
-        return kwargs.get('verbose', False)
+        return self._get_param(
+            'verbose',
+            kwargs,
+            default=False
+        )
 
     def _get_input_file(self, kwargs):
         """Returns an input file from the given arguments (``dict``)."""
