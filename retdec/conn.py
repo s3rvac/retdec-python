@@ -123,10 +123,18 @@ class APIConnection:
                 requests.exceptions.ConnectionError) as ex:
             raise ConnectionError(str(ex))
 
-        if response.ok:
-            return response
+        self._ensure_request_succeeded(response)
+        return response
 
-        # There was an error, so raise a proper exception.
+    def _ensure_request_succeeded(self, response):
+        """Checks if a request with the given response succeeded.
+
+        Raises a proper exception when the request failed.
+        """
+        if response.ok:
+            return
+
+        # The request failed, so raise a proper exception.
         json = response.json()
         if response.status_code == 401:
             raise AuthenticationError
