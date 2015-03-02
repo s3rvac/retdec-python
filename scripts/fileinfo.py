@@ -16,15 +16,7 @@ import sys
 # directory into the path, the 'retdec' package would not be found.
 sys.path.append('.')
 
-try:
-    from retdec.tools import fileinfo
-except ImportError:
-    sys.stderr.write(
-        "error: Failed to import 'retdec'."
-        ' Make sure that you have retdec-python installed'
-        ' (https://github.com/s3rvac/retdec-python).\n'
-    )
-    sys.exit(1)
+from retdec.tools import fileinfo
 
 if __name__ == '__main__':
     try:
