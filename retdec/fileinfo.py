@@ -17,7 +17,7 @@ class Fileinfo(Service):
     """Access to the file-analyzing service."""
 
     def run_analysis(self, **kwargs):
-        """Starts an analysis with the given arguments.
+        """Starts an analysis with the given parameters.
 
         :param input_file: File to be analyzed (**required**).
         :type input_file: str or file-like object
@@ -31,7 +31,7 @@ class Fileinfo(Service):
         return Analysis(id, conn)
 
     def _start_analysis(self, conn, **kwargs):
-        """Starts an analysis with the given arguments.
+        """Starts an analysis with the given parameters.
 
         :param retdec.conn.APIConnection conn: Connection to the API to be used
                                                for sending API requests.
@@ -47,20 +47,20 @@ class Fileinfo(Service):
         response = conn.send_post_request('', params=params, files=files)
         return response['id']
 
-    def _get_verbose_param(self, kwargs):
+    def _get_verbose_param(self, params):
         """Returns the value of the ``verbose`` parameter to be used when
         starting an analysis.
         """
         return self._get_param(
             'verbose',
-            kwargs,
+            params,
             default=False
         )
 
-    def _get_input_file(self, kwargs):
-        """Returns an input file from the given arguments (``dict``)."""
-        if 'input_file' in kwargs:
-            return File(kwargs['input_file'])
+    def _get_input_file(self, params):
+        """Returns an input file from the given parameters (``dict``)."""
+        if 'input_file' in params:
+            return File(params['input_file'])
 
 
 class Analysis(Resource):

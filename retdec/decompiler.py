@@ -18,7 +18,7 @@ class Decompiler(Service):
     """Access to the decompilation service."""
 
     def run_decompilation(self, **kwargs):
-        """Starts a decompilation with the given arguments.
+        """Starts a decompilation with the given parameters.
 
         :param input_file: File to be analyzed (**required**).
         :type input_file: str or file-like object
@@ -32,7 +32,7 @@ class Decompiler(Service):
         return Decompilation(id, conn)
 
     def _start_decompilation(self, conn, **kwargs):
-        """Starts a decompilation with the given arguments.
+        """Starts a decompilation with the given parameters.
 
         :param retdec.conn.APIConnection conn: Connection to the API to be used
                                                for sending API requests.
@@ -51,11 +51,11 @@ class Decompiler(Service):
         response = conn.send_post_request('', params=params, files=files)
         return response['id']
 
-    def _get_mode(self, input_file, kwargs):
-        """Returns a mode from the given arguments (``dict``)."""
+    def _get_mode(self, input_file, params):
+        """Returns a mode from the given parameters (``dict``)."""
         return self._get_param(
             'mode',
-            kwargs,
+            params,
             choices={'c', 'bin'},
             default=self._get_default_mode(input_file)
         )
@@ -66,10 +66,10 @@ class Decompiler(Service):
         """
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
 
-    def _get_input_file(self, kwargs):
-        """Returns an input file from the given arguments (``dict``)."""
-        if 'input_file' in kwargs:
-            return File(kwargs['input_file'])
+    def _get_input_file(self, params):
+        """Returns an input file from the given parameters (``dict``)."""
+        if 'input_file' in params:
+            return File(params['input_file'])
 
 
 class Decompilation(Resource):
