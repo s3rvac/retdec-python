@@ -10,7 +10,9 @@ import os
 
 from retdec import DEFAULT_API_URL
 from retdec.conn import APIConnection
+from retdec.exceptions import InvalidValueError
 from retdec.exceptions import MissingAPIKeyError
+from retdec.exceptions import MissingParameterError
 
 
 class Service:
@@ -68,6 +70,29 @@ class Service:
         # Ensure that the URL does not end with a slash because the API does
         # not use trailing slashes.
         return api_url.rstrip('/')
+
+    @staticmethod
+    def _get_param(name, params, required=False, choices=None, default=None):
+        """Returns the value of the given parameter.
+
+        :param str name: Name of the parameter.
+        :param dict params: Parameters from which the value should be obtained.
+        :param bool required: Has the parameter be present and be non-``None``?
+        :param set choices: Allowed values for the parameter.
+        :param object default: Default value to return when `required` is
+                               ``False`` and the parameter is not found.
+        """
+        if name not in params or params[name] is None:
+            if required:
+                raise MissingParameterError(name)
+            return default
+
+        value = params[name]
+
+        if choices is not None and value not in choices:
+            raise InvalidValueError(name, value)
+
+        return value
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(

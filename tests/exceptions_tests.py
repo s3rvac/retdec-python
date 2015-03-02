@@ -10,7 +10,9 @@ import unittest
 
 from retdec.exceptions import AuthenticationError
 from retdec.exceptions import ConnectionError
+from retdec.exceptions import InvalidValueError
 from retdec.exceptions import MissingAPIKeyError
+from retdec.exceptions import MissingParameterError
 from retdec.exceptions import UnknownAPIError
 
 
@@ -21,6 +23,23 @@ class MissingAPIKeyErrorTests(unittest.TestCase):
         ex = MissingAPIKeyError()
         self.assertIn('API key', str(ex))
         self.assertIn('RETDEC_API_KEY', str(ex))
+
+
+class MissingParameterErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.MissingAPIKeyError`."""
+
+    def test_has_correct_description(self):
+        ex = MissingParameterError('PARAM_NAME')
+        self.assertIn('PARAM_NAME', str(ex))
+
+
+class InvalidValueErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.MissingAPIKeyError`."""
+
+    def test_has_correct_description(self):
+        ex = InvalidValueError('PARAM_NAME', 'PARAM_VALUE')
+        self.assertIn('PARAM_NAME', str(ex))
+        self.assertIn('PARAM_VALUE', str(ex))
 
 
 class AuthenticationErrorTests(unittest.TestCase):

@@ -21,6 +21,24 @@ class MissingAPIKeyError(RetdecError):
         )
 
 
+class MissingParameterError(RetdecError):
+    """Exception raised when a required parameter is not set."""
+
+    def __init__(self, name):
+        super().__init__(
+            "Missing parameter '{}'.".format(name)
+        )
+
+
+class InvalidValueError(RetdecError):
+    """Exception raised when a parameter has an invalid value."""
+
+    def __init__(self, name, value):
+        super().__init__(
+            "Value '{}' of parameter '{}' is invalid.".format(value, name)
+        )
+
+
 class AuthenticationError(RetdecError):
     """Exception raised when authentication with the provided API key fails."""
 
