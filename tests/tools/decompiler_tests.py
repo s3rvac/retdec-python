@@ -37,3 +37,15 @@ class ParseArgsTests(ParseArgsBaseTests):
     def test_api_url_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--api-url', 'URL', 'prog.exe'])
         self.assertEqual(args.api_url, 'URL')
+
+    def test_mode_is_set_to_none_when_not_given(self):
+        args = parse_args(['decompiler.py', 'prog.exe'])
+        self.assertIsNone(args.mode)
+
+    def test_mode_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-m', 'bin', 'prog.exe'])
+        self.assertEqual(args.mode, 'bin')
+
+    def test_mode_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--mode', 'bin', 'prog.exe'])
+        self.assertEqual(args.mode, 'bin')

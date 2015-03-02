@@ -53,13 +53,18 @@ class Decompiler(Service):
 
     def _get_mode(self, input_file, kwargs):
         """Returns a mode from the given arguments (``dict``)."""
-        if 'mode' in kwargs:
-            return kwargs['mode'].lower()
+        return self._get_param(
+            'mode',
+            kwargs,
+            choices={'c', 'bin'},
+            default=self._get_default_mode(input_file)
+        )
 
-        # Select the mode automatically based on the input file's name.
-        if input_file.name.lower().endswith('.c'):
-            return 'c'
-        return 'bin'
+    def _get_default_mode(self, input_file):
+        """Returns a default mode to be used based on the given input file's
+        name.
+        """
+        return 'c' if input_file.name.lower().endswith('.c') else 'bin'
 
     def _get_input_file(self, kwargs):
         """Returns an input file from the given arguments (``dict``)."""

@@ -11,6 +11,7 @@ from unittest import mock
 
 from retdec.decompiler import Decompilation
 from retdec.decompiler import Decompiler
+from retdec.exceptions import InvalidValueError
 from retdec.file import File
 from tests.file_tests import AnyFile
 from tests.service_tests import BaseServiceTests
@@ -67,6 +68,13 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
             params={'mode': 'bin'},
             files={'input': AnyFile()}
         )
+
+    def test_raises_exception_when_mode_is_invalid(self):
+        with self.assertRaises(InvalidValueError):
+            self.decompiler.run_decompilation(
+                input_file=self.input_file_mock,
+                mode='xxx'
+            )
 
     def test_file_name_extension_is_case_insensitive_during_mode_detection(self):
         self.input_file_mock.name = 'test.C'

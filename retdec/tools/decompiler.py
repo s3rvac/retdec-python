@@ -21,6 +21,12 @@ def parse_args(argv):
     )
     _add_arguments_shared_by_all_tools(parser)
     parser.add_argument(
+        '-m', '--mode',
+        dest='mode',
+        choices={'c', 'bin'},
+        help='decompilation mode (default: automatic detection)'
+    )
+    parser.add_argument(
         'file',
         metavar='FILE',
         help='file to decompile'
@@ -35,7 +41,8 @@ def main():
         api_key=args.api_key
     )
     decompilation = decompiler.run_decompilation(
-        input_file=args.file
+        input_file=args.file,
+        mode=args.mode
     )
     decompilation.wait_until_finished()
     decompilation.save_output_hll()
