@@ -20,7 +20,11 @@ class ResourceTests(unittest.TestCase):
         r = Resource('ID', mock.Mock(spec_set=APIConnection))
         self.assertEqual(r.id, 'ID')
 
-    def test_wait_until_finished_returns_when_resource_is_finished(self):
+
+class ResourceWaitUntilFinishedTests(unittest.TestCase):
+    """Tests for :func:`retdec.resource.Resource.wait_until_finished()`."""
+
+    def test_returns_when_resource_is_finished(self):
         conn_mock = mock.Mock(spec_set=APIConnection)
         conn_mock.send_get_request.return_value = {'finished': True}
 
