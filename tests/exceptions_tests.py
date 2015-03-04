@@ -13,6 +13,7 @@ from retdec.exceptions import ConnectionError
 from retdec.exceptions import InvalidValueError
 from retdec.exceptions import MissingAPIKeyError
 from retdec.exceptions import MissingParameterError
+from retdec.exceptions import ResourceFailedError
 from retdec.exceptions import UnknownAPIError
 
 
@@ -60,6 +61,18 @@ class ConnectionErrorTests(unittest.TestCase):
 
     def test_includes_reason_when_given(self):
         ex = ConnectionError('REASON')
+        self.assertIn('REASON', str(ex))
+
+
+class ResourceFailedErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.ResourceFailedError`."""
+
+    def test_does_not_include_reason_when_not_given(self):
+        ex = ResourceFailedError()
+        self.assertNotIn('reason', str(ex))
+
+    def test_includes_reason_when_given(self):
+        ex = ResourceFailedError('REASON')
         self.assertIn('REASON', str(ex))
 
 

@@ -58,6 +58,16 @@ class ConnectionError(RetdecError):
         super().__init__(message)
 
 
+class ResourceFailedError(RetdecError):
+    """Exception raised when a resource (e.g. a decompilation) has failed."""
+
+    def __init__(self, reason=None):
+        message = 'The resource has failed.'
+        if reason is not None:
+            message += ' Reason: {}'.format(reason)
+        super().__init__(message)
+
+
 class UnknownAPIError(RetdecError):
     """Exception raised when there is an unknown API error.
 
