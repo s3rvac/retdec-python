@@ -118,6 +118,17 @@ class DecompilationTestsBase(ResourceTestsBase):
 class DecompilationTests(DecompilationTestsBase):
     """Tests for :class:`retdec.decompiler.Decompilation`."""
 
+    def test_get_completion_checks_status_on_first_call_and_returns_correct_value(self):
+        self.conn_mock.send_get_request.return_value = self.status_with({
+            'completion': 20
+        })
+        d = Decompilation('ID', self.conn_mock)
+
+        completion = d.get_completion()
+
+        self.assertEqual(completion, 20)
+        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+
 
 class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
     """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`."""

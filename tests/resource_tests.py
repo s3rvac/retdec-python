@@ -46,3 +46,52 @@ class ResourceTests(ResourceTestsBase):
     def test_id_returns_passed_id(self):
         r = Resource('ID', self.conn_mock)
         self.assertEqual(r.id, 'ID')
+
+    def test_has_finished_checks_status_on_first_call_and_returns_correct_value(self):
+        self.conn_mock.send_get_request.return_value = self.status_with({
+            'finished': True,
+            'succeeded': True
+        })
+        r = Resource('ID', self.conn_mock)
+
+        finished = r.has_finished()
+
+        self.assertTrue(finished)
+        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+
+    def test_has_succeeded_checks_status_on_first_call_and_returns_correct_value(self):
+        self.conn_mock.send_get_request.return_value = self.status_with({
+            'finished': True,
+            'succeeded': True
+        })
+        r = Resource('ID', self.conn_mock)
+
+        succeeded = r.has_succeeded()
+
+        self.assertTrue(succeeded)
+        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+
+    def test_has_failed_checks_status_on_first_call_and_returns_correct_value(self):
+        self.conn_mock.send_get_request.return_value = self.status_with({
+            'finished': True,
+            'failed': True
+        })
+        r = Resource('ID', self.conn_mock)
+
+        failed = r.has_failed()
+
+        self.assertTrue(failed)
+        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+
+    def test_get_error_checks_status_on_first_call_and_returns_correct_value(self):
+        self.conn_mock.send_get_request.return_value = self.status_with({
+            'finished': True,
+            'failed': True,
+            'error': 'Error message.'
+        })
+        r = Resource('ID', self.conn_mock)
+
+        error = r.get_error()
+
+        self.assertEqual(error, 'Error message.')
+        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
