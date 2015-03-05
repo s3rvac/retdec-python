@@ -121,3 +121,21 @@ class ResourceTests(ResourceTestsBase):
 
         self.assertEqual(error, 'Error message.')
         self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+
+    def test_two_successive_state_queries_do_not_result_into_two_status_checks(self):
+        # A certain time interval has to pass between checks successive checks
+        # for the resource to query its status.
+        self.conn_mock.send_get_request.side_effect = [
+            self.status_with({
+                'pending': True
+            }), self.status_with({
+                'pending': False
+            })
+        ]
+        r = Resource('ID', self.conn_mock)
+
+        r.is_pending()
+        pending = r.is_pending()
+
+        self.assertEqual(len(self.conn_mock.send_get_request.mock_calls), 1)
+        self.assertTrue(pending)  # Still True because there was only one query.

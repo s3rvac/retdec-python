@@ -105,6 +105,7 @@ class Resource:
         self._succeeded = status['succeeded']
         self._failed = status['failed']
         self._error = status['error']
+        self._last_updated = datetime.datetime.now()
         return status
 
     def _get_status(self):
