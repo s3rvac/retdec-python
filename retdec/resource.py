@@ -65,7 +65,11 @@ class Resource:
         return self._finished
 
     def has_failed(self):
-        """Has the resource failed?"""
+        """Has the resource failed?
+
+        For finished resources, this is always the negation of
+        :func:`has_succeeded()`.
+        """
         self._update_state_if_needed()
         return self._failed
 
