@@ -105,22 +105,31 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
         )
 
 
-class DecompilationTests(ResourceTestsBase):
+class DecompilationTestsBase(ResourceTestsBase):
+    """Base class for all tests of :class:`retdec.decompiler.Decompilation`."""
+
+    def status_with(self, status):
+        """Adds missing keys to the given status and returns it."""
+        status = super().status_with(status)
+        if 'completion' not in status:
+            status['completion'] = 0
+        return status
+
+
+class DecompilationTests(DecompilationTestsBase):
     """Tests for :class:`retdec.decompiler.Decompilation`."""
 
 
-class DecompilationWaitUntilFinishedTests(ResourceTestsBase):
+class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
     """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`."""
 
     def test_returns_when_resource_is_finished(self):
         conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = {
+        conn_mock.send_get_request.return_value = self.status_with({
             'completion': 100,
             'finished': True,
-            'succeeded': True,
-            'failed': False,
-            'error': None
-        }
+            'succeeded': True
+        })
         d = Decompilation('ID', conn_mock)
 
         d.wait_until_finished()
@@ -129,13 +138,11 @@ class DecompilationWaitUntilFinishedTests(ResourceTestsBase):
 
     def test_calls_callback_when_resource_finishes(self):
         conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = {
+        conn_mock.send_get_request.return_value = self.status_with({
             'completion': 100,
             'finished': True,
-            'succeeded': True,
-            'failed': False,
-            'error': None
-        }
+            'succeeded': True
+        })
         d = Decompilation('ID', conn_mock)
         callback = mock.Mock()
 
@@ -143,31 +150,22 @@ class DecompilationWaitUntilFinishedTests(ResourceTestsBase):
 
         callback.assert_called_once_with(d)
 
-    @mock.patch('time.sleep')
-    def test_calls_callback_when_resource_status_changes(self, sleep_mock):
+    def test_calls_callback_when_resource_status_changes(self):
         conn_mock = mock.Mock(spec_set=APIConnection)
         conn_mock.send_get_request.side_effect = [
-            {
+            self.status_with({
                 'completion': 0,
                 'finished': False,
-                'succeeded': False,
-                'failed': False,
-                'error': None
-            },
-            {
+                'succeeded': False
+            }), self.status_with({
                 'completion': 15,
                 'finished': False,
-                'succeeded': False,
-                'failed': False,
-                'error': None
-            },
-            {
+                'succeeded': False
+            }), self.status_with({
                 'completion': 100,
                 'finished': True,
-                'succeeded': True,
-                'failed': False,
-                'error': None
-            }
+                'succeeded': True
+            })
         ]
         d = Decompilation('ID', conn_mock)
         callback = mock.Mock()
@@ -178,13 +176,11 @@ class DecompilationWaitUntilFinishedTests(ResourceTestsBase):
 
     def test_raises_exception_by_default_when_resource_failed(self):
         conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = {
-            'completion': 45,
+        conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
-            'succeeded': False,
             'failed': True,
             'error': 'error message'
-        }
+        })
         d = Decompilation('ID', conn_mock)
 
         with self.assertRaises(DecompilationFailedError):
@@ -192,13 +188,11 @@ class DecompilationWaitUntilFinishedTests(ResourceTestsBase):
 
     def test_calls_on_failure_when_it_is_callable(self):
         conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = {
-            'completion': 45,
+        conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
-            'succeeded': False,
             'failed': True,
             'error': 'error message'
-        }
+        })
         d = Decompilation('ID', conn_mock)
         on_failure_mock = mock.Mock()
 
@@ -208,13 +202,11 @@ class DecompilationWaitUntilFinishedTests(ResourceTestsBase):
 
     def test_does_not_raise_exception_when_on_failure_is_none(self):
         conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = {
-            'completion': 45,
+        conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
-            'succeeded': False,
             'failed': True,
             'error': 'error message'
-        }
+        })
         d = Decompilation('ID', conn_mock)
 
         d.wait_until_finished(on_failure=None)

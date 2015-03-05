@@ -25,6 +25,18 @@ class ResourceTestsBase(unittest.TestCase):
         patcher.start()
         self.addCleanup(patcher.stop)
 
+    def status_with(self, status):
+        """Adds missing keys to the given status and returns it."""
+        if 'finished' not in status:
+            status['finished'] = False
+        if 'succeeded' not in status:
+            status['succeeded'] = False
+        if 'failed' not in status:
+            status['failed'] = False
+        if 'error' not in status:
+            status['error'] = None
+        return status
+
 
 class ResourceTests(ResourceTestsBase):
     """Tests for :class:`retdec.resource.Resource`."""
