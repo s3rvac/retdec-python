@@ -19,6 +19,8 @@ class ResourceTestsBase(unittest.TestCase):
     """
 
     def setUp(self):
+        self.conn_mock = mock.Mock(spec_set=APIConnection)
+
         # Patch time.sleep() to prevent sleeping during tests.
         self.time_sleep_mock = mock.Mock()
         patcher = mock.patch('time.sleep', self.time_sleep_mock)
@@ -42,5 +44,5 @@ class ResourceTests(ResourceTestsBase):
     """Tests for :class:`retdec.resource.Resource`."""
 
     def test_id_returns_passed_id(self):
-        r = Resource('ID', mock.Mock(spec_set=APIConnection))
+        r = Resource('ID', self.conn_mock)
         self.assertEqual(r.id, 'ID')

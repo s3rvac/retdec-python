@@ -8,7 +8,6 @@
 
 from unittest import mock
 
-from retdec.conn import APIConnection
 from retdec.exceptions import AnalysisFailedError
 from retdec.file import File
 from retdec.fileinfo import Analysis
@@ -97,37 +96,34 @@ class AnalysisWaitUntilFinishedTests(AnalysisTestsBase):
     """Tests for :func:`retdec.resource.Analysis.wait_until_finished()`."""
 
     def test_sends_correct_request_and_returns_when_resource_is_finished(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'finished': True
         })
-        a = Analysis('ID', conn_mock)
+        a = Analysis('ID', self.conn_mock)
 
         a.wait_until_finished()
 
-        conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
 
     def test_raises_exception_by_default_when_resource_failed(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        a = Analysis('ID', conn_mock)
+        a = Analysis('ID', self.conn_mock)
 
         with self.assertRaises(AnalysisFailedError):
             a.wait_until_finished()
 
     def test_calls_on_failure_when_it_is_callable(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
             'succeeded': False,
             'failed': True,
             'error': 'error message'
         })
-        a = Analysis('ID', conn_mock)
+        a = Analysis('ID', self.conn_mock)
         on_failure_mock = mock.Mock()
 
         a.wait_until_finished(on_failure=on_failure_mock)
@@ -135,12 +131,11 @@ class AnalysisWaitUntilFinishedTests(AnalysisTestsBase):
         on_failure_mock.assert_called_once_with('error message')
 
     def test_does_not_raise_exception_when_on_failure_is_none(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        a = Analysis('ID', conn_mock)
+        a = Analysis('ID', self.conn_mock)
 
         a.wait_until_finished(on_failure=None)

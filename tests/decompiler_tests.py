@@ -8,7 +8,6 @@
 
 from unittest import mock
 
-from retdec.conn import APIConnection
 from retdec.decompiler import Decompilation
 from retdec.decompiler import Decompiler
 from retdec.exceptions import DecompilationFailedError
@@ -124,26 +123,24 @@ class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
     """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`."""
 
     def test_returns_when_resource_is_finished(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'completion': 100,
             'finished': True,
             'succeeded': True
         })
-        d = Decompilation('ID', conn_mock)
+        d = Decompilation('ID', self.conn_mock)
 
         d.wait_until_finished()
 
-        conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
 
     def test_calls_callback_when_resource_finishes(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'completion': 100,
             'finished': True,
             'succeeded': True
         })
-        d = Decompilation('ID', conn_mock)
+        d = Decompilation('ID', self.conn_mock)
         callback = mock.Mock()
 
         d.wait_until_finished(callback)
@@ -151,8 +148,7 @@ class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
         callback.assert_called_once_with(d)
 
     def test_calls_callback_when_resource_status_changes(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.side_effect = [
+        self.conn_mock.send_get_request.side_effect = [
             self.status_with({
                 'completion': 0,
                 'finished': False,
@@ -167,7 +163,7 @@ class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
                 'succeeded': True
             })
         ]
-        d = Decompilation('ID', conn_mock)
+        d = Decompilation('ID', self.conn_mock)
         callback = mock.Mock()
 
         d.wait_until_finished(callback)
@@ -175,25 +171,23 @@ class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
         self.assertEqual(len(callback.mock_calls), 2)
 
     def test_raises_exception_by_default_when_resource_failed(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        d = Decompilation('ID', conn_mock)
+        d = Decompilation('ID', self.conn_mock)
 
         with self.assertRaises(DecompilationFailedError):
             d.wait_until_finished()
 
     def test_calls_on_failure_when_it_is_callable(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        d = Decompilation('ID', conn_mock)
+        d = Decompilation('ID', self.conn_mock)
         on_failure_mock = mock.Mock()
 
         d.wait_until_finished(on_failure=on_failure_mock)
@@ -201,12 +195,11 @@ class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
         on_failure_mock.assert_called_once_with('error message')
 
     def test_does_not_raise_exception_when_on_failure_is_none(self):
-        conn_mock = mock.Mock(spec_set=APIConnection)
-        conn_mock.send_get_request.return_value = self.status_with({
+        self.conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        d = Decompilation('ID', conn_mock)
+        d = Decompilation('ID', self.conn_mock)
 
         d.wait_until_finished(on_failure=None)
