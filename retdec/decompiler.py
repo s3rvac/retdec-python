@@ -77,7 +77,7 @@ class Decompilation(Resource):
     """A representation of a decompilation."""
 
     def get_completion(self):
-        """How much of the resource has been completed?
+        """How much of the decompilation has been completed (in percentage)?
 
         It is an ``int`` between 0 and 100.
         """
