@@ -10,7 +10,7 @@ import unittest
 from unittest import mock
 
 from retdec.conn import APIConnection
-from retdec.exceptions import ResourceFailedError
+from retdec.exceptions import AnalysisFailedError
 from retdec.file import File
 from retdec.fileinfo import Analysis
 from retdec.fileinfo import Fileinfo
@@ -116,7 +116,7 @@ class AnalysisWaitUntilFinishedTests(unittest.TestCase):
         }
         a = Analysis('ID', conn_mock)
 
-        with self.assertRaises(ResourceFailedError):
+        with self.assertRaises(AnalysisFailedError):
             a.wait_until_finished()
 
     def test_calls_on_failure_when_it_is_callable(self):

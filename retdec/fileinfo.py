@@ -8,7 +8,7 @@
 
 import contextlib
 
-from retdec.exceptions import ResourceFailedError
+from retdec.exceptions import AnalysisFailedError
 from retdec.file import File
 from retdec.resource import Resource
 from retdec.service import Service
@@ -67,7 +67,7 @@ class Fileinfo(Service):
 class Analysis(Resource):
     """A representation of an analysis."""
 
-    def wait_until_finished(self, on_failure=ResourceFailedError):
+    def wait_until_finished(self, on_failure=AnalysisFailedError):
         """Waits until the analysis is finished.
 
         :param callable on_failure: What should be done when the analysis

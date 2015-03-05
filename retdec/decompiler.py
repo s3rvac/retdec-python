@@ -9,7 +9,7 @@
 import contextlib
 import shutil
 
-from retdec.exceptions import ResourceFailedError
+from retdec.exceptions import DecompilationFailedError
 from retdec.file import File
 from retdec.resource import Resource
 from retdec.service import Service
@@ -85,7 +85,7 @@ class Decompilation(Resource):
         return self._completion
 
     def wait_until_finished(self, callback=None,
-                            on_failure=ResourceFailedError):
+                            on_failure=DecompilationFailedError):
         """Waits until the decompilation is finished.
 
         :param callable callback: Function to be called when the status of the

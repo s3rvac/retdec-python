@@ -13,7 +13,8 @@ from retdec.exceptions import ConnectionError
 from retdec.exceptions import InvalidValueError
 from retdec.exceptions import MissingAPIKeyError
 from retdec.exceptions import MissingParameterError
-from retdec.exceptions import ResourceFailedError
+from retdec.exceptions import DecompilationFailedError
+from retdec.exceptions import AnalysisFailedError
 from retdec.exceptions import UnknownAPIError
 
 
@@ -64,15 +65,27 @@ class ConnectionErrorTests(unittest.TestCase):
         self.assertIn('REASON', str(ex))
 
 
-class ResourceFailedErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.ResourceFailedError`."""
+class AnalysisFailedErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.AnalysisFailedError`."""
 
     def test_does_not_include_reason_when_not_given(self):
-        ex = ResourceFailedError()
+        ex = AnalysisFailedError()
         self.assertNotIn('reason', str(ex))
 
     def test_includes_reason_when_given(self):
-        ex = ResourceFailedError('REASON')
+        ex = AnalysisFailedError('REASON')
+        self.assertIn('REASON', str(ex))
+
+
+class DecompilationFailedErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.DecompilationFailedError`."""
+
+    def test_does_not_include_reason_when_not_given(self):
+        ex = DecompilationFailedError()
+        self.assertNotIn('reason', str(ex))
+
+    def test_includes_reason_when_given(self):
+        ex = DecompilationFailedError('REASON')
         self.assertIn('REASON', str(ex))
 
 

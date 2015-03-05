@@ -58,11 +58,21 @@ class ConnectionError(RetdecError):
         super().__init__(message)
 
 
-class ResourceFailedError(RetdecError):
-    """Exception raised when a resource (e.g. a decompilation) has failed."""
+class AnalysisFailedError(RetdecError):
+    """Exception raised when a fileinfo analysis has failed."""
 
     def __init__(self, reason=None):
-        message = 'The resource has failed.'
+        message = 'The analysis has failed.'
+        if reason is not None:
+            message += ' Reason: {}'.format(reason)
+        super().__init__(message)
+
+
+class DecompilationFailedError(RetdecError):
+    """Exception raised when a decompilation has failed."""
+
+    def __init__(self, reason=None):
+        message = 'The decompilation has failed.'
         if reason is not None:
             message += ' Reason: {}'.format(reason)
         super().__init__(message)

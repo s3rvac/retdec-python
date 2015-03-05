@@ -13,7 +13,7 @@ from retdec.conn import APIConnection
 from retdec.decompiler import Decompilation
 from retdec.decompiler import Decompiler
 from retdec.exceptions import InvalidValueError
-from retdec.exceptions import ResourceFailedError
+from retdec.exceptions import DecompilationFailedError
 from retdec.file import File
 from tests.file_tests import AnyFile
 from tests.service_tests import BaseServiceTests
@@ -187,7 +187,7 @@ class DecompilationWaitUntilFinishedTests(unittest.TestCase):
         }
         d = Decompilation('ID', conn_mock)
 
-        with self.assertRaises(ResourceFailedError):
+        with self.assertRaises(DecompilationFailedError):
             d.wait_until_finished()
 
     def test_calls_on_failure_when_it_is_callable(self):
