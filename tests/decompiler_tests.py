@@ -6,6 +6,7 @@
 
 """Tests for the :mod:`retdec.decompiler` module."""
 
+import datetime
 from unittest import mock
 
 from retdec.decompiler import Decompilation
@@ -132,6 +133,18 @@ class DecompilationTests(DecompilationTestsBase):
 
 class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
     """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`."""
+
+    def setUp(self):
+        super().setUp()
+
+        # Disable the waiting interval so that the status is checked in every
+        # state-querying method call.
+        self._orig_state_update_interval = Decompilation._STATE_UPDATE_INTERVAL
+        Decompilation._STATE_UPDATE_INTERVAL = datetime.timedelta(seconds=0)
+
+    def tearDown(self):
+        # Restore the waiting interval.
+        Decompilation._STATE_UPDATE_INTERVAL = self._orig_state_update_interval
 
     def test_returns_when_resource_is_finished(self):
         self.conn_mock.send_get_request.return_value = self.status_with({
