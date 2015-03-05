@@ -6,16 +6,16 @@
 
 """Tests for the :mod:`retdec.decompiler` module."""
 
-import unittest
 from unittest import mock
 
 from retdec.conn import APIConnection
 from retdec.decompiler import Decompilation
 from retdec.decompiler import Decompiler
-from retdec.exceptions import InvalidValueError
 from retdec.exceptions import DecompilationFailedError
+from retdec.exceptions import InvalidValueError
 from retdec.file import File
 from tests.file_tests import AnyFile
+from tests.resource_tests import ResourceTestsBase
 from tests.service_tests import BaseServiceTests
 
 
@@ -105,11 +105,11 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
         )
 
 
-class DecompilationTests(unittest.TestCase):
+class DecompilationTests(ResourceTestsBase):
     """Tests for :class:`retdec.decompiler.Decompilation`."""
 
 
-class DecompilationWaitUntilFinishedTests(unittest.TestCase):
+class DecompilationWaitUntilFinishedTests(ResourceTestsBase):
     """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`."""
 
     def test_returns_when_resource_is_finished(self):

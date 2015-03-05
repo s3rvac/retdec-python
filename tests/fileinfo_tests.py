@@ -6,7 +6,6 @@
 
 """Tests for the :mod:`retdec.fileinfo` module."""
 
-import unittest
 from unittest import mock
 
 from retdec.conn import APIConnection
@@ -15,6 +14,7 @@ from retdec.file import File
 from retdec.fileinfo import Analysis
 from retdec.fileinfo import Fileinfo
 from tests.file_tests import AnyFile
+from tests.resource_tests import ResourceTestsBase
 from tests.service_tests import BaseServiceTests
 
 
@@ -85,11 +85,11 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
         )
 
 
-class AnalysisTests(unittest.TestCase):
+class AnalysisTests(ResourceTestsBase):
     """Tests for :class:`retdec.fileinfo.Analysis`."""
 
 
-class AnalysisWaitUntilFinishedTests(unittest.TestCase):
+class AnalysisWaitUntilFinishedTests(ResourceTestsBase):
     """Tests for :func:`retdec.resource.Analysis.wait_until_finished()`."""
 
     def test_sends_correct_request_and_returns_when_resource_is_finished(self):

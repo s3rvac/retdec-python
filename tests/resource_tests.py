@@ -13,7 +13,20 @@ from retdec.conn import APIConnection
 from retdec.resource import Resource
 
 
-class ResourceTests(unittest.TestCase):
+class ResourceTestsBase(unittest.TestCase):
+    """Base class for tests of :class:`retdec.resource.Resource` and its
+    subclasses.
+    """
+
+    def setUp(self):
+        # Patch time.sleep() to prevent sleeping during tests.
+        self.time_sleep_mock = mock.Mock()
+        patcher = mock.patch('time.sleep', self.time_sleep_mock)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+
+class ResourceTests(ResourceTestsBase):
     """Tests for :class:`retdec.resource.Resource`."""
 
     def test_id_returns_passed_id(self):
