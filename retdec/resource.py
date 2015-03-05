@@ -49,6 +49,11 @@ class Resource:
         self._update_state_if_needed()
         return self._pending
 
+    def is_running(self):
+        """Is the resource currently running?"""
+        self._update_state_if_needed()
+        return self._running
+
     def has_finished(self):
         """Has the resource finished?"""
         self._update_state_if_needed()
@@ -91,6 +96,7 @@ class Resource:
         """Updates the state of the resource."""
         status = self._get_status()
         self._pending = status['pending']
+        self._running = status['running']
         self._finished = status['finished']
         self._succeeded = status['succeeded']
         self._failed = status['failed']
