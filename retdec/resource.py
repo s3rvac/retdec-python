@@ -6,13 +6,15 @@
 
 """Base class of all resources."""
 
+import datetime
 import time
-
-from retdec.exceptions import ResourceFailedError
 
 
 class Resource:
     """Base class of all resources."""
+
+    #: Time interval after which we can update resource's state.
+    _STATE_UPDATE_INTERVAL = datetime.timedelta(seconds=0.5)
 
     def __init__(self, id, conn):
         """Initializes the resource.
@@ -24,62 +26,67 @@ class Resource:
         self._id = id
         self._conn = conn
 
+        # To prevent abuse of the API, we update the state of the resource only
+        # once in a while. In order to track whether we should perform an
+        # update, we keep a date and time of the last update. By initializing
+        # it to the minimal representable date, we ensure that the resource
+        # gets updated upon the first call of a state-checking method, like
+        # has_finished().
+        # See the implementation of _state_should_be_updated() for more details.
+        self._last_updated = datetime.datetime.min
+
     @property
     def id(self):
         """Unique identifier of the resource."""
         return self._id
 
-    def wait_until_finished(self, callback=None,
-                            on_failure=ResourceFailedError):
-        """Waits until the resource is finished.
+    def has_finished(self):
+        """Has the resource finished?"""
+        self._update_state_if_needed()
+        return self._finished
 
-        :param callable callback: Function to be called when the status of the
-                                  resource is changed or it finishes.
-        :param callable on_failure: What should be done when the resource
-                                    fails?
+    def has_succeeded(self):
+        """Has the resource succeeded?"""
+        self._update_state_if_needed()
+        return self._finished
 
-        If `callback` is not ``None``, it is called with the resource as its
-        argument when the status of the resource is changed or when it
-        finishes.
+    def has_failed(self):
+        """Has the resource failed?"""
+        self._update_state_if_needed()
+        return self._failed
 
-        If `on_failure` is ``None``, nothing is done when the resource fails.
-        Otherwise, it is called with the error message. If the returned value
-        is an exception, it is raised.
+    def get_error(self):
+        """A reason why the resource failed.
+
+        If the resource has not failed, it returns ``None``.
         """
-        # Ensure that we have something callable (do nothing by default).
-        callback = callback or (lambda _: None)
+        self._update_state_if_needed()
+        return self._error
 
-        # Currently, the retdec.com API does not support push notifications, so
-        # we have to do polling.
-        # Track completion changes so we can call the callback when the status
-        # changes.
-        last_completion = None
-        while True:
-            status = self._get_status()
+    def _update_state_if_needed(self):
+        """Updates the state of the resource (if needed)."""
+        if self._state_should_be_updated():
+            self._update_state()
 
-            if status['finished']:
-                break
+    def _state_should_be_updated(self):
+        """Should the state of the resource be updated?"""
+        # To prevent abuse of the API, update the status only once in a while.
+        now = datetime.datetime.now()
+        return (now - self._last_updated) > self._STATE_UPDATE_INTERVAL
 
-            if (last_completion is not None and
-                    status['completion'] != last_completion):
-                callback(self)
-            last_completion = status['completion']
+    def _wait_until_state_can_be_updated(self):
+        """Waits until the state can be updated."""
+        time.sleep(self._STATE_UPDATE_INTERVAL.total_seconds())
 
-            # Sleep a bit to prevent abuse of the API.
-            time.sleep(0.5)
-
-        # The resource has finished.
-
-        # Call the callback one final time. This has to be done because the
-        # resource may have immediately finished, without giving us chance to
-        # call the callback.
-        callback(self)
-
-        if status['failed'] and on_failure is not None:
-            obj = on_failure(status['error'])
-            if isinstance(obj, Exception):
-                raise obj
+    def _update_state(self):
+        """Updates the state of the resource."""
+        status = self._get_status()
+        self._finished = status['finished']
+        self._succeeded = status['succeeded']
+        self._failed = status['failed']
+        self._error = status['error']
+        return status
 
     def _get_status(self):
-        """Returns the current status of the resource."""
+        """Obtains and returns the current status of the resource."""
         return self._conn.send_get_request('/{}/status'.format(self.id))

@@ -9,9 +9,10 @@
 import contextlib
 import shutil
 
+from retdec.exceptions import ResourceFailedError
 from retdec.file import File
-from retdec.service import Service
 from retdec.resource import Resource
+from retdec.service import Service
 
 
 class Decompiler(Service):
@@ -75,9 +76,68 @@ class Decompiler(Service):
 class Decompilation(Resource):
     """A representation of a decompilation."""
 
+    def get_completion(self):
+        """How much of the resource has been completed?
+
+        It is an ``int`` between 0 and 100.
+        """
+        self._update_state_if_needed()
+        return self._completion
+
+    def wait_until_finished(self, callback=None,
+                            on_failure=ResourceFailedError):
+        """Waits until the decompilation is finished.
+
+        :param callable callback: Function to be called when the status of the
+                                  decompilation is changed or it finishes.
+        :param callable on_failure: What should be done when the decompilation
+                                    fails?
+
+        If `callback` is not ``None``, it is called with the decompilation as its
+        argument when the status of the decompilation is changed or when it
+        finishes.
+
+        If `on_failure` is ``None``, nothing is done when the decompilation fails.
+        Otherwise, it is called with the error message. If the returned value
+        is an exception, it is raised.
+        """
+        # Ensure that we have something callable (do nothing by default).
+        callback = callback or (lambda _: None)
+
+        # Currently, the retdec.com API does not support push notifications, so
+        # we have to do polling.
+        # Track completion changes so we can call the callback when the status
+        # changes.
+        last_completion = None
+        while not self.has_finished():
+            if (last_completion is not None and
+                    self._completion != last_completion):
+                callback(self)
+            last_completion = self._completion
+
+            self._wait_until_state_can_be_updated()
+
+        # The decompilation has finished.
+
+        # Call the callback one final time. This has to be done because the
+        # decompilation may have immediately finished, without giving us chance to
+        # call the callback.
+        callback(self)
+
+        if self._failed and on_failure is not None:
+            obj = on_failure(self._error)
+            if isinstance(obj, Exception):
+                raise obj
+
     def save_output_hll(self):
         """Saves the decompiled output code to the current directory."""
         file_path = '/{}/outputs/hll'.format(self.id)
         with contextlib.closing(self._conn.get_file(file_path)) as src:
             with open(src.name, 'wb') as dst:
                 shutil.copyfileobj(src, dst)
+
+    def _update_state(self):
+        """Updates the state of the decompilation."""
+        status = super()._update_state()
+        self._completion = status['completion']
+        return status

@@ -8,9 +8,10 @@
 
 import contextlib
 
+from retdec.exceptions import ResourceFailedError
 from retdec.file import File
-from retdec.service import Service
 from retdec.resource import Resource
+from retdec.service import Service
 
 
 class Fileinfo(Service):
@@ -65,6 +66,27 @@ class Fileinfo(Service):
 
 class Analysis(Resource):
     """A representation of an analysis."""
+
+    def wait_until_finished(self, on_failure=ResourceFailedError):
+        """Waits until the analysis is finished.
+
+        :param callable on_failure: What should be done when the analysis
+                                    fails?
+
+        If `on_failure` is ``None``, nothing is done when the analysis fails.
+        Otherwise, it is called with the error message. If the returned value
+        is an exception, it is raised.
+        """
+        # Currently, the retdec.com API does not support push notifications, so
+        # we have to do polling.
+        while not self.has_finished():
+            self._wait_until_state_can_be_updated()
+
+        # The analysis has finished.
+        if self._failed and on_failure is not None:
+            obj = on_failure(self._error)
+            if isinstance(obj, Exception):
+                raise obj
 
     def get_output(self):
         """Obtains and returns the output from the analysis."""
