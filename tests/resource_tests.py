@@ -29,6 +29,8 @@ class ResourceTestsBase(unittest.TestCase):
 
     def status_with(self, status):
         """Adds missing keys to the given status and returns it."""
+        if 'pending' not in status:
+            status['pending'] = False
         if 'finished' not in status:
             status['finished'] = False
         if 'succeeded' not in status:
@@ -46,6 +48,17 @@ class ResourceTests(ResourceTestsBase):
     def test_id_returns_passed_id(self):
         r = Resource('ID', self.conn_mock)
         self.assertEqual(r.id, 'ID')
+
+    def test_is_pending_checks_status_on_first_call_and_returns_correct_value(self):
+        self.conn_mock.send_get_request.return_value = self.status_with({
+            'pending': True
+        })
+        r = Resource('ID', self.conn_mock)
+
+        pending = r.is_pending()
+
+        self.assertTrue(pending)
+        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
 
     def test_has_finished_checks_status_on_first_call_and_returns_correct_value(self):
         self.conn_mock.send_get_request.return_value = self.status_with({

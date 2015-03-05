@@ -40,6 +40,15 @@ class Resource:
         """Unique identifier of the resource."""
         return self._id
 
+    def is_pending(self):
+        """Is the resource in a pending state?
+
+        A resource is *pending* if it is scheduled to run but has not started
+        yet.
+        """
+        self._update_state_if_needed()
+        return self._pending
+
     def has_finished(self):
         """Has the resource finished?"""
         self._update_state_if_needed()
@@ -81,6 +90,7 @@ class Resource:
     def _update_state(self):
         """Updates the state of the resource."""
         status = self._get_status()
+        self._pending = status['pending']
         self._finished = status['finished']
         self._succeeded = status['succeeded']
         self._failed = status['failed']
