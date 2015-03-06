@@ -15,6 +15,7 @@ from retdec.fileinfo import Analysis
 from retdec.fileinfo import Fileinfo
 from tests.file_tests import AnyFile
 from tests.resource_tests import ResourceTestsBase
+from tests.resource_tests import WithDisabledWaitingInterval
 from tests.service_tests import BaseServiceTests
 
 
@@ -93,7 +94,10 @@ class AnalysisTests(AnalysisTestsBase):
     """Tests for :class:`retdec.fileinfo.Analysis`."""
 
 
-class AnalysisWaitUntilFinishedTests(AnalysisTestsBase):
+# WithDisabledWaitingInterval has to be put as the first base class, see its
+# description for the reason why.
+class AnalysisWaitUntilFinishedTests(WithDisabledWaitingInterval,
+                                     AnalysisTestsBase):
     """Tests for :func:`retdec.resource.Analysis.wait_until_finished()`."""
 
     def test_sends_correct_request_and_returns_when_resource_is_finished(self):

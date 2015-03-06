@@ -6,7 +6,6 @@
 
 """Tests for the :mod:`retdec.decompiler` module."""
 
-import datetime
 from unittest import mock
 
 from retdec.decompiler import Decompilation
@@ -16,6 +15,7 @@ from retdec.exceptions import InvalidValueError
 from retdec.file import File
 from tests.file_tests import AnyFile
 from tests.resource_tests import ResourceTestsBase
+from tests.resource_tests import WithDisabledWaitingInterval
 from tests.service_tests import BaseServiceTests
 
 
@@ -131,20 +131,11 @@ class DecompilationTests(DecompilationTestsBase):
         self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
 
 
-class DecompilationWaitUntilFinishedTests(DecompilationTestsBase):
+# WithDisabledWaitingInterval has to be put as the first base class, see its
+# description for the reason why.
+class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
+                                          DecompilationTestsBase):
     """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`."""
-
-    def setUp(self):
-        super().setUp()
-
-        # Disable the waiting interval so that the status is checked in every
-        # state-querying method call.
-        self._orig_state_update_interval = Decompilation._STATE_UPDATE_INTERVAL
-        Decompilation._STATE_UPDATE_INTERVAL = datetime.timedelta(seconds=0)
-
-    def tearDown(self):
-        # Restore the waiting interval.
-        Decompilation._STATE_UPDATE_INTERVAL = self._orig_state_update_interval
 
     def test_returns_when_resource_is_finished(self):
         self.conn_mock.send_get_request.return_value = self.status_with({

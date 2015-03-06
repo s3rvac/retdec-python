@@ -6,6 +6,7 @@
 
 """Tests for the :mod:`retdec.resource` module."""
 
+import datetime
 import unittest
 from unittest import mock
 
@@ -19,6 +20,8 @@ class ResourceTestsBase(unittest.TestCase):
     """
 
     def setUp(self):
+        super().setUp()
+
         self.conn_mock = mock.Mock(spec_set=APIConnection)
 
         # Patch time.sleep() to prevent sleeping during tests.
@@ -42,6 +45,36 @@ class ResourceTestsBase(unittest.TestCase):
         if 'error' not in status:
             status['error'] = None
         return status
+
+
+# Do not inherit from unittest.TestCase because WithDisabledWaitingInterval is
+# a mixin, not a base class for tests.
+class WithDisabledWaitingInterval:
+    """Mixin for tests that wish to disable the waiting interval.
+
+    When the waiting interval is disabled, the status is checked in every
+    state-querying method call. As a result, there is no busy-waiting.
+
+    When using the mixin, always put it before classes that inherit from
+    ``unittest.TestCase``. Otherwise, their setUp() method is not called
+    because ``unittest.TestCase.setUp()`` does not call ``super().setUp()``.
+    See http://nedbatchelder.com/blog/201210/multiple_inheritance_is_hard.html
+    for more details.
+    """
+
+    def setUp(self):
+        super().setUp()
+
+        # Disable the waiting interval so that the status is checked in every
+        # state-querying method call.
+        self._orig_state_update_interval = Resource._STATE_UPDATE_INTERVAL
+        Resource._STATE_UPDATE_INTERVAL = datetime.timedelta(seconds=0)
+
+    def tearDown(self):
+        super().tearDown()
+
+        # Restore the waiting interval.
+        Resource._STATE_UPDATE_INTERVAL = self._orig_state_update_interval
 
 
 class ResourceTests(ResourceTestsBase):
