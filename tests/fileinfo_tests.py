@@ -106,6 +106,20 @@ class AnalysisWaitUntilFinishedTests(AnalysisTestsBase):
 
         self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
 
+    def test_waits_until_analysis_finishes(self):
+        self.conn_mock.send_get_request.side_effect = [
+            self.status_with({
+                'finished': False,
+                'succeeded': False
+            }), self.status_with({
+                'finished': True,
+                'succeeded': True
+            })
+        ]
+        a = Analysis('ID', self.conn_mock)
+
+        a.wait_until_finished()
+
     def test_raises_exception_by_default_when_resource_failed(self):
         self.conn_mock.send_get_request.return_value = self.status_with({
             'finished': True,
