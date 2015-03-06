@@ -6,6 +6,7 @@
 
 """Tests for the :mod:`retdec.fileinfo` module."""
 
+import io
 from unittest import mock
 
 from retdec.exceptions import AnalysisFailedError
@@ -139,3 +140,16 @@ class AnalysisWaitUntilFinishedTests(AnalysisTestsBase):
         a = Analysis('ID', self.conn_mock)
 
         a.wait_until_finished(on_failure=None)
+
+
+class AnalysisGetOutputTests(AnalysisTestsBase):
+    """Tests for :func:`retdec.resource.Analysis.get_output()`."""
+
+    def test_accesses_correct_url_and_returns_its_data(self):
+        self.conn_mock.get_file.return_value = io.BytesIO(b'data')
+        a = Analysis('ID', self.conn_mock)
+
+        output = a.get_output()
+
+        self.assertEqual(output, 'data')
+        self.conn_mock.get_file.assert_called_once_with('/ID/output')
