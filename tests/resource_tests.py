@@ -77,6 +77,34 @@ class WithDisabledWaitingInterval:
         Resource._STATE_UPDATE_INTERVAL = self._orig_state_update_interval
 
 
+# Do not inherit from unittest.TestCase because WithMockedIO is
+# a mixin, not a base class for tests.
+class WithMockedIO:
+    """Mixin for tests that call functions that perform I/O operations.
+
+    When using the mixin, always put it before classes that inherit from
+    ``unittest.TestCase``. Otherwise, their setUp() method is not called
+    because ``unittest.TestCase.setUp()`` does not call ``super().setUp()``.
+    See http://nedbatchelder.com/blog/201210/multiple_inheritance_is_hard.html
+    for more details.
+    """
+
+    def setUp(self):
+        super().setUp()
+
+        # Mock open().
+        self.open_mock = mock.mock_open()
+        patcher = mock.patch('builtins.open', self.open_mock)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        # Mock the shutil module.
+        self.shutil_mock = mock.Mock()
+        patcher = mock.patch('retdec.resource.shutil', self.shutil_mock)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+
 class ResourceTests(ResourceTestsBase):
     """Tests for :class:`retdec.resource.Resource`."""
 

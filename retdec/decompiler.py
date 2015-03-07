@@ -6,9 +6,6 @@
 
 """Access to the decompiler (decompilation of files)."""
 
-import contextlib
-import shutil
-
 from retdec.exceptions import DecompilationFailedError
 from retdec.file import File
 from retdec.resource import Resource
@@ -129,12 +126,16 @@ class Decompilation(Resource):
             if isinstance(obj, Exception):
                 raise obj
 
-    def save_output_hll(self):
-        """Saves the decompiled output code to the current directory."""
+    def save_output_hll(self, directory=None):
+        """Saves the decompiled output code to the given directory.
+
+        :param str directory: Path to a directory in which the decompiled
+                              output will be stored.
+
+        If `directory` is ``None``, the current working directory is used.
+        """
         file_path = '/{}/outputs/hll'.format(self.id)
-        with contextlib.closing(self._conn.get_file(file_path)) as src:
-            with open(src.name, 'wb') as dst:
-                shutil.copyfileobj(src, dst)
+        self._get_file_and_save_it_to(file_path, directory)
 
     def _update_state(self):
         """Updates the state of the decompilation."""

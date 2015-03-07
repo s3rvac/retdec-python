@@ -6,6 +6,7 @@
 
 """Tests for the :mod:`retdec.decompiler` module."""
 
+import os
 from unittest import mock
 
 from retdec.decompiler import Decompilation
@@ -16,6 +17,7 @@ from retdec.file import File
 from tests.file_tests import AnyFile
 from tests.resource_tests import ResourceTestsBase
 from tests.resource_tests import WithDisabledWaitingInterval
+from tests.resource_tests import WithMockedIO
 from tests.service_tests import BaseServiceTests
 
 
@@ -218,3 +220,44 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
         d = Decompilation('ID', self.conn_mock)
 
         d.wait_until_finished(on_failure=None)
+
+
+# WithMockedIO has to be put as the first base class, see its description for
+# the reason why.
+class DecompilationSaveOutputHLLTests(WithMockedIO, DecompilationTestsBase):
+    """Tests for :func:`retdec.resource.Decompilation.save_output_hll()`."""
+
+    def test_accesses_correct_url(self):
+        file_mock = mock.MagicMock()
+        self.conn_mock.get_file.return_value = file_mock
+        d = Decompilation('ID', self.conn_mock)
+
+        d.save_output_hll()
+
+        self.conn_mock.get_file.assert_called_once_with('/ID/outputs/hll')
+
+    def test_stores_file_to_cwd_when_directory_is_not_given(self):
+        file_mock = mock.MagicMock()
+        file_mock.name = 'test.out.c'
+        self.conn_mock.get_file.return_value = file_mock
+        d = Decompilation('ID', self.conn_mock)
+
+        d.save_output_hll()
+
+        self.open_mock.assert_called_once_with(
+            os.path.join(os.getcwd(), 'test.out.c'),
+            'wb'
+        )
+
+    def test_stores_file_to_directory_when_given(self):
+        file_mock = mock.MagicMock()
+        file_mock.name = 'test.out.c'
+        self.conn_mock.get_file.return_value = file_mock
+        d = Decompilation('ID', self.conn_mock)
+
+        d.save_output_hll('dir')
+
+        self.open_mock.assert_called_once_with(
+            os.path.join('dir', 'test.out.c'),
+            'wb'
+        )

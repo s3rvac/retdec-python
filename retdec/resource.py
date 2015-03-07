@@ -6,7 +6,10 @@
 
 """Base class of all resources."""
 
+import contextlib
 import datetime
+import os
+import shutil
 import time
 
 
@@ -111,3 +114,16 @@ class Resource:
     def _get_status(self):
         """Obtains and returns the current status of the resource."""
         return self._conn.send_get_request('/{}/status'.format(self.id))
+
+    def _get_file_and_save_it_to(self, file_path, directory=None):
+        """Obtains a file from `file_path` and saves it to `directory`.
+
+        :param str file_path: Path to the file to be downloaded.
+        :param str directory: Directory in which the file will be stored.
+
+        If `directory` is ``None``, the current working directory is used.
+        """
+        directory = directory or os.getcwd()
+        with contextlib.closing(self._conn.get_file(file_path)) as src:
+            with open(os.path.join(directory, src.name), 'wb') as dst:
+                shutil.copyfileobj(src, dst)
