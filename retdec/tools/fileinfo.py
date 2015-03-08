@@ -16,8 +16,13 @@ from retdec.tools import _add_arguments_shared_by_all_tools
 def parse_args(argv):
     """Parses the given list of arguments."""
     parser = argparse.ArgumentParser(
-        description=('Analyzes the given binary file through the retdec.com '
-                     'decompilation service by using their public REST API.')
+        description=(
+            'Analyzes the given binary file through the retdec.com '
+            'decompilation service by using their public REST API.\n'
+            '\n'
+            'The output from the analysis is printed to the standard output.'
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter
     )
     _add_arguments_shared_by_all_tools(parser)
     parser.add_argument(
