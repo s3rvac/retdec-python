@@ -7,6 +7,7 @@
 """A tool for decompiling files. It uses the library."""
 
 import argparse
+import os
 import sys
 
 from retdec.decompiler import Decompiler
@@ -20,7 +21,11 @@ def parse_args(argv):
             'Decompiles the given file through the retdec.com '
             'decompilation service by using their public REST API.\n'
             '\n'
-            'The decompiled code is saved in the current working directory.'
+            'By default, the output files are stored into the same directory '
+            'where the input file is located. For example, if the input file is '
+            "'dir/prog.exe', then the decompiled code in the C language is "
+            "saved as 'dir/prog.c'. You can override the output directory by "
+            'using the -o/--output-dir parameter.'
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
@@ -32,11 +37,33 @@ def parse_args(argv):
         help='decompilation mode (default: automatic detection)'
     )
     parser.add_argument(
+        '-o', '--output-dir',
+        dest='output_dir',
+        help='save the outputs into this directory'
+    )
+    parser.add_argument(
         'file',
         metavar='FILE',
         help='file to decompile'
     )
     return parser.parse_args(argv[1:])
+
+
+def get_output_dir(input_file, output_dir):
+    """Returns an absolute path to a directory where the output files should be
+    saved.
+
+    :param str input_file: Path to the input file from the tool parameters
+                           (``args.file``).
+    :param str output_dir: Path to the output directory from the tool
+                           parameters (``args.output_dir``).
+    """
+    if output_dir is not None:
+        # The output directory was forced by the user.
+        return os.path.abspath(output_dir)
+
+    # Save the outputs to the same directory where the input file is located.
+    return os.path.abspath(os.path.dirname(input_file))
 
 
 def main():
@@ -50,7 +77,8 @@ def main():
         mode=args.mode
     )
     decompilation.wait_until_finished()
-    decompilation.save_output_hll()
+    output_dir = get_output_dir(args.file, args.output_dir)
+    decompilation.save_output_hll(output_dir)
     return 0
 
 
