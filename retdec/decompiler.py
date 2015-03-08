@@ -126,6 +126,13 @@ class Decompilation(Resource):
             if isinstance(obj, Exception):
                 raise obj
 
+    def get_output_hll(self):
+        """Obtains and returns the decompiled code in the high-level language
+        (`str`).
+        """
+        file_path = '/{}/output/hll'.format(self.id)
+        return self._get_file_contents(file_path, is_text_file=True)
+
     def save_output_hll(self, directory=None):
         """Saves the decompiled code in the high-level language to the given
         directory.
