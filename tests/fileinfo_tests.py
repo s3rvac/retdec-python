@@ -6,9 +6,9 @@
 
 """Tests for the :mod:`retdec.fileinfo` module."""
 
-import io
 from unittest import mock
 
+from tests.resource_tests import WithMockedIO
 from retdec.exceptions import AnalysisFailedError
 from retdec.file import File
 from retdec.fileinfo import Analysis
@@ -160,14 +160,15 @@ class AnalysisWaitUntilFinishedTests(WithDisabledWaitingInterval,
         a.wait_until_finished(on_failure=None)
 
 
-class AnalysisGetOutputTests(AnalysisTestsBase):
+# WithMockedIO has to be put as the first base class, see its description for
+# the reason why.
+class AnalysisGetOutputTests(WithMockedIO, AnalysisTestsBase):
     """Tests for :func:`retdec.resource.Analysis.get_output()`."""
 
-    def test_accesses_correct_url_and_returns_its_data(self):
-        self.conn_mock.get_file.return_value = io.BytesIO(b'data')
+    def test_obtains_file_contents(self):
         a = Analysis('ID', self.conn_mock)
-
-        output = a.get_output()
-
-        self.assertEqual(output, 'data')
-        self.conn_mock.get_file.assert_called_once_with('/ID/output')
+        self.assert_obtains_file_contents(
+            a.get_output,
+            '/ID/output',
+            text_file=True
+        )

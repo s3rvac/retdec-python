@@ -7,6 +7,8 @@
 """Tests for the :mod:`retdec.resource` module."""
 
 import datetime
+import io
+import os
 import unittest
 from unittest import mock
 
@@ -103,6 +105,43 @@ class WithMockedIO:
         patcher = mock.patch('retdec.resource.shutil', self.shutil_mock)
         patcher.start()
         self.addCleanup(patcher.stop)
+
+    def assert_obtains_file_contents(self, func, file_path, text_file):
+        """Asserts that ``func()`` obtains the contents of the given file.
+
+        :param callable func: Function to be called.
+        :param str file_path: Path to the file to be downloaded.
+        :param bool text_file: Is it a text file or a binary file?
+        """
+        self.conn_mock.get_file.return_value = io.BytesIO(b'data')
+
+        output = func()
+
+        self.assertEqual(output, 'data' if text_file else b'data')
+        self.conn_mock.get_file.assert_called_once_with(file_path)
+
+    def assert_obtains_and_saves_file(self, func, file_path, directory):
+        """Asserts that ``func(directory)`` obtains the given file and saves it
+        to `directory`.
+
+        :param callable func: Function to be called with `directory`.
+        :param str file_path: Path to the file to be downloaded.
+        :param str directory: Directory in which the file will be stored.
+
+        If `directory` is ``None``, the current working directory is used.
+        """
+        file_mock = mock.MagicMock()
+        file_mock.name = 'file_name'
+        self.conn_mock.get_file.return_value = file_mock
+
+        func(directory)
+
+        self.conn_mock.get_file.assert_called_once_with(file_path)
+        directory = directory or os.getcwd()
+        self.open_mock.assert_called_once_with(
+            os.path.join(directory, 'file_name'),
+            'wb'
+        )
 
 
 class ResourceTests(ResourceTestsBase):
