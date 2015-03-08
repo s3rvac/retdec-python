@@ -223,10 +223,12 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
 
 # WithMockedIO has to be put as the first base class, see its description for
 # the reason why.
-class DecompilationSaveOutputHLLTests(WithMockedIO, DecompilationTestsBase):
-    """Tests for :func:`retdec.resource.Decompilation.save_output_hll()`."""
+class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
+    """Tests for methods that obtain outputs from a
+    :class:`retdec.decompilation.Decompilation`.
+    """
 
-    def test_stores_file_to_cwd_when_directory_is_not_given(self):
+    def test_save_output_hll_stores_file_to_cwd_when_directory_is_not_given(self):
         d = Decompilation('ID', self.conn_mock)
         self.assert_obtains_and_saves_file(
             d.save_output_hll,
@@ -234,7 +236,7 @@ class DecompilationSaveOutputHLLTests(WithMockedIO, DecompilationTestsBase):
             directory=None
         )
 
-    def test_stores_file_to_directory_when_given(self):
+    def test_save_output_hll_stores_file_to_directory_when_given(self):
         d = Decompilation('ID', self.conn_mock)
         self.assert_obtains_and_saves_file(
             d.save_output_hll,

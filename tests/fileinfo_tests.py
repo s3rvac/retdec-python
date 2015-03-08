@@ -162,10 +162,12 @@ class AnalysisWaitUntilFinishedTests(WithDisabledWaitingInterval,
 
 # WithMockedIO has to be put as the first base class, see its description for
 # the reason why.
-class AnalysisGetOutputTests(WithMockedIO, AnalysisTestsBase):
-    """Tests for :func:`retdec.resource.Analysis.get_output()`."""
+class AnalysisGetOutputsTests(WithMockedIO, AnalysisTestsBase):
+    """Tests for methods that obtain outputs from an
+    :class:`retdec.fileinfo.Analysis`.
+    """
 
-    def test_obtains_file_contents(self):
+    def test_get_output_obtains_file_contents(self):
         a = Analysis('ID', self.conn_mock)
         self.assert_obtains_file_contents(
             a.get_output,
