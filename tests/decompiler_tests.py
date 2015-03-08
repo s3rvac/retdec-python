@@ -251,3 +251,27 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
             '/ID/outputs/hll',
             directory='dir'
         )
+
+    def test_get_output_dsm_obtains_file_contents(self):
+        d = Decompilation('ID', self.conn_mock)
+        self.assert_obtains_file_contents(
+            d.get_output_dsm,
+            '/ID/output/dsm',
+            is_text_file=True
+        )
+
+    def test_save_output_dsm_stores_file_to_cwd_when_directory_is_not_given(self):
+        d = Decompilation('ID', self.conn_mock)
+        self.assert_obtains_and_saves_file(
+            d.save_output_dsm,
+            '/ID/outputs/dsm',
+            directory=None
+        )
+
+    def test_save_output_dsm_stores_file_to_directory_when_given(self):
+        d = Decompilation('ID', self.conn_mock)
+        self.assert_obtains_and_saves_file(
+            d.save_output_dsm,
+            '/ID/outputs/dsm',
+            directory='dir'
+        )

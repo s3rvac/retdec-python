@@ -79,6 +79,7 @@ def main():
     decompilation.wait_until_finished()
     output_dir = get_output_dir(args.file, args.output_dir)
     decompilation.save_output_hll(output_dir)
+    decompilation.save_output_dsm(output_dir)
     return 0
 
 

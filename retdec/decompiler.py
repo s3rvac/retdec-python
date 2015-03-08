@@ -145,6 +145,25 @@ class Decompilation(Resource):
         file_path = '/{}/outputs/hll'.format(self.id)
         self._get_file_and_save_it_to(file_path, directory)
 
+    def get_output_dsm(self):
+        """Obtains and returns the disassembled input file in assembly-like
+        syntax (`str`).
+        """
+        file_path = '/{}/output/dsm'.format(self.id)
+        return self._get_file_contents(file_path, is_text_file=True)
+
+    def save_output_dsm(self, directory=None):
+        """Saves the disassembled input file in assembly-like syntax to the
+        given directory.
+
+        :param str directory: Path to a directory in which the file will be
+                              stored.
+
+        If `directory` is ``None``, the current working directory is used.
+        """
+        file_path = '/{}/outputs/dsm'.format(self.id)
+        self._get_file_and_save_it_to(file_path, directory)
+
     def _update_state(self):
         """Updates the state of the decompilation."""
         status = super()._update_state()
