@@ -80,7 +80,7 @@ class ProgressBarDisplayer(ProgressDisplayer):
             completion
         ))
 
-        if completion == 100 and d.has_finished():
+        if d.has_finished():
             if d.has_succeeded():
                 sys.stdout.write('OK')
             else:
