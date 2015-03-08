@@ -130,8 +130,10 @@ class Decompilation(Resource):
         """Obtains and returns the decompiled code in the high-level language
         (`str`).
         """
-        file_path = '/{}/output/hll'.format(self.id)
-        return self._get_file_contents(file_path, is_text_file=True)
+        return self._get_file_contents(
+            self._path_to_output_file('hll'),
+            is_text_file=True
+        )
 
     def save_output_hll(self, directory=None):
         """Saves the decompiled code in the high-level language to the given
@@ -142,15 +144,19 @@ class Decompilation(Resource):
 
         If `directory` is ``None``, the current working directory is used.
         """
-        file_path = '/{}/outputs/hll'.format(self.id)
-        self._get_file_and_save_it_to(file_path, directory)
+        self._get_file_and_save_it_to(
+            self._path_to_output_file('hll'),
+            directory
+        )
 
     def get_output_dsm(self):
         """Obtains and returns the disassembled input file in assembly-like
         syntax (`str`).
         """
-        file_path = '/{}/output/dsm'.format(self.id)
-        return self._get_file_contents(file_path, is_text_file=True)
+        return self._get_file_contents(
+            self._path_to_output_file('dsm'),
+            is_text_file=True
+        )
 
     def save_output_dsm(self, directory=None):
         """Saves the disassembled input file in assembly-like syntax to the
@@ -161,11 +167,17 @@ class Decompilation(Resource):
 
         If `directory` is ``None``, the current working directory is used.
         """
-        file_path = '/{}/outputs/dsm'.format(self.id)
-        self._get_file_and_save_it_to(file_path, directory)
+        self._get_file_and_save_it_to(
+            self._path_to_output_file('dsm'),
+            directory
+        )
 
     def _update_state(self):
         """Updates the state of the decompilation."""
         status = super()._update_state()
         self._completion = status['completion']
         return status
+
+    def _path_to_output_file(self, output_file):
+        """Returns a path to the given output file."""
+        return '/{}/outputs/{}'.format(self.id, output_file)
