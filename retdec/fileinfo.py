@@ -87,6 +87,6 @@ class Analysis(Resource):
                 raise obj
 
     def get_output(self):
-        """Obtains and returns the output from the analysis."""
+        """Obtains and returns the output from the analysis (`str`)."""
         file_path = '/{}/output'.format(self.id)
         return self._get_file_contents(file_path)
