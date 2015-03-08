@@ -232,7 +232,7 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
         d = Decompilation('ID', self.conn_mock)
         self.assert_obtains_file_contents(
             d.get_output_hll,
-            '/ID/output/hll',
+            '/ID/outputs/hll',
             is_text_file=True
         )
 
@@ -256,7 +256,7 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
         d = Decompilation('ID', self.conn_mock)
         self.assert_obtains_file_contents(
             d.get_output_dsm,
-            '/ID/output/dsm',
+            '/ID/outputs/dsm',
             is_text_file=True
         )
 
