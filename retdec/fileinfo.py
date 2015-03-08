@@ -6,8 +6,6 @@
 
 """Access to the file-analyzing service (fileinfo)."""
 
-import contextlib
-
 from retdec.exceptions import AnalysisFailedError
 from retdec.file import File
 from retdec.resource import Resource
@@ -91,5 +89,4 @@ class Analysis(Resource):
     def get_output(self):
         """Obtains and returns the output from the analysis."""
         file_path = '/{}/output'.format(self.id)
-        with contextlib.closing(self._conn.get_file(file_path)) as file:
-            return file.read().decode()
+        return self._get_file_contents(file_path)
