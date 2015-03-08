@@ -115,15 +115,15 @@ class Resource:
         """Obtains and returns the current status of the resource."""
         return self._conn.send_get_request('/{}/status'.format(self.id))
 
-    def _get_file_contents(self, file_path, text_file=True):
+    def _get_file_contents(self, file_path, is_text_file):
         """Obtains the contents of a file from the given path.
 
         :param str file_path: Path to the file to be downloaded.
-        :param bool text_file: Is it a text file or a binary file?
+        :param bool is_text_file: Is it a text file or a binary file?
         """
         with contextlib.closing(self._conn.get_file(file_path)) as file:
             contents = file.read()
-            if text_file:
+            if is_text_file:
                 contents = contents.decode()
             return contents
 

@@ -89,4 +89,4 @@ class Analysis(Resource):
     def get_output(self):
         """Obtains and returns the output from the analysis (`str`)."""
         file_path = '/{}/output'.format(self.id)
-        return self._get_file_contents(file_path)
+        return self._get_file_contents(file_path, is_text_file=True)

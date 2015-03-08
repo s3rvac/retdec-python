@@ -170,5 +170,5 @@ class AnalysisGetOutputTests(WithMockedIO, AnalysisTestsBase):
         self.assert_obtains_file_contents(
             a.get_output,
             '/ID/output',
-            text_file=True
+            is_text_file=True
         )

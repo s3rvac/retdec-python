@@ -106,18 +106,18 @@ class WithMockedIO:
         patcher.start()
         self.addCleanup(patcher.stop)
 
-    def assert_obtains_file_contents(self, func, file_path, text_file):
+    def assert_obtains_file_contents(self, func, file_path, is_text_file):
         """Asserts that ``func()`` obtains the contents of the given file.
 
         :param callable func: Function to be called.
         :param str file_path: Path to the file to be downloaded.
-        :param bool text_file: Is it a text file or a binary file?
+        :param bool is_text_file: Is it a text file or a binary file?
         """
         self.conn_mock.get_file.return_value = io.BytesIO(b'data')
 
         output = func()
 
-        self.assertEqual(output, 'data' if text_file else b'data')
+        self.assertEqual(output, 'data' if is_text_file else b'data')
         self.conn_mock.get_file.assert_called_once_with(file_path)
 
     def assert_obtains_and_saves_file(self, func, file_path, directory):
