@@ -127,7 +127,8 @@ class Decompilation(Resource):
                 raise obj
 
     def save_output_hll(self, directory=None):
-        """Saves the decompiled output code to the given directory.
+        """Saves the decompiled code in the high-level language to the given
+        directory.
 
         :param str directory: Path to a directory in which the decompiled
                               output will be stored.
