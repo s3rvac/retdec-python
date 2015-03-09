@@ -165,13 +165,21 @@ class ParseArgsTests(ParseArgsBaseTests):
         self.assertTrue(args.quiet)
 
 
+class FakeArguments:
+    """Fake representation of tool arguments."""
+
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
+
+
 class GetOutputDirTests(unittest.TestCase):
     """Tests for :func:`retdec.tools.decompiler.get_output_dir()`."""
 
     def test_returns_correct_dir_when_output_dir_is_not_given(self):
         input_file = os.path.join('dir', 'prog.exe')
+        args = FakeArguments(file=input_file, output_dir=None)
 
-        output_dir = get_output_dir(input_file, output_dir=None)
+        output_dir = get_output_dir(args)
 
         self.assertEqual(
             output_dir,
@@ -181,21 +189,15 @@ class GetOutputDirTests(unittest.TestCase):
 
     def test_returns_correct_dir_when_output_dir_is_given(self):
         input_file = os.path.join('dir', 'prog.exe')
+        args = FakeArguments(file=input_file, output_dir='other_dir')
 
-        output_dir = get_output_dir(input_file, output_dir='other_dir')
+        output_dir = get_output_dir(args)
 
         self.assertEqual(
             output_dir,
             os.path.join(os.getcwd(), 'other_dir')
         )
         self.assertTrue(os.path.isabs(output_dir))
-
-
-class FakeArguments:
-    """Fake representation of tool arguments."""
-
-    def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
 
 
 class GetProgressCallbackTests(unittest.TestCase):

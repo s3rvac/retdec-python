@@ -146,21 +146,16 @@ def parse_args(argv):
     return parser.parse_args(argv[1:])
 
 
-def get_output_dir(input_file, output_dir):
+def get_output_dir(args):
     """Returns an absolute path to a directory where the output files should be
     saved.
-
-    :param str input_file: Path to the input file from the tool parameters
-                           (``args.file``).
-    :param str output_dir: Path to the output directory from the tool
-                           parameters (``args.output_dir``).
     """
-    if output_dir is not None:
+    if args.output_dir is not None:
         # The output directory was forced by the user.
-        return os.path.abspath(output_dir)
+        return os.path.abspath(args.output_dir)
 
     # Save the outputs to the same directory where the input file is located.
-    return os.path.abspath(os.path.dirname(input_file))
+    return os.path.abspath(os.path.dirname(args.file))
 
 
 def get_progress_displayer(args):
@@ -191,7 +186,7 @@ def main():
         callback=displayer.display_decompilation_progress
     )
 
-    output_dir = get_output_dir(args.file, args.output_dir)
+    output_dir = get_output_dir(args)
     decompilation.save_output_hll(output_dir)
     decompilation.save_output_dsm(output_dir)
 
