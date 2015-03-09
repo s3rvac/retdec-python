@@ -70,6 +70,56 @@ class Decompiler(Service):
             return File(params['input_file'])
 
 
+class DecompilationPhase:
+    """Phase of a decompilation."""
+
+    def __init__(self, name, part, description, completion):
+        """Initializes a phase."""
+        self._name = name
+        self._part = part
+        self._description = description
+        self._completion = completion
+
+    @property
+    def name(self):
+        """Name of the phase (`str)."""
+        return self._name
+
+    @property
+    def part(self):
+        """Part to which the phase belongs (`str`).
+
+        May be ``None`` if the phase does not belong to any part.
+        """
+        return self._part
+
+    @property
+    def description(self):
+        """Description of the phase (`str`)."""
+        return self._description
+
+    @property
+    def completion(self):
+        """Completion (in percentages, ``0-100``)."""
+        return self._completion
+
+    def __eq__(self, other):
+        return (self.__class__ == other.__class__ and
+                self.__dict__ == other.__dict__)
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __repr__(self):
+        return '{}(name={!r}, part={!r}, description={!r}, completion={})'.format(
+            self.__class__.__qualname__,
+            self.name,
+            self.part,
+            self.description,
+            self.completion
+        )
+
+
 class Decompilation(Resource):
     """A representation of a decompilation."""
 
@@ -80,6 +130,15 @@ class Decompilation(Resource):
         """
         self._update_state_if_needed()
         return self._completion
+
+    def get_phases(self):
+        """Obtains and returns a list of phases.
+
+        The returned type is a list of
+        :class:`retdec.decompiler.DecompilationPhase`.
+        """
+        self._update_state_if_needed()
+        return self._phases
 
     def wait_until_finished(self, callback=None,
                             on_failure=DecompilationFailedError):
@@ -176,7 +235,12 @@ class Decompilation(Resource):
         """Updates the state of the decompilation."""
         status = super()._update_state()
         self._completion = status['completion']
+        self._phases = self._phases_from_status(status)
         return status
+
+    def _phases_from_status(self, status):
+        """Creates a list of phases from the given status."""
+        return [DecompilationPhase(**phase) for phase in status['phases']]
 
     def _path_to_output_file(self, output_file):
         """Returns a path to the given output file."""
