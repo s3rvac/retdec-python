@@ -110,7 +110,7 @@ class ParseArgsTests(ParseArgsBaseTests):
 
     def test_file_is_parsed_correctly(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
-        self.assertEqual(args.file, 'prog.exe')
+        self.assertEqual(args.input_file, 'prog.exe')
 
     def test_api_key_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-k', 'KEY', 'prog.exe'])
@@ -177,7 +177,7 @@ class GetOutputDirTests(unittest.TestCase):
 
     def test_returns_correct_dir_when_output_dir_is_not_given(self):
         input_file = os.path.join('dir', 'prog.exe')
-        args = FakeArguments(file=input_file, output_dir=None)
+        args = FakeArguments(input_file=input_file, output_dir=None)
 
         output_dir = get_output_dir(args)
 
@@ -189,7 +189,7 @@ class GetOutputDirTests(unittest.TestCase):
 
     def test_returns_correct_dir_when_output_dir_is_given(self):
         input_file = os.path.join('dir', 'prog.exe')
-        args = FakeArguments(file=input_file, output_dir='other_dir')
+        args = FakeArguments(input_file=input_file, output_dir='other_dir')
 
         output_dir = get_output_dir(args)
 

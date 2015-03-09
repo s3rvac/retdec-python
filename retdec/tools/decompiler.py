@@ -139,7 +139,7 @@ def parse_args(argv):
         help='print only errors, nothing else (not even progress)'
     )
     parser.add_argument(
-        'file',
+        'input_file',
         metavar='FILE',
         help='file to decompile'
     )
@@ -155,7 +155,7 @@ def get_output_dir(args):
         return os.path.abspath(args.output_dir)
 
     # Save the outputs to the same directory where the input file is located.
-    return os.path.abspath(os.path.dirname(args.file))
+    return os.path.abspath(os.path.dirname(args.input_file))
 
 
 def get_progress_displayer(args):
@@ -176,7 +176,7 @@ def main():
     )
 
     decompilation = decompiler.run_decompilation(
-        input_file=args.file,
+        input_file=args.input_file,
         mode=args.mode
     )
 

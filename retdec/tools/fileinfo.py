@@ -26,7 +26,7 @@ def parse_args(argv):
     )
     _add_arguments_shared_by_all_tools(parser)
     parser.add_argument(
-        'file',
+        'input_file',
         metavar='FILE',
         help='file to analyze'
     )
@@ -46,7 +46,7 @@ def main():
         api_key=args.api_key
     )
     analysis = fileinfo.run_analysis(
-        input_file=args.file,
+        input_file=args.input_file,
         verbose=args.verbose
     )
     analysis.wait_until_finished()

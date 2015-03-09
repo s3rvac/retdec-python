@@ -20,7 +20,7 @@ class ParseArgsTests(ParseArgsBaseTests):
 
     def test_file_is_parsed_correctly(self):
         args = parse_args(['fileinfo.py', 'prog.exe'])
-        self.assertEqual(args.file, 'prog.exe')
+        self.assertEqual(args.input_file, 'prog.exe')
 
     def test_api_key_is_parsed_correctly_short_form(self):
         args = parse_args(['fileinfo.py', '-k', 'KEY', 'prog.exe'])
