@@ -201,7 +201,7 @@ class GetOutputDirTests(unittest.TestCase):
 
 
 class GetProgressCallbackTests(unittest.TestCase):
-    """Tests for :func:`retdec.tools.decompiler.get_progress_callback()`."""
+    """Tests for :func:`retdec.tools.decompiler.get_progress_displayer()`."""
 
     def test_returns_progress_bar_displayer_by_default(self):
         args = FakeArguments(quiet=False)
