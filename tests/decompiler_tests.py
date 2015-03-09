@@ -26,12 +26,12 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def setUp(self):
         super().setUp()
 
-        self.input_file_mock = mock.MagicMock(spec_set=File)
+        self.input_file = mock.MagicMock(spec_set=File)
 
         self.decompiler = Decompiler(api_key='KEY')
 
     def test_creates_api_connection_with_correct_url_and_api_key(self):
-        self.decompiler.run_decompilation(input_file=self.input_file_mock)
+        self.decompiler.run_decompilation(input_file=self.input_file)
 
         self.APIConnectionMock.assert_called_once_with(
             'https://retdec.com/service/api/decompiler/decompilations',
@@ -39,22 +39,22 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
         )
 
     def test_mode_is_set_to_c_when_not_given_and_file_name_ends_with_c(self):
-        self.input_file_mock.name = 'test.c'
+        self.input_file.name = 'test.c'
 
-        self.decompiler.run_decompilation(input_file=self.input_file_mock)
+        self.decompiler.run_decompilation(input_file=self.input_file)
 
-        self.conn_mock.send_post_request.assert_called_once_with(
+        self.conn.send_post_request.assert_called_once_with(
             '',
             params={'mode': 'c'},
             files={'input': AnyFile()}
         )
 
     def test_mode_is_set_to_bin_when_not_given_and_file_name_does_not_end_with_c(self):
-        self.input_file_mock.name = 'test.exe'
+        self.input_file.name = 'test.exe'
 
-        self.decompiler.run_decompilation(input_file=self.input_file_mock)
+        self.decompiler.run_decompilation(input_file=self.input_file)
 
-        self.conn_mock.send_post_request.assert_called_once_with(
+        self.conn.send_post_request.assert_called_once_with(
             '',
             params={'mode': 'bin'},
             files={'input': AnyFile()}
@@ -62,11 +62,11 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
 
     def test_mode_is_used_when_given(self):
         self.decompiler.run_decompilation(
-            input_file=self.input_file_mock,
+            input_file=self.input_file,
             mode='bin'
         )
 
-        self.conn_mock.send_post_request.assert_called_once_with(
+        self.conn.send_post_request.assert_called_once_with(
             '',
             params={'mode': 'bin'},
             files={'input': AnyFile()}
@@ -75,26 +75,26 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def test_raises_exception_when_mode_is_invalid(self):
         with self.assertRaises(InvalidValueError):
             self.decompiler.run_decompilation(
-                input_file=self.input_file_mock,
+                input_file=self.input_file,
                 mode='xxx'
             )
 
     def test_file_name_extension_is_case_insensitive_during_mode_detection(self):
-        self.input_file_mock.name = 'test.C'
+        self.input_file.name = 'test.C'
 
-        self.decompiler.run_decompilation(input_file=self.input_file_mock)
+        self.decompiler.run_decompilation(input_file=self.input_file)
 
-        self.conn_mock.send_post_request.assert_called_once_with(
+        self.conn.send_post_request.assert_called_once_with(
             '',
             params={'mode': 'c'},
             files={'input': AnyFile()}
         )
 
     def test_uses_returned_id_to_initialize_decompilation(self):
-        self.conn_mock.send_post_request.return_value = {'id': 'ID'}
+        self.conn.send_post_request.return_value = {'id': 'ID'}
 
         decompilation = self.decompiler.run_decompilation(
-            input_file=self.input_file_mock
+            input_file=self.input_file
         )
 
         self.assertTrue(decompilation.id, 'ID')
@@ -121,15 +121,15 @@ class DecompilationTests(DecompilationTestsBase):
     """Tests for :class:`retdec.decompiler.Decompilation`."""
 
     def test_get_completion_checks_status_on_first_call_and_returns_correct_value(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'completion': 20
         })
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
 
         completion = d.get_completion()
 
         self.assertEqual(completion, 20)
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
 
 # WithDisabledWaitingInterval has to be put as the first base class, see its
@@ -139,24 +139,24 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
     """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`."""
 
     def test_returns_when_resource_is_finished(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'completion': 100,
             'finished': True,
             'succeeded': True
         })
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
 
         d.wait_until_finished()
 
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_calls_callback_when_resource_finishes(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'completion': 100,
             'finished': True,
             'succeeded': True
         })
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
         callback = mock.Mock()
 
         d.wait_until_finished(callback)
@@ -164,7 +164,7 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
         callback.assert_called_once_with(d)
 
     def test_calls_callback_when_resource_status_changes(self):
-        self.conn_mock.send_get_request.side_effect = [
+        self.conn.send_get_request.side_effect = [
             self.status_with({
                 'completion': 0,
                 'finished': False,
@@ -179,7 +179,7 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
                 'succeeded': True
             })
         ]
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
         callback = mock.Mock()
 
         d.wait_until_finished(callback)
@@ -187,36 +187,36 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
         self.assertEqual(len(callback.mock_calls), 2)
 
     def test_raises_exception_by_default_when_resource_failed(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
 
         with self.assertRaises(DecompilationFailedError):
             d.wait_until_finished()
 
     def test_calls_on_failure_when_it_is_callable(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        d = Decompilation('ID', self.conn_mock)
-        on_failure_mock = mock.Mock()
+        d = Decompilation('ID', self.conn)
+        on_failure = mock.Mock()
 
-        d.wait_until_finished(on_failure=on_failure_mock)
+        d.wait_until_finished(on_failure=on_failure)
 
-        on_failure_mock.assert_called_once_with('error message')
+        on_failure.assert_called_once_with('error message')
 
     def test_does_not_raise_exception_when_on_failure_is_none(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
 
         d.wait_until_finished(on_failure=None)
 
@@ -229,7 +229,7 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
     """
 
     def test_get_output_hll_obtains_file_contents(self):
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
         self.assert_obtains_file_contents(
             d.get_output_hll,
             '/ID/outputs/hll',
@@ -237,7 +237,7 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
         )
 
     def test_save_output_hll_stores_file_to_cwd_when_directory_is_not_given(self):
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
             d.save_output_hll,
             '/ID/outputs/hll',
@@ -245,7 +245,7 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
         )
 
     def test_save_output_hll_stores_file_to_directory_when_given(self):
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
             d.save_output_hll,
             '/ID/outputs/hll',
@@ -253,7 +253,7 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
         )
 
     def test_get_output_dsm_obtains_file_contents(self):
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
         self.assert_obtains_file_contents(
             d.get_output_dsm,
             '/ID/outputs/dsm',
@@ -261,7 +261,7 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
         )
 
     def test_save_output_dsm_stores_file_to_cwd_when_directory_is_not_given(self):
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
             d.save_output_dsm,
             '/ID/outputs/dsm',
@@ -269,7 +269,7 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
         )
 
     def test_save_output_dsm_stores_file_to_directory_when_given(self):
-        d = Decompilation('ID', self.conn_mock)
+        d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
             d.save_output_dsm,
             '/ID/outputs/dsm',

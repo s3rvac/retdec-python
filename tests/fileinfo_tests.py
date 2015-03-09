@@ -25,12 +25,12 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
     def setUp(self):
         super().setUp()
 
-        self.input_file_mock = mock.MagicMock(spec_set=File)
+        self.input_file = mock.MagicMock(spec_set=File)
 
         self.fileinfo = Fileinfo(api_key='KEY')
 
     def test_creates_api_connection_with_correct_url_and_api_key(self):
-        self.fileinfo.run_analysis(input_file=self.input_file_mock)
+        self.fileinfo.run_analysis(input_file=self.input_file)
 
         self.APIConnectionMock.assert_called_once_with(
             'https://retdec.com/service/api/fileinfo/analyses',
@@ -38,9 +38,9 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
         )
 
     def test_verbose_is_set_to_0_when_not_given(self):
-        self.fileinfo.run_analysis(input_file=self.input_file_mock)
+        self.fileinfo.run_analysis(input_file=self.input_file)
 
-        self.conn_mock.send_post_request.assert_called_once_with(
+        self.conn.send_post_request.assert_called_once_with(
             '',
             params={'verbose': 0},
             files={'input': AnyFile()}
@@ -48,11 +48,11 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
 
     def test_verbose_is_set_to_0_when_given_but_false(self):
         self.fileinfo.run_analysis(
-            input_file=self.input_file_mock,
+            input_file=self.input_file,
             verbose=False
         )
 
-        self.conn_mock.send_post_request.assert_called_once_with(
+        self.conn.send_post_request.assert_called_once_with(
             '',
             params={'verbose': 0},
             files={'input': AnyFile()}
@@ -60,21 +60,21 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
 
     def test_verbose_is_set_to_1_when_given_and_true(self):
         self.fileinfo.run_analysis(
-            input_file=self.input_file_mock,
+            input_file=self.input_file,
             verbose=True
         )
 
-        self.conn_mock.send_post_request.assert_called_once_with(
+        self.conn.send_post_request.assert_called_once_with(
             '',
             params={'verbose': 1},
             files={'input': AnyFile()}
         )
 
     def test_uses_returned_id_to_initialize_analysis(self):
-        self.conn_mock.send_post_request.return_value = {'id': 'ID'}
+        self.conn.send_post_request.return_value = {'id': 'ID'}
 
         analysis = self.fileinfo.run_analysis(
-            input_file=self.input_file_mock
+            input_file=self.input_file
         )
 
         self.assertTrue(analysis.id, 'ID')
@@ -101,17 +101,17 @@ class AnalysisWaitUntilFinishedTests(WithDisabledWaitingInterval,
     """Tests for :func:`retdec.resource.Analysis.wait_until_finished()`."""
 
     def test_sends_correct_request_and_returns_when_resource_is_finished(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True
         })
-        a = Analysis('ID', self.conn_mock)
+        a = Analysis('ID', self.conn)
 
         a.wait_until_finished()
 
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_waits_until_analysis_finishes(self):
-        self.conn_mock.send_get_request.side_effect = [
+        self.conn.send_get_request.side_effect = [
             self.status_with({
                 'finished': False,
                 'succeeded': False
@@ -120,42 +120,42 @@ class AnalysisWaitUntilFinishedTests(WithDisabledWaitingInterval,
                 'succeeded': True
             })
         ]
-        a = Analysis('ID', self.conn_mock)
+        a = Analysis('ID', self.conn)
 
         a.wait_until_finished()
 
     def test_raises_exception_by_default_when_resource_failed(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        a = Analysis('ID', self.conn_mock)
+        a = Analysis('ID', self.conn)
 
         with self.assertRaises(AnalysisFailedError):
             a.wait_until_finished()
 
     def test_calls_on_failure_when_it_is_callable(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'succeeded': False,
             'failed': True,
             'error': 'error message'
         })
-        a = Analysis('ID', self.conn_mock)
-        on_failure_mock = mock.Mock()
+        a = Analysis('ID', self.conn)
+        on_failure = mock.Mock()
 
-        a.wait_until_finished(on_failure=on_failure_mock)
+        a.wait_until_finished(on_failure=on_failure)
 
-        on_failure_mock.assert_called_once_with('error message')
+        on_failure.assert_called_once_with('error message')
 
     def test_does_not_raise_exception_when_on_failure_is_none(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'error message'
         })
-        a = Analysis('ID', self.conn_mock)
+        a = Analysis('ID', self.conn)
 
         a.wait_until_finished(on_failure=None)
 
@@ -168,7 +168,7 @@ class AnalysisGetOutputsTests(WithMockedIO, AnalysisTestsBase):
     """
 
     def test_get_output_obtains_file_contents(self):
-        a = Analysis('ID', self.conn_mock)
+        a = Analysis('ID', self.conn)
         self.assert_obtains_file_contents(
             a.get_output,
             '/ID/output',

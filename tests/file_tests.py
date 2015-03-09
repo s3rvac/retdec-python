@@ -54,28 +54,28 @@ class FileTests(unittest.TestCase):
     """Tests for :class:`retdec.file.File`."""
 
     def test_file_is_used_directly_when_opened_file_is_given(self):
-        file_mock = mock.Mock()
-        f = File(file_mock)
+        file = mock.Mock()
+        f = File(file)
         f.read()
-        file_mock.read.assert_called_once_with()
+        file.read.assert_called_once_with()
 
     @mock.patch('builtins.open')
-    def test_file_is_opened_when_path_is_given(self, open_mock):
-        file_mock = mock.Mock()
-        open_mock.return_value = file_mock
+    def test_file_is_opened_when_path_is_given(self, open):
+        file = mock.Mock()
+        open.return_value = file
         f = File('test.txt')
         f.read()
-        open_mock.assert_called_once_with('test.txt', 'rb')
-        file_mock.read.assert_called_once_with()
+        open.assert_called_once_with('test.txt', 'rb')
+        file.read.assert_called_once_with()
 
     def test_name_returns_custom_name_when_given(self):
         f = File(io.StringIO('...'), 'file.txt')
         self.assertEqual(f.name, 'file.txt')
 
     def test_name_returns_original_name_when_no_custom_name_is_given(self):
-        file_mock = mock.Mock()
-        file_mock.name = 'file.txt'
-        f = File(file_mock)
+        file = mock.Mock()
+        file.name = 'file.txt'
+        f = File(file)
         self.assertEqual(f.name, 'file.txt')
 
     def test_name_returns_none_when_file_has_no_name(self):
@@ -83,9 +83,9 @@ class FileTests(unittest.TestCase):
         self.assertIsNone(f.name)
 
     def test_mode_returns_original_mode_when_underlying_file_has_mode(self):
-        file_mock = mock.Mock()
-        file_mock.mode = 'r+'
-        f = File(file_mock)
+        file = mock.Mock()
+        file.mode = 'r+'
+        f = File(file)
         self.assertEqual(f.mode, 'r+')
 
     def test_mode_returns_none_when_underlying_file_has_no_mode(self):

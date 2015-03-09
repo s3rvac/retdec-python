@@ -158,8 +158,8 @@ class APIConnectionTests(unittest.TestCase):
     # instance, not directly through requests.{get,post}().
     @mock.patch('retdec.conn.requests.Session')
     def test_send_get_request_raises_connection_error_when_there_is_connection_error(
-            self, requests_session_mock):
-        requests_session_mock.side_effect = requests.exceptions.ConnectionError(
+            self, requests_session):
+        requests_session.side_effect = requests.exceptions.ConnectionError(
             'Connection refused.'
         )
         conn = APIConnection('https://retdec.com/service/api', 'KEY')

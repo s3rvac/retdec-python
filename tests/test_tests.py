@@ -23,10 +23,10 @@ class TestTests(BaseServiceTests):
             'https://retdec.com/service/api/test/echo',
             'API-KEY'
         )
-        self.conn_mock.send_get_request.assert_called_once_with()
+        self.conn.send_get_request.assert_called_once_with()
 
     def test_auth_raises_exception_when_authentication_fails(self):
-        self.conn_mock.send_get_request.side_effect = AuthenticationError
+        self.conn.send_get_request.side_effect = AuthenticationError
         test = Test(api_key='INVALID-API-KEY')
         with self.assertRaises(AuthenticationError):
             test.auth()

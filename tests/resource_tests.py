@@ -24,11 +24,11 @@ class ResourceTestsBase(unittest.TestCase):
     def setUp(self):
         super().setUp()
 
-        self.conn_mock = mock.Mock(spec_set=APIConnection)
+        self.conn = mock.Mock(spec_set=APIConnection)
 
         # Patch time.sleep() to prevent sleeping during tests.
-        self.time_sleep_mock = mock.Mock()
-        patcher = mock.patch('time.sleep', self.time_sleep_mock)
+        self.time_sleep = mock.Mock()
+        patcher = mock.patch('time.sleep', self.time_sleep)
         patcher.start()
         self.addCleanup(patcher.stop)
 
@@ -95,14 +95,14 @@ class WithMockedIO:
         super().setUp()
 
         # Mock open().
-        self.open_mock = mock.mock_open()
-        patcher = mock.patch('builtins.open', self.open_mock)
+        self.open = mock.mock_open()
+        patcher = mock.patch('builtins.open', self.open)
         patcher.start()
         self.addCleanup(patcher.stop)
 
         # Mock the shutil module.
-        self.shutil_mock = mock.Mock()
-        patcher = mock.patch('retdec.resource.shutil', self.shutil_mock)
+        self.shutil = mock.Mock()
+        patcher = mock.patch('retdec.resource.shutil', self.shutil)
         patcher.start()
         self.addCleanup(patcher.stop)
 
@@ -113,12 +113,12 @@ class WithMockedIO:
         :param str file_path: Path to the file to be downloaded.
         :param bool is_text_file: Is it a text file or a binary file?
         """
-        self.conn_mock.get_file.return_value = io.BytesIO(b'data')
+        self.conn.get_file.return_value = io.BytesIO(b'data')
 
         output = func()
 
         self.assertEqual(output, 'data' if is_text_file else b'data')
-        self.conn_mock.get_file.assert_called_once_with(file_path)
+        self.conn.get_file.assert_called_once_with(file_path)
 
     def assert_obtains_and_saves_file(self, func, file_path, directory):
         """Asserts that ``func(directory)`` obtains the given file and saves it
@@ -130,15 +130,15 @@ class WithMockedIO:
 
         If `directory` is ``None``, the current working directory is used.
         """
-        file_mock = mock.MagicMock()
-        file_mock.name = 'file_name'
-        self.conn_mock.get_file.return_value = file_mock
+        file = mock.MagicMock()
+        file.name = 'file_name'
+        self.conn.get_file.return_value = file
 
         func(directory)
 
-        self.conn_mock.get_file.assert_called_once_with(file_path)
+        self.conn.get_file.assert_called_once_with(file_path)
         directory = directory or os.getcwd()
-        self.open_mock.assert_called_once_with(
+        self.open.assert_called_once_with(
             os.path.join(directory, 'file_name'),
             'wb'
         )
@@ -148,94 +148,94 @@ class ResourceTests(ResourceTestsBase):
     """Tests for :class:`retdec.resource.Resource`."""
 
     def test_id_returns_passed_id(self):
-        r = Resource('ID', self.conn_mock)
+        r = Resource('ID', self.conn)
         self.assertEqual(r.id, 'ID')
 
     def test_is_pending_checks_status_on_first_call_and_returns_correct_value(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'pending': True
         })
-        r = Resource('ID', self.conn_mock)
+        r = Resource('ID', self.conn)
 
         pending = r.is_pending()
 
         self.assertTrue(pending)
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_is_running_checks_status_on_first_call_and_returns_correct_value(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'running': True
         })
-        r = Resource('ID', self.conn_mock)
+        r = Resource('ID', self.conn)
 
         running = r.is_running()
 
         self.assertTrue(running)
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_has_finished_checks_status_on_first_call_and_returns_correct_value(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'succeeded': True
         })
-        r = Resource('ID', self.conn_mock)
+        r = Resource('ID', self.conn)
 
         finished = r.has_finished()
 
         self.assertTrue(finished)
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_has_succeeded_checks_status_on_first_call_and_returns_correct_value(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'succeeded': True
         })
-        r = Resource('ID', self.conn_mock)
+        r = Resource('ID', self.conn)
 
         succeeded = r.has_succeeded()
 
         self.assertTrue(succeeded)
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_has_failed_checks_status_on_first_call_and_returns_correct_value(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True
         })
-        r = Resource('ID', self.conn_mock)
+        r = Resource('ID', self.conn)
 
         failed = r.has_failed()
 
         self.assertTrue(failed)
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_get_error_checks_status_on_first_call_and_returns_correct_value(self):
-        self.conn_mock.send_get_request.return_value = self.status_with({
+        self.conn.send_get_request.return_value = self.status_with({
             'finished': True,
             'failed': True,
             'error': 'Error message.'
         })
-        r = Resource('ID', self.conn_mock)
+        r = Resource('ID', self.conn)
 
         error = r.get_error()
 
         self.assertEqual(error, 'Error message.')
-        self.conn_mock.send_get_request.assert_called_once_with('/ID/status')
+        self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_two_successive_state_queries_do_not_result_into_two_status_checks(self):
         # A certain time interval has to pass between checks successive checks
         # for the resource to query its status.
-        self.conn_mock.send_get_request.side_effect = [
+        self.conn.send_get_request.side_effect = [
             self.status_with({
                 'pending': True
             }), self.status_with({
                 'pending': False
             })
         ]
-        r = Resource('ID', self.conn_mock)
+        r = Resource('ID', self.conn)
 
         r.is_pending()
         pending = r.is_pending()
 
-        self.assertEqual(len(self.conn_mock.send_get_request.mock_calls), 1)
+        self.assertEqual(len(self.conn.send_get_request.mock_calls), 1)
         self.assertTrue(pending)  # Still True because there was only one query.

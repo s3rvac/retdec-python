@@ -21,9 +21,9 @@ class BaseServiceTests(unittest.TestCase):
     def setUp(self):
         # Mock APIConnection so that when it is instantiated, it returns our
         # connection that can be used in the tests.
-        self.conn_mock = mock.MagicMock(spec_set=APIConnection)
+        self.conn = mock.MagicMock(spec_set=APIConnection)
         self.APIConnectionMock = mock.Mock()
-        self.APIConnectionMock.return_value = self.conn_mock
+        self.APIConnectionMock.return_value = self.conn
         patcher = mock.patch(
             'retdec.service.APIConnection',
             self.APIConnectionMock
