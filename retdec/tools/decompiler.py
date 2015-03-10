@@ -95,6 +95,146 @@ class ProgressBarDisplayer(ProgressDisplayer):
         pass
 
 
+class ProgressLogDisplayer(ProgressDisplayer):
+    """Displays a progress log during decompilation."""
+
+    def __init__(self):
+        """Initializes the displayer."""
+        self._last_part = None
+        self._last_phase_index = 0
+        self._prologue_printed = False
+        self._first_download = True
+
+    def display_decompilation_progress(self, d):
+        # Example:
+        #
+        #    8DRerEdKop
+        #    ----------
+        #
+        #    Waiting for resources (0%)...                   [OK]
+        #    Pre-Processing:
+        #        Obtaining file information (5%)...          [OK]
+        #    Front-End:
+        #        Initializing (20%)...                       [OK]
+        #        Creating instruction decoders (22%)...      [OK]
+        #        Detecting statically linked code (25%)...   [OK]
+        #        Instruction decoding (28%)...               [OK]
+        #        Control-flow analysis (31%)...              [OK]
+        #        Data-flow analysis (34%)...                 [OK]
+        #        Type recovery (37%)...                      [OK]
+        #        Generating LLVM IR (40%)...                 [OK]
+        #    Middle-End:
+        #        Initializing (45%)...                       [OK]
+        #        Validating the LLVM IR (50%)...             [OK]
+        #        Optimizing the LLVM IR (55%)...             [OK]
+        #    Back-End:
+        #        Initializing (60%)...                       [OK]
+        #        Converting the LLVM IR into BIR (65%)...    [OK]
+        #        Optimizing the BIR (70%)...                 [OK]
+        #        Validating the BIR (90%)...                 [OK]
+        #        Generating the target code (95%)...         [OK]
+        #    Done (100%)...
+        #
+
+        self._print_prologue_unless_already_printed(d)
+
+        self._print_phases(self._get_new_phases(d))
+
+        if d.has_finished():
+            self._print_decompilation_end(d)
+
+        # Make the output available as soon as possible.
+        sys.stdout.flush()
+
+    def _print_prologue_unless_already_printed(self, d):
+        """Prints the prologue unless it has already been printed."""
+        if not self._prologue_printed:
+            self._print_prologue(d)
+            self._prologue_printed = True
+
+    def _print_prologue(self, d):
+        """Prints the prologue."""
+        prologue = '{}'.format(d.id)
+        sys.stdout.write('{}\n'.format(prologue))
+        sys.stdout.write('{}\n'.format('-' * len(prologue)))
+        sys.stdout.write('\n')
+
+    def _get_new_phases(self, d):
+        """Returns new phases from the given decompilation."""
+        phases = d.get_phases()
+        return phases[self._last_phase_index:]
+
+    def _print_phases(self, phases):
+        """Prints the given phases."""
+        for phase in phases:
+            # Print status for the last phase (if any).
+            if self._last_phase_index > 0:
+                self._print_end_of_successful_phase()
+            self._print_phase(phase)
+            self._last_part = phase.part
+            self._last_phase_index += 1
+
+    def _print_phase(self, phase):
+        """Prints the given phase."""
+        phase_str = ''
+
+        if phase.part is not None:
+            if phase.part != self._last_part:
+                # Entering a new part.
+                sys.stdout.write('{}:\n'.format(phase.part))
+            phase_str += '    '
+
+        phase_str += '{} ({}%)...'.format(phase.description, phase.completion)
+
+        # Print the phase in an aligned way so the status can be printed
+        # afterwards.
+        sys.stdout.write('{0:<50} '.format(phase_str))
+
+    def _print_decompilation_end(self, d):
+        """Prints the end of the decompilation."""
+        if d.has_failed():
+            self._print_end_of_failed_phase()
+        else:
+            # Do not print '[OK]' for the last phase ('Done'), just end the
+            # line.
+            sys.stdout.write('\n')
+
+    def _print_end_of_successful_phase(self):
+        """Prints the and of a successful phase."""
+        self._print_phase_end('OK')
+
+    def _print_end_of_failed_phase(self):
+        """Prints the and of a failed phase."""
+        self._print_phase_end('FAIL')
+
+    def _print_phase_end(self, status):
+        """Prints the end of the current phase."""
+        sys.stdout.write('[{}]\n'.format(status))
+
+    def display_download_progress(self, file_name):
+        # Example:
+        #
+        #    Downloading:
+        #     - prog.c
+        #     - prog.dsm
+        #
+
+        self._print_download_header_unless_already_printed()
+
+        sys.stdout.write(' - {}\n'.format(file_name))
+
+        # Make the output available as soon as possible.
+        sys.stdout.flush()
+
+    def _print_download_header_unless_already_printed(self):
+        """Prints the "downloading" header (unless it has been already
+        printed).
+        """
+        if self._first_download:
+            sys.stdout.write('\nDownloading:\n')
+            self._first_download = False
+
+
 class NoProgressDisplayer(ProgressDisplayer):
     """Displays nothing."""
 
@@ -139,6 +279,12 @@ def parse_args(argv):
         help='print only errors, nothing else (not even progress)'
     )
     parser.add_argument(
+        '-v', '--verbose',
+        dest='verbose',
+        action='store_true',
+        help='be more verbose during the decompilation'
+    )
+    parser.add_argument(
         'input_file',
         metavar='FILE',
         help='file to decompile'
@@ -164,6 +310,8 @@ def get_progress_displayer(args):
     """
     if args.quiet:
         return NoProgressDisplayer()
+    elif args.verbose:
+        return ProgressLogDisplayer()
     return ProgressBarDisplayer()
 
 

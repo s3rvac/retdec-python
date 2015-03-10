@@ -12,8 +12,10 @@ import unittest
 from unittest import mock
 
 from retdec.decompiler import Decompilation
+from retdec.decompiler import DecompilationPhase
 from retdec.tools.decompiler import NoProgressDisplayer
 from retdec.tools.decompiler import ProgressBarDisplayer
+from retdec.tools.decompiler import ProgressLogDisplayer
 from retdec.tools.decompiler import get_output_dir
 from retdec.tools.decompiler import get_progress_displayer
 from retdec.tools.decompiler import parse_args
@@ -76,6 +78,89 @@ class ProgressBarDisplayerTests(ProgressDisplayerTestsBase):
     def test_repr_returns_correct_value(self):
         displayer = ProgressBarDisplayer()
         self.assertEqual(repr(displayer), '<ProgressBarDisplayer>')
+
+
+class ProgressLogDisplayerTests(ProgressDisplayerTestsBase):
+    """Tests for :class:`retdec.tools.decompiler.ProgressLogDisplayer`."""
+
+    def test_display_decompilation_progress_displays_correct_value_successful_decompilation(self):
+        displayer = ProgressLogDisplayer()
+        d = mock.MagicMock(spec_set=Decompilation)
+        d.id = 'ID'
+        d.has_finished.return_value = True
+        d.has_failed.return_value = False
+        d.get_phases.return_value = [
+            DecompilationPhase(
+                name='Waiting For Resources',
+                part=None,
+                description='Waiting for resources',
+                completion=0
+            ),
+            DecompilationPhase(
+                name='File Information',
+                part='Pre-Processing',
+                description='Obtaining file information',
+                completion=5
+            ),
+            DecompilationPhase(
+                name='Done',
+                part=None,
+                description='Done',
+                completion=100
+            )
+        ]
+
+        displayer.display_decompilation_progress(d)
+
+        self.assertEqual(
+            self.stdout.getvalue(), """
+ID
+--
+
+Waiting for resources (0%)...                      [OK]
+Pre-Processing:
+    Obtaining file information (5%)...             [OK]
+Done (100%)...                                     \n""".lstrip())
+
+    def test_display_decompilation_progress_displays_correct_value_failed_decompilation(self):
+        displayer = ProgressLogDisplayer()
+        d = mock.MagicMock(spec_set=Decompilation)
+        d.id = 'ID'
+        d.has_finished.return_value = True
+        d.has_failed.return_value = True
+        d.get_phases.return_value = [
+            DecompilationPhase(
+                name='Waiting For Resources',
+                part=None,
+                description='Waiting for resources',
+                completion=0
+            )
+        ]
+
+        displayer.display_decompilation_progress(d)
+
+        self.assertEqual(
+            self.stdout.getvalue(), """
+ID
+--
+
+Waiting for resources (0%)...                      [FAIL]
+""".lstrip())
+
+    def test_display_download_progress_displays_correct_value(self):
+        displayer = ProgressLogDisplayer()
+
+        displayer.display_download_progress('test.out.c')
+
+        self.assertEqual(
+            self.stdout.getvalue(),
+            ('\nDownloading:\n'
+             ' - test.out.c\n')
+        )
+
+    def test_repr_returns_correct_value(self):
+        displayer = ProgressLogDisplayer()
+        self.assertEqual(repr(displayer), '<ProgressLogDisplayer>')
 
 
 class NoProgressDisplayerTests(ProgressDisplayerTestsBase):
@@ -164,6 +249,18 @@ class ParseArgsTests(ParseArgsBaseTests):
         args = parse_args(['decompiler.py', '--quiet', 'prog.exe'])
         self.assertTrue(args.quiet)
 
+    def test_verbose_is_set_to_false_when_not_given(self):
+        args = parse_args(['decompiler.py', 'prog.exe'])
+        self.assertFalse(args.verbose)
+
+    def test_verbose_is_set_to_true_when_given_in_short_form(self):
+        args = parse_args(['decompiler.py', '-v', 'prog.exe'])
+        self.assertTrue(args.verbose)
+
+    def test_verbose_is_set_to_true_when_given_in_long_form(self):
+        args = parse_args(['decompiler.py', '--verbose', 'prog.exe'])
+        self.assertTrue(args.verbose)
+
 
 class FakeArguments:
     """Fake representation of tool arguments."""
@@ -204,14 +301,21 @@ class GetProgressCallbackTests(unittest.TestCase):
     """Tests for :func:`retdec.tools.decompiler.get_progress_displayer()`."""
 
     def test_returns_progress_bar_displayer_by_default(self):
-        args = FakeArguments(quiet=False)
+        args = FakeArguments(quiet=False, verbose=False)
 
         displayer = get_progress_displayer(args)
 
         self.assertIsInstance(displayer, ProgressBarDisplayer)
 
+    def test_returns_progress_log_displayer_if_verbose_is_set(self):
+        args = FakeArguments(quiet=False, verbose=True)
+
+        displayer = get_progress_displayer(args)
+
+        self.assertIsInstance(displayer, ProgressLogDisplayer)
+
     def test_returns_no_progress_displayer_if_quiet_is_set(self):
-        args = FakeArguments(quiet=True)
+        args = FakeArguments(quiet=True, verbose=False)
 
         displayer = get_progress_displayer(args)
 
