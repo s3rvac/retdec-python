@@ -249,17 +249,17 @@ class ParseArgsTests(ParseArgsBaseTests):
         args = parse_args(['decompiler.py', '--quiet', 'prog.exe'])
         self.assertTrue(args.quiet)
 
-    def test_verbose_is_set_to_false_when_not_given(self):
+    def test_brief_is_set_to_false_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
-        self.assertFalse(args.verbose)
+        self.assertFalse(args.brief)
 
-    def test_verbose_is_set_to_true_when_given_in_short_form(self):
-        args = parse_args(['decompiler.py', '-v', 'prog.exe'])
-        self.assertTrue(args.verbose)
+    def test_brief_is_set_to_true_when_given_in_short_form(self):
+        args = parse_args(['decompiler.py', '-b', 'prog.exe'])
+        self.assertTrue(args.brief)
 
-    def test_verbose_is_set_to_true_when_given_in_long_form(self):
-        args = parse_args(['decompiler.py', '--verbose', 'prog.exe'])
-        self.assertTrue(args.verbose)
+    def test_brief_is_set_to_true_when_given_in_long_form(self):
+        args = parse_args(['decompiler.py', '--brief', 'prog.exe'])
+        self.assertTrue(args.brief)
 
 
 class FakeArguments:
@@ -300,22 +300,22 @@ class GetOutputDirTests(unittest.TestCase):
 class GetProgressCallbackTests(unittest.TestCase):
     """Tests for :func:`retdec.tools.decompiler.get_progress_displayer()`."""
 
-    def test_returns_progress_bar_displayer_by_default(self):
-        args = FakeArguments(quiet=False, verbose=False)
-
-        displayer = get_progress_displayer(args)
-
-        self.assertIsInstance(displayer, ProgressBarDisplayer)
-
-    def test_returns_progress_log_displayer_if_verbose_is_set(self):
-        args = FakeArguments(quiet=False, verbose=True)
+    def test_returns_progress_log_displayer_by_default(self):
+        args = FakeArguments(quiet=False, brief=False)
 
         displayer = get_progress_displayer(args)
 
         self.assertIsInstance(displayer, ProgressLogDisplayer)
 
+    def test_returns_progress_bar_displayer_if_brief_is_set(self):
+        args = FakeArguments(quiet=False, brief=True)
+
+        displayer = get_progress_displayer(args)
+
+        self.assertIsInstance(displayer, ProgressBarDisplayer)
+
     def test_returns_no_progress_displayer_if_quiet_is_set(self):
-        args = FakeArguments(quiet=True, verbose=False)
+        args = FakeArguments(quiet=True, brief=False)
 
         displayer = get_progress_displayer(args)
 

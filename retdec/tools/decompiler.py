@@ -262,6 +262,12 @@ def parse_args(argv):
     )
     _add_arguments_shared_by_all_tools(parser)
     parser.add_argument(
+        '-b', '--brief',
+        dest='brief',
+        action='store_true',
+        help='print fewer information during the decompilation'
+    )
+    parser.add_argument(
         '-m', '--mode',
         dest='mode',
         choices={'c', 'bin'},
@@ -277,12 +283,6 @@ def parse_args(argv):
         dest='quiet',
         action='store_true',
         help='print only errors, nothing else (not even progress)'
-    )
-    parser.add_argument(
-        '-v', '--verbose',
-        dest='verbose',
-        action='store_true',
-        help='be more verbose during the decompilation'
     )
     parser.add_argument(
         'input_file',
@@ -310,9 +310,9 @@ def get_progress_displayer(args):
     """
     if args.quiet:
         return NoProgressDisplayer()
-    elif args.verbose:
-        return ProgressLogDisplayer()
-    return ProgressBarDisplayer()
+    elif args.brief:
+        return ProgressBarDisplayer()
+    return ProgressLogDisplayer()
 
 
 def main():
