@@ -279,6 +279,13 @@ class DecompilationTests(DecompilationTestsBase):
         self.assertEqual(phases[1].name, 'name2')
         self.conn.send_get_request.assert_called_once_with('/ID/status')
 
+    def test_repr_returns_correct_value(self):
+        d = Decompilation('ID', self.conn)
+        self.assertEqual(
+            repr(d),
+            "<retdec.decompiler.Decompilation id='ID'>"
+        )
+
 
 # WithDisabledWaitingInterval has to be put as the first base class, see its
 # description for the reason why.

@@ -255,3 +255,9 @@ class Decompilation(Resource):
     def _path_to_output_file(self, output_file):
         """Returns a path to the given output file."""
         return '/{}/outputs/{}'.format(self.id, output_file)
+
+    def __repr__(self):
+        return '<{} id={!r}>'.format(
+            __name__ + '.' + self.__class__.__qualname__,
+            self.id
+        )

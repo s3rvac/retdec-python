@@ -101,6 +101,13 @@ class AnalysisTestsBase(ResourceTestsBase):
 class AnalysisTests(AnalysisTestsBase):
     """Tests for :class:`retdec.fileinfo.Analysis`."""
 
+    def test_repr_returns_correct_value(self):
+        a = Analysis('ID', self.conn)
+        self.assertEqual(
+            repr(a),
+            "<retdec.fileinfo.Analysis id='ID'>"
+        )
+
 
 # WithDisabledWaitingInterval has to be put as the first base class, see its
 # description for the reason why.

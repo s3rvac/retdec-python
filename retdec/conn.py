@@ -158,3 +158,9 @@ class APIConnection:
         # https://retdec.com/api/docs/essential_information.html#id3
         _, params = cgi.parse_header(headers.get('Content-Disposition', ''))
         return params.get('filename', None)
+
+    def __repr__(self):
+        return '<{} base_url={!r}>'.format(
+            __name__ + '.' + self.__class__.__qualname__,
+            self._base_url
+        )
