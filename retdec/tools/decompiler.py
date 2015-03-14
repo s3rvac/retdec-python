@@ -322,8 +322,14 @@ def display_download_progress(displayer, file_path):
     displayer.display_download_progress(os.path.basename(file_path))
 
 
-def main():
-    args = parse_args(sys.argv)
+def main(argv=None):
+    """Runs the tool.
+
+    :param list argv: Tool arguments.
+
+    If `argv` is ``None``, ``sys.argv`` is used.
+    """
+    args = parse_args(argv if argv is not None else sys.argv)
 
     decompiler = Decompiler(
         api_url=args.api_url,

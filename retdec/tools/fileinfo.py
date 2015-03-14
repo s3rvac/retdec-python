@@ -39,8 +39,14 @@ def parse_args(argv):
     return parser.parse_args(argv[1:])
 
 
-def main():
-    args = parse_args(sys.argv)
+def main(argv=None):
+    """Runs the tool.
+
+    :param list argv: Tool arguments.
+
+    If `argv` is ``None``, ``sys.argv`` is used.
+    """
+    args = parse_args(argv if argv is not None else sys.argv)
     fileinfo = Fileinfo(
         api_url=args.api_url,
         api_key=args.api_key
