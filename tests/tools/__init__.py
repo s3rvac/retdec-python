@@ -11,11 +11,19 @@ import unittest
 from unittest import mock
 
 
-class ParseArgsBaseTests(unittest.TestCase):
-    """Base class for all ``parse_args()`` tests."""
+class ToolTestsBase(unittest.TestCase):
+    """Base class for tests of tools."""
 
     def setUp(self):
-        # Patch sys.stderr (argparse prints error messages to it).
+        super().setUp()
+
+        # Patch sys.stdout.
+        self.stdout = io.StringIO()
+        patcher = mock.patch('sys.stdout', self.stdout)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        # Patch sys.stderr.
         self.stderr = io.StringIO()
         patcher = mock.patch('sys.stderr', self.stderr)
         patcher.start()

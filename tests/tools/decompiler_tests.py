@@ -20,7 +20,7 @@ from retdec.tools.decompiler import display_download_progress
 from retdec.tools.decompiler import get_output_dir
 from retdec.tools.decompiler import get_progress_displayer
 from retdec.tools.decompiler import parse_args
-from tests.tools import ParseArgsBaseTests
+from tests.tools import ToolTestsBase
 
 
 class ProgressDisplayerTestsBase(unittest.TestCase):
@@ -195,7 +195,7 @@ class NoProgressDisplayerTests(ProgressDisplayerTestsBase):
         )
 
 
-class ParseArgsTests(ParseArgsBaseTests):
+class ParseArgsTests(ToolTestsBase):
     """Tests for :func:`retdec.tools.decompiler.parse_args()`."""
 
     def test_file_is_required(self):
