@@ -93,9 +93,3 @@ class Service:
             raise InvalidValueError(name, value)
 
         return value
-
-    def __repr__(self):
-        return '<{} api_url={!r}>'.format(
-            self.__class__.__qualname__,
-            self.api_url
-        )

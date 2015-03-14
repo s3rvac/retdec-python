@@ -25,7 +25,7 @@ class AnyFile:
 
     def __repr__(self):
         return '<{}>'.format(
-            self.__class__.__qualname__
+            __name__ + '.' + self.__class__.__qualname__
         )
 
 
@@ -45,7 +45,7 @@ class AnyFileNamed:
 
     def __repr__(self):
         return '<{} name={!r}>'.format(
-            self.__class__.__qualname__,
+            __name__ + '.' + self.__class__.__qualname__,
             self.name
         )
 
@@ -94,4 +94,4 @@ class FileTests(unittest.TestCase):
 
     def test_repr_returns_correct_value(self):
         f = File(io.StringIO('...'), name='file.txt')
-        self.assertEqual(repr(f), "<File name='file.txt' mode=None>")
+        self.assertEqual(repr(f), "<retdec.file.File name='file.txt' mode=None>")

@@ -79,13 +79,3 @@ class ServiceTests(unittest.TestCase):
             api_url='https://retdec.com/service/api/'
         )
         self.assertEqual(service.api_url, 'https://retdec.com/service/api')
-
-    def test_repr_returns_correct_value(self):
-        service = Service(
-            api_key='API-KEY',
-            api_url='https://retdec.com/service/api/'
-        )
-        self.assertEqual(
-            repr(service),
-            "<Service api_url='https://retdec.com/service/api'>"
-        )

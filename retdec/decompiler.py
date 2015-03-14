@@ -69,6 +69,12 @@ class Decompiler(Service):
         if 'input_file' in params:
             return File(params['input_file'])
 
+    def __repr__(self):
+        return '<{} api_url={!r}>'.format(
+            __name__ + '.' + self.__class__.__qualname__,
+            self.api_url
+        )
+
 
 class DecompilationPhase:
     """Phase of a decompilation."""
@@ -112,7 +118,7 @@ class DecompilationPhase:
 
     def __repr__(self):
         return '{}(name={!r}, part={!r}, description={!r}, completion={})'.format(
-            self.__class__.__qualname__,
+            __name__ + '.' + self.__class__.__qualname__,
             self.name,
             self.part,
             self.description,

@@ -19,6 +19,20 @@ from tests.resource_tests import WithDisabledWaitingInterval
 from tests.service_tests import BaseServiceTests
 
 
+class FileinfoTests(BaseServiceTests):
+    """Tests for :class:`retdec.fileinfo.Fileinfo`."""
+
+    def test_repr_returns_correct_value(self):
+        fileinfo = Fileinfo(
+            api_key='API-KEY',
+            api_url='https://retdec.com/service/api/'
+        )
+        self.assertEqual(
+            repr(fileinfo),
+            "<retdec.fileinfo.Fileinfo api_url='https://retdec.com/service/api'>"
+        )
+
+
 class FileinfoRunAnalysisTests(BaseServiceTests):
     """Tests for :func:`retdec.fileinfo.Fileinfo.run_analysis()`."""
 
@@ -78,12 +92,6 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
         )
 
         self.assertTrue(analysis.id, 'ID')
-
-    def test_repr_returns_correct_value(self):
-        self.assertEqual(
-            repr(self.fileinfo),
-            "<Fileinfo api_url='https://retdec.com/service/api'>"
-        )
 
 
 class AnalysisTestsBase(ResourceTestsBase):

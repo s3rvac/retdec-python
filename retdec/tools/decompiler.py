@@ -48,7 +48,9 @@ class ProgressDisplayer(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     def __repr__(self):
-        return '<{}>'.format(self.__class__.__qualname__)
+        return '<{}>'.format(
+            __name__ + '.' + self.__class__.__qualname__
+        )
 
 
 class ProgressBarDisplayer(ProgressDisplayer):

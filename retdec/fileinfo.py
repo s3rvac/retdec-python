@@ -61,6 +61,12 @@ class Fileinfo(Service):
         if 'input_file' in params:
             return File(params['input_file'])
 
+    def __repr__(self):
+        return '<{} api_url={!r}>'.format(
+            __name__ + '.' + self.__class__.__qualname__,
+            self.api_url
+        )
+
 
 class Analysis(Resource):
     """A representation of an analysis."""

@@ -22,6 +22,20 @@ from tests.resource_tests import WithMockedIO
 from tests.service_tests import BaseServiceTests
 
 
+class DecompilerTests(BaseServiceTests):
+    """Tests for :class:`retdec.decompiler.Decompiler`."""
+
+    def test_repr_returns_correct_value(self):
+        decompiler = Decompiler(
+            api_key='API-KEY',
+            api_url='https://retdec.com/service/api/'
+        )
+        self.assertEqual(
+            repr(decompiler),
+            "<retdec.decompiler.Decompiler api_url='https://retdec.com/service/api'>"
+        )
+
+
 class DecompilerRunDecompilationTests(BaseServiceTests):
     """Tests for :func:`retdec.decompiler.Decompiler.run_decompilation()`."""
 
@@ -100,12 +114,6 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
         )
 
         self.assertTrue(decompilation.id, 'ID')
-
-    def test_repr_returns_correct_value(self):
-        self.assertEqual(
-            repr(self.decompiler),
-            "<Decompiler api_url='https://retdec.com/service/api'>"
-        )
 
 
 class DecompilationPhaseTests(unittest.TestCase):
@@ -213,8 +221,8 @@ class DecompilationPhaseTests(unittest.TestCase):
         )
         self.assertEqual(
             repr(phase),
-            ("DecompilationPhase(name='NAME', part='PART', "
-             "description='DESCRIPTION', completion=75)")
+            ("retdec.decompiler.DecompilationPhase(name='NAME', "
+             "part='PART', description='DESCRIPTION', completion=75)")
         )
 
 

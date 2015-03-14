@@ -78,7 +78,10 @@ class ProgressBarDisplayerTests(ProgressDisplayerTestsBase):
 
     def test_repr_returns_correct_value(self):
         displayer = ProgressBarDisplayer()
-        self.assertEqual(repr(displayer), '<ProgressBarDisplayer>')
+        self.assertEqual(
+            repr(displayer),
+            '<retdec.tools.decompiler.ProgressBarDisplayer>'
+        )
 
 
 class ProgressLogDisplayerTests(ProgressDisplayerTestsBase):
@@ -161,7 +164,10 @@ Waiting for resources (0%)...                      [FAIL]
 
     def test_repr_returns_correct_value(self):
         displayer = ProgressLogDisplayer()
-        self.assertEqual(repr(displayer), '<ProgressLogDisplayer>')
+        self.assertEqual(
+            repr(displayer),
+            '<retdec.tools.decompiler.ProgressLogDisplayer>'
+        )
 
 
 class NoProgressDisplayerTests(ProgressDisplayerTestsBase):
@@ -183,7 +189,10 @@ class NoProgressDisplayerTests(ProgressDisplayerTestsBase):
 
     def test_repr_returns_correct_value(self):
         displayer = NoProgressDisplayer()
-        self.assertEqual(repr(displayer), '<NoProgressDisplayer>')
+        self.assertEqual(
+            repr(displayer),
+            '<retdec.tools.decompiler.NoProgressDisplayer>'
+        )
 
 
 class ParseArgsTests(ParseArgsBaseTests):
