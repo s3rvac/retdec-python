@@ -133,9 +133,13 @@ class Resource:
         :param str file_path: Path to the file to be downloaded.
         :param str directory: Directory in which the file will be stored.
 
+        :returns: Path to the saved file (`str`).
+
         If `directory` is ``None``, the current working directory is used.
         """
         directory = directory or os.getcwd()
         with contextlib.closing(self._conn.get_file(file_path)) as src:
-            with open(os.path.join(directory, src.name), 'wb') as dst:
+            dst_path = os.path.join(directory, src.name)
+            with open(dst_path, 'wb') as dst:
                 shutil.copyfileobj(src, dst)
+                return dst_path

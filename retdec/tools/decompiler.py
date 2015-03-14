@@ -315,6 +315,11 @@ def get_progress_displayer(args):
     return ProgressLogDisplayer()
 
 
+def display_download_progress(displayer, file_path):
+    """Displays progress of downloading the given file."""
+    displayer.display_download_progress(os.path.basename(file_path))
+
+
 def main():
     args = parse_args(sys.argv)
 
@@ -335,8 +340,10 @@ def main():
     )
 
     output_dir = get_output_dir(args)
-    decompilation.save_output_hll(output_dir)
-    decompilation.save_output_dsm(output_dir)
+    file_path = decompilation.save_output_hll(output_dir)
+    display_download_progress(displayer, file_path)
+    file_path = decompilation.save_output_dsm(output_dir)
+    display_download_progress(displayer, file_path)
 
     return 0
 

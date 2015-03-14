@@ -134,14 +134,16 @@ class WithMockedIO:
         file.name = 'file_name'
         self.conn.get_file.return_value = file
 
-        func(directory)
+        saved_file_path = func(directory)
 
         self.conn.get_file.assert_called_once_with(file_path)
         directory = directory or os.getcwd()
+        ref_saved_file_path = os.path.join(directory, 'file_name')
         self.open.assert_called_once_with(
-            os.path.join(directory, 'file_name'),
+            ref_saved_file_path,
             'wb'
         )
+        self.assertEqual(ref_saved_file_path, saved_file_path)
 
 
 class ResourceTests(ResourceTestsBase):

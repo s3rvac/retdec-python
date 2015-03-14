@@ -201,9 +201,11 @@ class Decompilation(Resource):
         :param str directory: Path to a directory in which the decompiled
                               output will be stored.
 
+        :returns: Path to the saved file (`str`).
+
         If `directory` is ``None``, the current working directory is used.
         """
-        self._get_file_and_save_it_to(
+        return self._get_file_and_save_it_to(
             self._path_to_output_file('hll'),
             directory
         )
@@ -224,9 +226,11 @@ class Decompilation(Resource):
         :param str directory: Path to a directory in which the file will be
                               stored.
 
+        :returns: Path to the saved file (`str`).
+
         If `directory` is ``None``, the current working directory is used.
         """
-        self._get_file_and_save_it_to(
+        return self._get_file_and_save_it_to(
             self._path_to_output_file('dsm'),
             directory
         )

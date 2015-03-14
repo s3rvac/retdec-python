@@ -16,6 +16,7 @@ from retdec.decompiler import DecompilationPhase
 from retdec.tools.decompiler import NoProgressDisplayer
 from retdec.tools.decompiler import ProgressBarDisplayer
 from retdec.tools.decompiler import ProgressLogDisplayer
+from retdec.tools.decompiler import display_download_progress
 from retdec.tools.decompiler import get_output_dir
 from retdec.tools.decompiler import get_progress_displayer
 from retdec.tools.decompiler import parse_args
@@ -320,3 +321,15 @@ class GetProgressCallbackTests(unittest.TestCase):
         displayer = get_progress_displayer(args)
 
         self.assertIsInstance(displayer, NoProgressDisplayer)
+
+
+class DisplayDownloadProgressTests(unittest.TestCase):
+    """Tests for :func:`retdec.tools.decompiler.display_download_progress()`.
+    """
+
+    def test_calls_display_on_displayer_with_file_name(self):
+        displayer = mock.Mock(spec_set=ProgressLogDisplayer)
+
+        display_download_progress(displayer, 'dir/file_name')
+
+        displayer.display_download_progress.assert_called_once_with('file_name')
