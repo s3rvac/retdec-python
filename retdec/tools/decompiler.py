@@ -342,8 +342,10 @@ def main():
     )
 
     output_dir = get_output_dir(args)
+
     file_path = decompilation.save_output_hll(output_dir)
     display_download_progress(displayer, file_path)
+
     file_path = decompilation.save_output_dsm(output_dir)
     display_download_progress(displayer, file_path)
 
