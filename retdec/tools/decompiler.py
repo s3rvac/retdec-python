@@ -43,8 +43,8 @@ class ProgressDisplayer(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def display_download_progress(self, file):
-        """Displays progress of downloading the given file."""
+    def display_download_progress(self, file_name):
+        """Displays progress of downloading file with the given name."""
         raise NotImplementedError
 
     def __repr__(self):
@@ -90,7 +90,7 @@ class ProgressBarDisplayer(ProgressDisplayer):
         # Make the output available as soon as possible.
         sys.stdout.flush()
 
-    def display_download_progress(self, file):
+    def display_download_progress(self, file_name):
         # Do not display anything.
         pass
 
