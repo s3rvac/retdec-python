@@ -88,7 +88,7 @@ class DecompilationPhase:
 
     @property
     def name(self):
-        """Name of the phase (`str)."""
+        """Name of the phase (`str`)."""
         return self._name
 
     @property
