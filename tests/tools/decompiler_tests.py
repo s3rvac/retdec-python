@@ -11,14 +11,17 @@ import os
 import unittest
 from unittest import mock
 
+from retdec import DEFAULT_API_URL
 from retdec.decompiler import Decompilation
 from retdec.decompiler import DecompilationPhase
+from retdec.decompiler import Decompiler
 from retdec.tools.decompiler import NoProgressDisplayer
 from retdec.tools.decompiler import ProgressBarDisplayer
 from retdec.tools.decompiler import ProgressLogDisplayer
 from retdec.tools.decompiler import display_download_progress
 from retdec.tools.decompiler import get_output_dir
 from retdec.tools.decompiler import get_progress_displayer
+from retdec.tools.decompiler import main
 from retdec.tools.decompiler import parse_args
 from tests.tools import ToolTestsBase
 
@@ -342,3 +345,51 @@ class DisplayDownloadProgressTests(unittest.TestCase):
         display_download_progress(displayer, 'dir/file_name')
 
         displayer.display_download_progress.assert_called_once_with('file_name')
+
+
+class MainTests(ToolTestsBase):
+    """Tests for :func:`retdec.tools.decompiler.main()`."""
+
+    def setUp(self):
+        super().setUp()
+
+        # Mock Decompiler so that when it is instantiated, it returns our
+        # decompiler that can be used in the tests.
+        self.decompiler = mock.MagicMock(spec_set=Decompiler)
+        self.DecompilerMock = mock.Mock()
+        self.DecompilerMock.return_value = self.decompiler
+        patcher = mock.patch(
+            'retdec.tools.decompiler.Decompiler',
+            self.DecompilerMock
+        )
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def test_performs_correct_actions_when_only_api_key_and_input_file_are_given(self):
+        self.decompiler.run_decompilation.return_value.get_output.return_value = 'OUTPUT'
+
+        main(['decompiler.py', '--api-key', 'API-KEY', 'prog.exe'])
+
+        # Decompiler is instantiated with correct arguments.
+        self.DecompilerMock.assert_called_once_with(
+            api_url=DEFAULT_API_URL,
+            api_key='API-KEY'
+        )
+
+        # Decompilation is run with correct arguments.
+        self.decompiler.run_decompilation.assert_called_once_with(
+            input_file='prog.exe',
+            mode=None
+        )
+
+        # The tool waits until the decompilation is finished.
+        decompilation = self.decompiler.run_decompilation()
+        self.assertEqual(
+            len(decompilation.wait_until_finished.mock_calls), 1
+        )
+
+        # The generated HLL is saved.
+        decompilation.save_output_hll.assert_called_once_with(os.getcwd())
+
+        # The generated DSM is saved.
+        decompilation.save_output_dsm.assert_called_once_with(os.getcwd())
