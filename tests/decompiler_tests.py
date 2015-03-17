@@ -291,7 +291,8 @@ class DecompilationTests(DecompilationTestsBase):
 # description for the reason why.
 class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
                                           DecompilationTestsBase):
-    """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`."""
+    """Tests for :func:`retdec.resource.Decompilation.wait_until_finished()`.
+    """
 
     def test_returns_when_resource_is_finished(self):
         self.conn.send_get_request.return_value = self.status_with({

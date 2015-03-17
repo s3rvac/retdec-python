@@ -255,8 +255,8 @@ def parse_args(argv):
             'decompilation service by using their public REST API.\n'
             '\n'
             'By default, the output files are stored into the same directory '
-            'where the input file is located. For example, if the input file is '
-            "'dir/prog.exe', then the decompiled code in the C language is "
+            'where the input file is located. For example, if the input file '
+            "is 'dir/prog.exe', then the decompiled code in the C language is "
             "saved as 'dir/prog.c'. You can override the output directory by "
             'using the -o/--output-dir parameter.'
         ),

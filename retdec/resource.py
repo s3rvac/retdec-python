@@ -35,7 +35,8 @@ class Resource:
         # it to the minimal representable date, we ensure that the resource
         # gets updated upon the first call of a state-checking method, like
         # has_finished().
-        # See the implementation of _state_should_be_updated() for more details.
+        # See the implementation of _state_should_be_updated() for more
+        # details.
         self._last_updated = datetime.datetime.min
 
     @property

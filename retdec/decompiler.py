@@ -155,13 +155,13 @@ class Decompilation(Resource):
         :param callable on_failure: What should be done when the decompilation
                                     fails?
 
-        If `callback` is not ``None``, it is called with the decompilation as its
-        argument when the status of the decompilation is changed or when it
+        If `callback` is not ``None``, it is called with the decompilation as
+        its argument when the status of the decompilation is changed or when it
         finishes.
 
-        If `on_failure` is ``None``, nothing is done when the decompilation fails.
-        Otherwise, it is called with the error message. If the returned value
-        is an exception, it is raised.
+        If `on_failure` is ``None``, nothing is done when the decompilation
+        fails. Otherwise, it is called with the error message. If the returned
+        value is an exception, it is raised.
         """
         # Ensure that we have something callable (do nothing by default).
         callback = callback or (lambda _: None)
@@ -182,8 +182,8 @@ class Decompilation(Resource):
         # The decompilation has finished.
 
         # Call the callback one final time. This has to be done because the
-        # decompilation may have immediately finished, without giving us chance to
-        # call the callback.
+        # decompilation may have immediately finished, without giving us chance
+        # to call the callback.
         callback(self)
 
         if self._failed and on_failure is not None:
