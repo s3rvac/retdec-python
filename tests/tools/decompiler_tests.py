@@ -262,6 +262,14 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--quiet', 'prog.exe'])
         self.assertTrue(args.quiet)
 
+    def test_generate_archive_is_set_to_false_when_with_archive_not_given(self):
+        args = parse_args(['decompiler.py', 'prog.exe'])
+        self.assertFalse(args.generate_archive)
+
+    def test_generate_archive_is_set_to_true_when_with_archive_given(self):
+        args = parse_args(['decompiler.py', '--with-archive', 'prog.exe'])
+        self.assertTrue(args.generate_archive)
+
     def test_brief_is_set_to_false_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
         self.assertFalse(args.brief)
@@ -377,7 +385,8 @@ class MainTests(ToolTestsBase):
         # Decompilation is run with correct arguments.
         self.decompiler.run_decompilation.assert_called_once_with(
             input_file='prog.exe',
-            mode=None
+            mode=None,
+            generate_archive=False
         )
 
         # The tool waits until the decompilation is finished.
@@ -391,3 +400,23 @@ class MainTests(ToolTestsBase):
 
         # The generated DSM is saved.
         decompilation.save_output_dsm.assert_called_once_with(os.getcwd())
+
+    def test_generates_and_saves_output_zip_archive_when_requested(self):
+        main([
+            'decompiler.py',
+            '--api-key', 'API-KEY',
+            '--with-archive',
+            'prog.exe'
+        ])
+
+        # Decompilation is run with correct arguments.
+        self.decompiler.run_decompilation.assert_called_once_with(
+            input_file='prog.exe',
+            mode=None,
+            generate_archive=True
+        )
+
+        decompilation = self.decompiler.run_decompilation()
+
+        # The generated ZIP archive is saved.
+        decompilation.save_output_archive.assert_called_once_with(os.getcwd())

@@ -22,6 +22,9 @@ class Decompiler(Service):
         :type input_file: str or file-like object
         :param mode: Decompilation mode.
         :type mode: str
+        :param generate_archive: Should a ZIP archive containing all outputs
+                                 from the decompilation be generated?
+        :type generate_archive: bool
 
         :returns: Started decompilation (:class:`Decompilation`).
         """
@@ -41,7 +44,8 @@ class Decompiler(Service):
         input_file = self._get_input_file(kwargs)
 
         params = {
-            'mode': self._get_mode(input_file, kwargs)
+            'mode': self._get_mode(input_file, kwargs),
+            'generate_archive': self._get_generate_archive(kwargs)
         }
         files = {
             'input': input_file
@@ -68,6 +72,17 @@ class Decompiler(Service):
         """Returns an input file from the given parameters (``dict``)."""
         if 'input_file' in params:
             return File(params['input_file'])
+
+    def _get_generate_archive(self, params):
+        """Returns whether a ZIP archive with all decompilation outputs should
+        be generated based on the given parameters (``dict``).
+        """
+        return self._get_param(
+            'generate_archive',
+            params,
+            choices={True, False},
+            default=False
+        )
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(
@@ -238,6 +253,22 @@ class Decompilation(Resource):
         """
         return self._get_file_and_save_it_to(
             self._path_to_output_file('dsm'),
+            directory
+        )
+
+    def save_output_archive(self, directory=None):
+        """Saves the ZIP archive containing all outputs from the decompilation
+        to the given directory.
+
+        :param str directory: Path to a directory in which the file will be
+                              stored.
+
+        :returns: Path to the saved file (`str`).
+
+        If `directory` is ``None``, the current working directory is used.
+        """
+        return self._get_file_and_save_it_to(
+            self._path_to_output_file('archive'),
             directory
         )
 

@@ -287,6 +287,12 @@ def parse_args(argv):
         help='print only errors, nothing else (not even progress)'
     )
     parser.add_argument(
+        '--with-archive',
+        dest='generate_archive',
+        action='store_true',
+        help='generate a ZIP archive containing all decompilation outputs'
+    )
+    parser.add_argument(
         'input_file',
         metavar='FILE',
         help='file to decompile'
@@ -338,7 +344,8 @@ def main(argv=None):
 
     decompilation = decompiler.run_decompilation(
         input_file=args.input_file,
-        mode=args.mode
+        mode=args.mode,
+        generate_archive=args.generate_archive
     )
 
     displayer = get_progress_displayer(args)
@@ -354,6 +361,10 @@ def main(argv=None):
 
     file_path = decompilation.save_output_dsm(output_dir)
     display_download_progress(displayer, file_path)
+
+    if args.generate_archive:
+        file_path = decompilation.save_output_archive(output_dir)
+        display_download_progress(displayer, file_path)
 
     return 0
 

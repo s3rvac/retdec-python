@@ -61,7 +61,10 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
 
         self.conn.send_post_request.assert_called_once_with(
             '',
-            params={'mode': 'c'},
+            params={
+                'mode': 'c',
+                'generate_archive': False
+            },
             files={'input': AnyFile()}
         )
 
@@ -72,7 +75,43 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
 
         self.conn.send_post_request.assert_called_once_with(
             '',
-            params={'mode': 'bin'},
+            params={
+                'mode': 'bin',
+                'generate_archive': False
+            },
+            files={'input': AnyFile()}
+        )
+
+    def test_generate_archive_is_set_to_false_when_not_given(self):
+        self.input_file.name = 'test.exe'
+
+        self.decompiler.run_decompilation(
+            input_file=self.input_file
+        )
+
+        self.conn.send_post_request.assert_called_once_with(
+            '',
+            params={
+                'mode': 'bin',
+                'generate_archive': False
+            },
+            files={'input': AnyFile()}
+        )
+
+    def test_generate_archive_is_set_to_true_when_given(self):
+        self.input_file.name = 'test.exe'
+
+        self.decompiler.run_decompilation(
+            input_file=self.input_file,
+            generate_archive=True
+        )
+
+        self.conn.send_post_request.assert_called_once_with(
+            '',
+            params={
+                'mode': 'bin',
+                'generate_archive': True
+            },
             files={'input': AnyFile()}
         )
 
@@ -84,7 +123,10 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
 
         self.conn.send_post_request.assert_called_once_with(
             '',
-            params={'mode': 'bin'},
+            params={
+                'mode': 'bin',
+                'generate_archive': False
+            },
             files={'input': AnyFile()}
         )
 
@@ -102,7 +144,10 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
 
         self.conn.send_post_request.assert_called_once_with(
             '',
-            params={'mode': 'c'},
+            params={
+                'mode': 'c',
+                'generate_archive': False
+            },
             files={'input': AnyFile()}
         )
 
@@ -429,5 +474,21 @@ class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
         self.assert_obtains_and_saves_file(
             d.save_output_dsm,
             '/ID/outputs/dsm',
+            directory='dir'
+        )
+
+    def test_save_output_archive_stores_file_to_cwd_when_directory_is_not_given(self):
+        d = Decompilation('ID', self.conn)
+        self.assert_obtains_and_saves_file(
+            d.save_output_archive,
+            '/ID/outputs/archive',
+            directory=None
+        )
+
+    def test_save_output_archive_stores_file_to_directory_when_given(self):
+        d = Decompilation('ID', self.conn)
+        self.assert_obtains_and_saves_file(
+            d.save_output_archive,
+            '/ID/outputs/archive',
             directory='dir'
         )
