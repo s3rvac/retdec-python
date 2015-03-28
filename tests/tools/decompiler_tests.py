@@ -412,19 +412,23 @@ class MainTests(ToolTestsBase):
         )
         main(standard_args + additional_args)
 
+    def assert_decompilation_was_run_also_with(self, *args, **kwargs):
+        """Asserts that the decompilation was also run with the given
+        arguments.
+        """
+        decompilation_args = self.decompiler.run_decompilation.call_args
+        for arg in args:
+            self.assertIn(arg, decompilation_args[0])
+        for kwarg in kwargs:
+            self.assertIn(kwarg, decompilation_args[1])
+
     def test_generates_and_saves_output_zip_archive_when_requested(self):
         self.call_main_with_standard_arguments_and(
             '--with-archive'
         )
 
-        # Decompilation is run with correct arguments.
-        self.decompiler.run_decompilation.assert_called_once_with(
-            input_file='prog.exe',
-            mode=None,
+        self.assert_decompilation_was_run_also_with(
             generate_archive=True
         )
-
         decompilation = self.decompiler.run_decompilation()
-
-        # The generated ZIP archive is saved.
         decompilation.save_output_archive.assert_called_once_with(os.getcwd())
