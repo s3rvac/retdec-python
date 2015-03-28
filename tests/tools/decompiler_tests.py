@@ -366,8 +366,6 @@ class MainTests(ToolTestsBase):
         self.addCleanup(patcher.stop)
 
     def test_performs_correct_actions_when_only_api_key_and_input_file_are_given(self):
-        self.decompiler.run_decompilation.return_value.get_output.return_value = 'OUTPUT'
-
         main(['decompiler.py', '--api-key', 'API-KEY', 'prog.exe'])
 
         # Decompiler is instantiated with correct arguments.
