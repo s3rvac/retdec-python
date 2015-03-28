@@ -401,13 +401,21 @@ class MainTests(ToolTestsBase):
         # The generated DSM is saved.
         decompilation.save_output_dsm.assert_called_once_with(os.getcwd())
 
-    def test_generates_and_saves_output_zip_archive_when_requested(self):
-        main([
+    def call_main_with_standard_arguments_and(self, *additional_args):
+        """Calls ``main()`` with standard arguments (such as ``--api-key``),
+        but also includes `additional_args`.
+        """
+        standard_args = (
             'decompiler.py',
             '--api-key', 'API-KEY',
-            '--with-archive',
             'prog.exe'
-        ])
+        )
+        main(standard_args + additional_args)
+
+    def test_generates_and_saves_output_zip_archive_when_requested(self):
+        self.call_main_with_standard_arguments_and(
+            '--with-archive'
+        )
 
         # Decompilation is run with correct arguments.
         self.decompiler.run_decompilation.assert_called_once_with(
