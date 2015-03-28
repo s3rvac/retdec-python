@@ -373,6 +373,13 @@ class MainTests(ToolTestsBase):
         patcher.start()
         self.addCleanup(patcher.stop)
 
+    def get_run_decompilation(self):
+        """Returns the decompilation that run.
+
+        This method assumes that a decompilation has run.
+        """
+        return self.decompiler.run_decompilation()
+
     def test_performs_correct_actions_when_only_api_key_and_input_file_are_given(self):
         main(['decompiler.py', '--api-key', 'API-KEY', 'prog.exe'])
 
@@ -390,7 +397,7 @@ class MainTests(ToolTestsBase):
         )
 
         # The tool waits until the decompilation is finished.
-        decompilation = self.decompiler.run_decompilation()
+        decompilation = self.get_run_decompilation()
         self.assertEqual(
             len(decompilation.wait_until_finished.mock_calls), 1
         )
@@ -430,5 +437,5 @@ class MainTests(ToolTestsBase):
         self.assert_decompilation_was_run_also_with(
             generate_archive=True
         )
-        decompilation = self.decompiler.run_decompilation()
+        decompilation = self.get_run_decompilation()
         decompilation.save_output_archive.assert_called_once_with(os.getcwd())
