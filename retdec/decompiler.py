@@ -44,8 +44,8 @@ class Decompiler(Service):
         input_file = self._get_input_file(kwargs)
 
         params = {
-            'mode': self._get_mode(input_file, kwargs),
-            'generate_archive': self._get_generate_archive(kwargs)
+            'mode': self._get_mode_param(input_file, kwargs),
+            'generate_archive': self._get_generate_archive_param(kwargs)
         }
         files = {
             'input': input_file
@@ -53,7 +53,7 @@ class Decompiler(Service):
         response = conn.send_post_request('', params=params, files=files)
         return response['id']
 
-    def _get_mode(self, input_file, params):
+    def _get_mode_param(self, input_file, params):
         """Returns a mode from the given parameters (``dict``)."""
         return self._get_param(
             'mode',
@@ -73,7 +73,7 @@ class Decompiler(Service):
         if 'input_file' in params:
             return File(params['input_file'])
 
-    def _get_generate_archive(self, params):
+    def _get_generate_archive_param(self, params):
         """Returns whether a ZIP archive with all decompilation outputs should
         be generated based on the given parameters (``dict``).
         """
