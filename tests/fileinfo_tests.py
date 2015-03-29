@@ -95,7 +95,7 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
 
 
 class AnalysisTestsBase(ResourceTestsBase):
-    """Base class for all tests of :class:`retdec.decompiler.Analysis`."""
+    """Base class of all tests of :class:`retdec.decompiler.Analysis`."""
 
 
 class AnalysisTests(AnalysisTestsBase):

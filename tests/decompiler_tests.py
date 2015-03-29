@@ -298,7 +298,7 @@ class DecompilationPhaseTests(unittest.TestCase):
 
 
 class DecompilationTestsBase(ResourceTestsBase):
-    """Base class for all tests of :class:`retdec.decompiler.Decompilation`."""
+    """Base class of all tests of :class:`retdec.decompiler.Decompilation`."""
 
     def status_with(self, status):
         """Adds missing keys to the given status and returns it."""
