@@ -124,7 +124,7 @@ class APIConnectionTests(unittest.TestCase):
         self.assertEqual(response, {'key': 'value'})
 
     @responses.activate
-    def test_send_get_request_raises_authentication_error_when_authentication_fails(self):
+    def test_send_get_request_raises_exception_when_authentication_fails(self):
         self.setup_responses(
             url='https://retdec.com/service/api',
             status=401,
@@ -136,7 +136,7 @@ class APIConnectionTests(unittest.TestCase):
             conn.send_get_request()
 
     @responses.activate
-    def test_send_get_request_raises_unknown_api_error_when_api_returns_unknown_error(self):
+    def test_send_get_request_raises_exception_when_api_returns_unknown_error(self):
         self.setup_responses(
             url='https://retdec.com/service/api',
             status=408,
@@ -157,7 +157,7 @@ class APIConnectionTests(unittest.TestCase):
     # requests. The reason is that HTTP requests are sent through a Session
     # instance, not directly through requests.{get,post}().
     @mock.patch('retdec.conn.requests.Session')
-    def test_send_get_request_raises_connection_error_when_there_is_connection_error(
+    def test_send_get_request_raises_exception_when_there_is_connection_error(
             self, requests_session):
         requests_session.side_effect = requests.exceptions.ConnectionError(
             'Connection refused.'
