@@ -13,9 +13,11 @@ class Test(Service):
     """Access to the testing service."""
 
     def auth(self):
-        """Tries authentication.
+        """Tries to authenticate.
 
         :raises ``AuthenticationError``: When the authentication fails.
+
+        Does nothing when the authentication succeeds.
         """
         conn = self._create_new_api_connection('/test/echo')
         # We do not need any parameters; simply send a GET request to
