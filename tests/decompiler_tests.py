@@ -115,6 +115,32 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
             files={'input': AnyFile()}
         )
 
+    def test_generate_archive_is_set_to_false_when_given_as_false(self):
+        self.input_file.name = 'test.exe'
+
+        self.decompiler.run_decompilation(
+            input_file=self.input_file,
+            generate_archive=False
+        )
+
+        self.conn.send_post_request.assert_called_once_with(
+            '',
+            params={
+                'mode': 'bin',
+                'generate_archive': False
+            },
+            files={'input': AnyFile()}
+        )
+
+    def test_raises_exception_when_generate_archive_parameter_is_invalid(self):
+        self.input_file.name = 'test.exe'
+
+        with self.assertRaises(InvalidValueError):
+            self.decompiler.run_decompilation(
+                input_file=self.input_file,
+                generate_archive='some data'
+            )
+
     def test_mode_is_used_when_given(self):
         self.decompiler.run_decompilation(
             input_file=self.input_file,
