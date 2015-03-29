@@ -23,10 +23,15 @@ class Decompiler(Service):
         :param mode: Decompilation mode.
         :type mode: str
         :param generate_archive: Should a ZIP archive containing all outputs
-                                 from the decompilation be generated?
+                                 from the decompilation be generated? ``False``
+                                 by default.
         :type generate_archive: bool
 
         :returns: Started decompilation (:class:`Decompilation`).
+
+        If `mode` is not given, it is automatically determined based on the
+        name of ``input_file``. If the input file ends with ``.c`` or ``.C``,
+        the mode is set to ``c``. Otherwise, the mode is set to ``bin``.
         """
         conn = self._create_new_api_connection('/decompiler/decompilations')
         id = self._start_decompilation(conn, **kwargs)
