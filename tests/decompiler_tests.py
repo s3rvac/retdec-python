@@ -98,7 +98,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
             files={'input': AnyFile()}
         )
 
-    def test_generate_archive_is_set_to_true_when_given(self):
+    def test_generate_archive_is_set_to_true_when_given_as_true(self):
         self.input_file.name = 'test.exe'
 
         self.decompiler.run_decompilation(
