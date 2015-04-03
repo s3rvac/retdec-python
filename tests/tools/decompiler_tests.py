@@ -426,8 +426,10 @@ class MainTests(ToolTestsBase):
         decompilation_args = self.decompiler.run_decompilation.call_args
         for arg in args:
             self.assertIn(arg, decompilation_args[0])
-        for kwarg in kwargs:
-            self.assertIn(kwarg, decompilation_args[1])
+        for key, value in kwargs.items():
+            self.assertIn(key, decompilation_args[1])
+            msg = "key is '{}'".format(key)
+            self.assertEqual(decompilation_args[1][key], value, msg)
 
     def test_generates_and_saves_output_zip_archive_when_requested(self):
         self.call_main_with_standard_arguments_and(
