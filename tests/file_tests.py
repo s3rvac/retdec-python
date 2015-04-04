@@ -38,7 +38,7 @@ class AnyFileNamed:
         self.name = name
 
     def __eq__(self, other):
-        return (isinstance(other, File) and other.name == self.name)
+        return isinstance(other, File) and other.name == self.name
 
     def __neq__(self, other):
         return not self == other
