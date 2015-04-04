@@ -22,7 +22,7 @@ class Matcher(metaclass=abc.ABCMeta):
     def __repr__(self):
         name = self.__class__.__qualname__
         attr_list = ', '.join(
-            '{}={!r}'.format(name, value) for name, value in self.__dict__.items()
+            '{}={!r}'.format(key, value) for key, value in self.__dict__.items()
         )
         return '{}({})'.format(name, attr_list)
 
