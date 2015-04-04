@@ -11,8 +11,11 @@ import unittest
 from unittest import mock
 
 from retdec.conn import APIConnection
-from retdec.service import Service
 from retdec.exceptions import MissingAPIKeyError
+from retdec.service import Service
+from tests.conn_tests import AnyFiles
+from tests.conn_tests import AnyParams
+from tests.conn_tests import AnyURL
 
 
 class BaseServiceTests(unittest.TestCase):
@@ -30,6 +33,17 @@ class BaseServiceTests(unittest.TestCase):
         )
         patcher.start()
         self.addCleanup(patcher.stop)
+
+    def assert_post_request_was_sent_with(self, url=AnyURL(), params=AnyParams(),
+                                          files=AnyFiles()):
+        """Asserts that a POST request was sent with the given parameters and
+        files.
+        """
+        self.conn.send_post_request.assert_called_once_with(
+            url,
+            params=params,
+            files=files
+        )
 
 
 class ServiceTests(unittest.TestCase):

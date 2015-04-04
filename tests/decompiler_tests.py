@@ -15,6 +15,8 @@ from retdec.decompiler import Decompiler
 from retdec.exceptions import DecompilationFailedError
 from retdec.exceptions import InvalidValueError
 from retdec.file import File
+from tests.conn_tests import AnyFilesWith
+from tests.conn_tests import AnyParamsWith
 from tests.file_tests import AnyFile
 from tests.resource_tests import ResourceTestsBase
 from tests.resource_tests import WithDisabledWaitingInterval
@@ -54,18 +56,20 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
             self.decompiler.api_key
         )
 
+    def test_sends_input_file(self):
+        self.decompiler.run_decompilation(input_file=self.input_file)
+
+        self.assert_post_request_was_sent_with(
+            files=AnyFilesWith(input=AnyFile())
+        )
+
     def test_mode_is_set_to_c_when_not_given_and_file_name_ends_with_c(self):
         self.input_file.name = 'test.c'
 
         self.decompiler.run_decompilation(input_file=self.input_file)
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={
-                'mode': 'c',
-                'generate_archive': False
-            },
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(mode='c')
         )
 
     def test_mode_is_set_to_bin_when_not_given_and_file_name_does_not_end_with_c(self):
@@ -73,13 +77,8 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
 
         self.decompiler.run_decompilation(input_file=self.input_file)
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={
-                'mode': 'bin',
-                'generate_archive': False
-            },
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(mode='bin')
         )
 
     def test_generate_archive_is_set_to_false_when_not_given(self):
@@ -89,13 +88,8 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
             input_file=self.input_file
         )
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={
-                'mode': 'bin',
-                'generate_archive': False
-            },
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(generate_archive=False)
         )
 
     def test_generate_archive_is_set_to_true_when_given_as_true(self):
@@ -106,13 +100,8 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
             generate_archive=True
         )
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={
-                'mode': 'bin',
-                'generate_archive': True
-            },
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(generate_archive=True)
         )
 
     def test_generate_archive_is_set_to_false_when_given_as_false(self):
@@ -123,13 +112,8 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
             generate_archive=False
         )
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={
-                'mode': 'bin',
-                'generate_archive': False
-            },
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(generate_archive=False)
         )
 
     def test_raises_exception_when_generate_archive_parameter_is_invalid(self):
@@ -147,13 +131,8 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
             mode='bin'
         )
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={
-                'mode': 'bin',
-                'generate_archive': False
-            },
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(mode='bin')
         )
 
     def test_raises_exception_when_mode_is_invalid(self):
@@ -168,13 +147,8 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
 
         self.decompiler.run_decompilation(input_file=self.input_file)
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={
-                'mode': 'c',
-                'generate_archive': False
-            },
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(mode='c')
         )
 
     def test_uses_returned_id_to_initialize_decompilation(self):

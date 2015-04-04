@@ -8,14 +8,16 @@
 
 from unittest import mock
 
-from tests.resource_tests import WithMockedIO
 from retdec.exceptions import AnalysisFailedError
 from retdec.file import File
 from retdec.fileinfo import Analysis
 from retdec.fileinfo import Fileinfo
+from tests.conn_tests import AnyFilesWith
+from tests.conn_tests import AnyParamsWith
 from tests.file_tests import AnyFile
 from tests.resource_tests import ResourceTestsBase
 from tests.resource_tests import WithDisabledWaitingInterval
+from tests.resource_tests import WithMockedIO
 from tests.service_tests import BaseServiceTests
 
 
@@ -51,13 +53,18 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
             self.fileinfo.api_key
         )
 
+    def test_sends_input_file(self):
+        self.fileinfo.run_analysis(input_file=self.input_file)
+
+        self.assert_post_request_was_sent_with(
+            files=AnyFilesWith(input=AnyFile())
+        )
+
     def test_verbose_is_set_to_0_when_not_given(self):
         self.fileinfo.run_analysis(input_file=self.input_file)
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={'verbose': 0},
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(verbose=0)
         )
 
     def test_verbose_is_set_to_0_when_given_but_false(self):
@@ -66,10 +73,8 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
             verbose=False
         )
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={'verbose': 0},
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(verbose=0)
         )
 
     def test_verbose_is_set_to_1_when_given_and_true(self):
@@ -78,10 +83,8 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
             verbose=True
         )
 
-        self.conn.send_post_request.assert_called_once_with(
-            '',
-            params={'verbose': 1},
-            files={'input': AnyFile()}
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(verbose=1)
         )
 
     def test_uses_returned_id_to_initialize_analysis(self):

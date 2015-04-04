@@ -25,3 +25,29 @@ class Matcher(metaclass=abc.ABCMeta):
             '{}={!r}'.format(name, value) for name, value in self.__dict__.items()
         )
         return '{}({})'.format(name, attr_list)
+
+
+class Anything(Matcher):
+    """A matcher that matches anything."""
+
+    def __eq__(self, other):
+        return True
+
+
+class AnyDictWith(Matcher):
+    """A matcher that matches and ``dict`` with the given keys and values.
+
+    The ``dict`` may also have other keys and values, which are not considered
+    during the matching.
+    """
+
+    def __init__(self, **kwargs):
+        self.__dict__ = kwargs
+
+    def __eq__(self, other):
+        if not isinstance(other, dict):
+            return False
+        for name, value in self.__dict__.items():
+            if name not in other or other[name] != value:
+                return False
+        return True

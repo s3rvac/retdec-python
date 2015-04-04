@@ -18,6 +18,31 @@ from retdec.conn import APIConnection
 from retdec.exceptions import AuthenticationError
 from retdec.exceptions import ConnectionError
 from retdec.exceptions import UnknownAPIError
+from tests import AnyDictWith
+from tests import Anything
+
+
+class AnyURL(Anything):
+    """A matcher that matches any URL."""
+
+
+class AnyParams(Anything):
+    """A matcher that matches any parameters."""
+
+
+class AnyParamsWith(AnyDictWith):
+    """A matcher that matches any parameters that contain the given
+    sub-parameters.
+    """
+
+
+class AnyFilesWith(AnyDictWith):
+    """A matcher that matches any files that contain the given sub-files.
+    """
+
+
+class AnyFiles(AnyDictWith):
+    """A matcher that matches any files."""
 
 
 class APIConnectionTests(unittest.TestCase):
