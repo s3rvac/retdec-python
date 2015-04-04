@@ -11,25 +11,17 @@ import unittest
 from unittest import mock
 
 from retdec.file import File
+from tests import Matcher
 
 
-class AnyFile:
-    """A matcher that matches any :class:`retdec.file.File`.
-    """
+class AnyFile(Matcher):
+    """A matcher that matches any :class:`retdec.file.File`."""
 
     def __eq__(self, other):
         return isinstance(other, File)
 
-    def __ne__(self, other):
-        return not self == other
 
-    def __repr__(self):
-        return '<{}>'.format(
-            __name__ + '.' + self.__class__.__qualname__
-        )
-
-
-class AnyFileNamed:
+class AnyFileNamed(Matcher):
     """A matcher that matches any :class:`retdec.file.File` that has the given
     name.
     """
@@ -39,15 +31,6 @@ class AnyFileNamed:
 
     def __eq__(self, other):
         return isinstance(other, File) and other.name == self.name
-
-    def __ne__(self, other):
-        return not self == other
-
-    def __repr__(self):
-        return '<{} name={!r}>'.format(
-            __name__ + '.' + self.__class__.__qualname__,
-            self.name
-        )
 
 
 class FileTests(unittest.TestCase):
