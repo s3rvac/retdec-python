@@ -126,7 +126,7 @@ class AnalysisWaitUntilFinishedTests(WithDisabledWaitingInterval,
 
         a.wait_until_finished()
 
-        self.conn.send_get_request.assert_called_once_with('/ID/status')
+        self.assert_get_request_was_sent_with('/ID/status')
 
     def test_waits_until_analysis_finishes(self):
         self.conn.send_get_request.side_effect = [

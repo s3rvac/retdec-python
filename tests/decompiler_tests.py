@@ -296,7 +296,7 @@ class DecompilationTests(DecompilationTestsBase):
         completion = d.get_completion()
 
         self.assertEqual(completion, 20)
-        self.conn.send_get_request.assert_called_once_with('/ID/status')
+        self.assert_get_request_was_sent_with('/ID/status')
 
     def test_get_phases_checks_status_on_first_call_and_returns_correct_value(self):
         self.conn.send_get_request.return_value = self.status_with({
@@ -322,7 +322,7 @@ class DecompilationTests(DecompilationTestsBase):
         self.assertEqual(len(phases), 2)
         self.assertEqual(phases[0].name, 'name1')
         self.assertEqual(phases[1].name, 'name2')
-        self.conn.send_get_request.assert_called_once_with('/ID/status')
+        self.assert_get_request_was_sent_with('/ID/status')
 
     def test_repr_returns_correct_value(self):
         d = Decompilation('ID', self.conn)
@@ -349,7 +349,7 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
 
         d.wait_until_finished()
 
-        self.conn.send_get_request.assert_called_once_with('/ID/status')
+        self.assert_get_request_was_sent_with('/ID/status')
 
     def test_calls_callback_when_resource_finishes(self):
         self.conn.send_get_request.return_value = self.status_with({

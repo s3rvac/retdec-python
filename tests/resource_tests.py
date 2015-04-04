@@ -48,6 +48,15 @@ class ResourceTestsBase(unittest.TestCase):
             status['error'] = None
         return status
 
+    def assert_get_request_was_sent_with(self, path, params=None):
+        """Asserts that a GET request was sent with the given path and
+        parameters.
+        """
+        if params is not None:
+            self.conn.send_get_request.assert_called_once_with(path, params)
+        else:
+            self.conn.send_get_request.assert_called_once_with(path)
+
 
 # Do not inherit from unittest.TestCase because WithDisabledWaitingInterval is
 # a mixin, not a base class for tests.
