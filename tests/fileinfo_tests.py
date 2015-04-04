@@ -14,7 +14,7 @@ from retdec.fileinfo import Analysis
 from retdec.fileinfo import Fileinfo
 from tests.conn_tests import AnyFilesWith
 from tests.conn_tests import AnyParamsWith
-from tests.file_tests import AnyFile
+from tests.file_tests import AnyFileNamed
 from tests.resource_tests import ResourceTestsBase
 from tests.resource_tests import WithDisabledWaitingInterval
 from tests.resource_tests import WithMockedIO
@@ -57,7 +57,7 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
         self.fileinfo.run_analysis(input_file=self.input_file)
 
         self.assert_post_request_was_sent_with(
-            files=AnyFilesWith(input=AnyFile())
+            files=AnyFilesWith(input=AnyFileNamed(self.input_file.name))
         )
 
     def test_verbose_is_set_to_flase_when_not_given(self):
