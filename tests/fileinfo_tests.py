@@ -60,31 +60,31 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
             files=AnyFilesWith(input=AnyFile())
         )
 
-    def test_verbose_is_set_to_0_when_not_given(self):
+    def test_verbose_is_set_to_flase_when_not_given(self):
         self.fileinfo.run_analysis(input_file=self.input_file)
 
         self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(verbose=0)
+            params=AnyParamsWith(verbose=False)
         )
 
-    def test_verbose_is_set_to_0_when_given_but_false(self):
+    def test_verbose_is_set_to_False_when_given_but_false(self):
         self.fileinfo.run_analysis(
             input_file=self.input_file,
             verbose=False
         )
 
         self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(verbose=0)
+            params=AnyParamsWith(verbose=False)
         )
 
-    def test_verbose_is_set_to_1_when_given_and_true(self):
+    def test_verbose_is_set_to_true_when_given_and_true(self):
         self.fileinfo.run_analysis(
             input_file=self.input_file,
             verbose=True
         )
 
         self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(verbose=1)
+            params=AnyParamsWith(verbose=True)
         )
 
     def test_uses_returned_id_to_initialize_analysis(self):
