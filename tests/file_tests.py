@@ -20,7 +20,7 @@ class AnyFile:
     def __eq__(self, other):
         return isinstance(other, File)
 
-    def __neq__(self, other):
+    def __ne__(self, other):
         return not self == other
 
     def __repr__(self):
@@ -40,7 +40,7 @@ class AnyFileNamed:
     def __eq__(self, other):
         return isinstance(other, File) and other.name == self.name
 
-    def __neq__(self, other):
+    def __ne__(self, other):
         return not self == other
 
     def __repr__(self):
