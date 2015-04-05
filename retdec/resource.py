@@ -78,7 +78,7 @@ class Resource:
         return self._failed
 
     def get_error(self):
-        """A reason why the resource failed.
+        """Returns the reason why the resource failed.
 
         If the resource has not failed, it returns ``None``.
         """
