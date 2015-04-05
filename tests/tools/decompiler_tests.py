@@ -27,18 +27,7 @@ from tests import WithPatching
 from tests.tools import ToolTestsBase
 
 
-class ProgressDisplayerTestsBase(unittest.TestCase, WithPatching):
-    """Base class of progress displayers."""
-
-    def setUp(self):
-        super().setUp()
-
-        # Patch sys.stdout (the displayers print the progress in it).
-        self.stdout = io.StringIO()
-        self.patch('sys.stdout', self.stdout)
-
-
-class ProgressBarDisplayerTests(ProgressDisplayerTestsBase):
+class ProgressBarDisplayerTests(ToolTestsBase):
     """Tests for :class:`retdec.tools.decompiler.ProgressBarDisplayer`."""
 
     def test_display_decompilation_progress_successful_decompilation(self):
@@ -86,7 +75,7 @@ class ProgressBarDisplayerTests(ProgressDisplayerTestsBase):
         )
 
 
-class ProgressLogDisplayerTests(ProgressDisplayerTestsBase):
+class ProgressLogDisplayerTests(ToolTestsBase):
     """Tests for :class:`retdec.tools.decompiler.ProgressLogDisplayer`."""
 
     def test_display_decompilation_progress_displays_correct_value_successful_decompilation(self):
@@ -172,7 +161,7 @@ Waiting for resources (0%)...                      [FAIL]
         )
 
 
-class NoProgressDisplayerTests(ProgressDisplayerTestsBase):
+class NoProgressDisplayerTests(ToolTestsBase):
     """Tests for :class:`retdec.tools.decompiler.NoProgressDisplayer`."""
 
     def test_display_decompilation_progress_does_nothing(self):
