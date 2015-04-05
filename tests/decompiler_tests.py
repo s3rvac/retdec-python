@@ -395,8 +395,9 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
         })
         d = Decompilation('ID', self.conn)
 
-        with self.assertRaises(DecompilationFailedError):
+        with self.assertRaises(DecompilationFailedError) as cm:
             d.wait_until_finished()
+        self.assertRegex(str(cm.exception), r'.*error message.*')
 
     def test_calls_on_failure_when_it_is_callable(self):
         self.conn.send_get_request.return_value = self.status_with({
