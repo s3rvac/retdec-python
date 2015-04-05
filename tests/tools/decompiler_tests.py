@@ -6,7 +6,6 @@
 
 """Tests for the :mod:`retdec.tools.decompiler` module."""
 
-import io
 import os
 import unittest
 from unittest import mock
@@ -23,7 +22,6 @@ from retdec.tools.decompiler import get_output_dir
 from retdec.tools.decompiler import get_progress_displayer
 from retdec.tools.decompiler import main
 from retdec.tools.decompiler import parse_args
-from tests import WithPatching
 from tests.tools import ToolTestsBase
 
 
