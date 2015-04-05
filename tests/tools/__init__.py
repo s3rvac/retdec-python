@@ -8,23 +8,18 @@
 
 import io
 import unittest
-from unittest import mock
+
+from tests import WithPatching
 
 
-class ToolTestsBase(unittest.TestCase):
+class ToolTestsBase(unittest.TestCase, WithPatching):
     """Base class for tests of tools."""
 
     def setUp(self):
         super().setUp()
 
-        # Patch sys.stdout.
         self.stdout = io.StringIO()
-        patcher = mock.patch('sys.stdout', self.stdout)
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        self.patch('sys.stdout', self.stdout)
 
-        # Patch sys.stderr.
         self.stderr = io.StringIO()
-        patcher = mock.patch('sys.stderr', self.stderr)
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        self.patch('sys.stderr', self.stderr)

@@ -14,9 +14,10 @@ from unittest import mock
 
 from retdec.conn import APIConnection
 from retdec.resource import Resource
+from tests import WithPatching
 
 
-class ResourceTestsBase(unittest.TestCase):
+class ResourceTestsBase(unittest.TestCase, WithPatching):
     """Base class for tests of :class:`retdec.resource.Resource` and its
     subclasses.
     """
@@ -28,9 +29,7 @@ class ResourceTestsBase(unittest.TestCase):
 
         # Patch time.sleep() to prevent sleeping during tests.
         self.time_sleep = mock.Mock()
-        patcher = mock.patch('time.sleep', self.time_sleep)
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        self.patch('time.sleep', self.time_sleep)
 
     def status_with(self, status):
         """Adds missing keys to the given status and returns it."""
@@ -90,7 +89,7 @@ class WithDisabledWaitingInterval:
 
 # Do not inherit from unittest.TestCase because WithMockedIO is
 # a mixin, not a base class for tests.
-class WithMockedIO:
+class WithMockedIO(WithPatching):
     """Mixin for tests that call functions that perform I/O operations.
 
     When using the mixin, always put it before classes that inherit from
@@ -103,17 +102,11 @@ class WithMockedIO:
     def setUp(self):
         super().setUp()
 
-        # Mock open().
         self.open = mock.mock_open()
-        patcher = mock.patch('builtins.open', self.open)
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        self.patch('builtins.open', self.open)
 
-        # Mock the shutil module.
         self.shutil = mock.Mock()
-        patcher = mock.patch('retdec.resource.shutil', self.shutil)
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        self.patch('retdec.resource.shutil', self.shutil)
 
     def assert_obtains_file_contents(self, func, file_path, is_text_file):
         """Asserts that ``func()`` obtains the contents of the given file.

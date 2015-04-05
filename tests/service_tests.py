@@ -13,12 +13,13 @@ from unittest import mock
 from retdec.conn import APIConnection
 from retdec.exceptions import MissingAPIKeyError
 from retdec.service import Service
+from tests import WithPatching
 from tests.conn_tests import AnyFiles
 from tests.conn_tests import AnyParams
 from tests.conn_tests import AnyURL
 
 
-class BaseServiceTests(unittest.TestCase):
+class BaseServiceTests(unittest.TestCase, WithPatching):
     """A base class for tests of :class:`retdec.service.Service` subclasses."""
 
     def setUp(self):
@@ -27,12 +28,10 @@ class BaseServiceTests(unittest.TestCase):
         self.conn = mock.MagicMock(spec_set=APIConnection)
         self.APIConnectionMock = mock.Mock()
         self.APIConnectionMock.return_value = self.conn
-        patcher = mock.patch(
+        self.patch(
             'retdec.service.APIConnection',
             self.APIConnectionMock
         )
-        patcher.start()
-        self.addCleanup(patcher.stop)
 
     def assert_post_request_was_sent_with(self, url=AnyURL(), params=AnyParams(),
                                           files=AnyFiles()):

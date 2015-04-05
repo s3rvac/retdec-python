@@ -63,12 +63,10 @@ class MainTests(ToolTestsBase):
         self.fileinfo = mock.MagicMock(spec_set=Fileinfo)
         self.FileinfoMock = mock.Mock()
         self.FileinfoMock.return_value = self.fileinfo
-        patcher = mock.patch(
+        self.patch(
             'retdec.tools.fileinfo.Fileinfo',
             self.FileinfoMock
         )
-        patcher.start()
-        self.addCleanup(patcher.stop)
 
     def test_performs_correct_actions(self):
         self.fileinfo.run_analysis.return_value.get_output.return_value = 'OUTPUT'

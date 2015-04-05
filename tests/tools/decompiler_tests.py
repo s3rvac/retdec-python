@@ -23,10 +23,11 @@ from retdec.tools.decompiler import get_output_dir
 from retdec.tools.decompiler import get_progress_displayer
 from retdec.tools.decompiler import main
 from retdec.tools.decompiler import parse_args
+from tests import WithPatching
 from tests.tools import ToolTestsBase
 
 
-class ProgressDisplayerTestsBase(unittest.TestCase):
+class ProgressDisplayerTestsBase(unittest.TestCase, WithPatching):
     """Base class of progress displayers."""
 
     def setUp(self):
@@ -34,9 +35,7 @@ class ProgressDisplayerTestsBase(unittest.TestCase):
 
         # Patch sys.stdout (the displayers print the progress in it).
         self.stdout = io.StringIO()
-        patcher = mock.patch('sys.stdout', self.stdout)
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        self.patch('sys.stdout', self.stdout)
 
 
 class ProgressBarDisplayerTests(ProgressDisplayerTestsBase):
@@ -366,12 +365,10 @@ class MainTests(ToolTestsBase):
         self.decompiler = mock.MagicMock(spec_set=Decompiler)
         self.DecompilerMock = mock.Mock()
         self.DecompilerMock.return_value = self.decompiler
-        patcher = mock.patch(
+        self.patch(
             'retdec.tools.decompiler.Decompiler',
             self.DecompilerMock
         )
-        patcher.start()
-        self.addCleanup(patcher.stop)
 
     def get_run_decompilation(self):
         """Returns the decompilation that run.

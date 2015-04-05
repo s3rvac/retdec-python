@@ -7,6 +7,19 @@
 """Tests for the library and tools."""
 
 import abc
+from unittest import mock
+
+
+# Do not inherit from unittest.TestCase because WithPatching is a mixin, not a
+# base class for tests.
+class WithPatching:
+    """Mixin for tests that perform patching during their setup."""
+
+    def patch(self, what, with_what):
+        """Patches `what` with `with_what`."""
+        patcher = mock.patch(what, with_what)
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
 
 class Matcher(metaclass=abc.ABCMeta):
