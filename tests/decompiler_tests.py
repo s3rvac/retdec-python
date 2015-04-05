@@ -424,71 +424,71 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
 
 # WithMockedIO has to be put as the first base class, see its description for
 # the reason why.
-class DecompilationGetOutputTests(WithMockedIO, DecompilationTestsBase):
+class DecompilationGetOutputsTests(WithMockedIO, DecompilationTestsBase):
     """Tests for methods that obtain outputs from a
     :class:`retdec.decompilation.Decompilation`.
     """
 
-    def test_get_output_hll_obtains_file_contents(self):
+    def test_get_hll_obtains_file_contents(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_file_contents(
-            d.get_output_hll,
+            d.get_hll,
             '/ID/outputs/hll',
             is_text_file=True
         )
 
-    def test_save_output_hll_stores_file_to_cwd_when_directory_is_not_given(self):
+    def test_save_hll_stores_file_to_cwd_when_directory_is_not_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_output_hll,
+            d.save_hll,
             '/ID/outputs/hll',
             directory=None
         )
 
-    def test_save_output_hll_stores_file_to_directory_when_given(self):
+    def test_save_hll_stores_file_to_directory_when_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_output_hll,
+            d.save_hll,
             '/ID/outputs/hll',
             directory='dir'
         )
 
-    def test_get_output_dsm_obtains_file_contents(self):
+    def test_get_dsm_obtains_file_contents(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_file_contents(
-            d.get_output_dsm,
+            d.get_dsm,
             '/ID/outputs/dsm',
             is_text_file=True
         )
 
-    def test_save_output_dsm_stores_file_to_cwd_when_directory_is_not_given(self):
+    def test_save_dsm_stores_file_to_cwd_when_directory_is_not_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_output_dsm,
+            d.save_dsm,
             '/ID/outputs/dsm',
             directory=None
         )
 
-    def test_save_output_dsm_stores_file_to_directory_when_given(self):
+    def test_save_dsm_stores_file_to_directory_when_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_output_dsm,
+            d.save_dsm,
             '/ID/outputs/dsm',
             directory='dir'
         )
 
-    def test_save_output_archive_stores_file_to_cwd_when_directory_is_not_given(self):
+    def test_save_archive_stores_file_to_cwd_when_directory_is_not_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_output_archive,
+            d.save_archive,
             '/ID/outputs/archive',
             directory=None
         )
 
-    def test_save_output_archive_stores_file_to_directory_when_given(self):
+    def test_save_archive_stores_file_to_directory_when_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_output_archive,
+            d.save_archive,
             '/ID/outputs/archive',
             directory='dir'
         )

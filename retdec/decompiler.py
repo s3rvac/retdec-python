@@ -211,7 +211,7 @@ class Decompilation(Resource):
             if isinstance(obj, Exception):
                 raise obj
 
-    def get_output_hll(self):
+    def get_hll(self):
         """Obtains and returns the decompiled code in the high-level language
         (`str`).
         """
@@ -220,12 +220,12 @@ class Decompilation(Resource):
             is_text_file=True
         )
 
-    def save_output_hll(self, directory=None):
+    def save_hll(self, directory=None):
         """Saves the decompiled code in the high-level language to the given
         directory.
 
         :param str directory: Path to a directory in which the decompiled
-                              output will be stored.
+                              code will be stored.
 
         :returns: Path to the saved file (`str`).
 
@@ -236,7 +236,7 @@ class Decompilation(Resource):
             directory
         )
 
-    def get_output_dsm(self):
+    def get_dsm(self):
         """Obtains and returns the disassembled input file in assembly-like
         syntax (`str`).
         """
@@ -245,7 +245,7 @@ class Decompilation(Resource):
             is_text_file=True
         )
 
-    def save_output_dsm(self, directory=None):
+    def save_dsm(self, directory=None):
         """Saves the disassembled input file in assembly-like syntax to the
         given directory.
 
@@ -261,7 +261,7 @@ class Decompilation(Resource):
             directory
         )
 
-    def save_output_archive(self, directory=None):
+    def save_archive(self, directory=None):
         """Saves the ZIP archive containing all outputs from the decompilation
         to the given directory.
 

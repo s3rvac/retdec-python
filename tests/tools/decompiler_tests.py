@@ -389,10 +389,10 @@ class MainTests(ToolTestsBase):
         )
 
         # The generated HLL is saved.
-        decompilation.save_output_hll.assert_called_once_with(os.getcwd())
+        decompilation.save_hll.assert_called_once_with(os.getcwd())
 
         # The generated DSM is saved.
-        decompilation.save_output_dsm.assert_called_once_with(os.getcwd())
+        decompilation.save_dsm.assert_called_once_with(os.getcwd())
 
     def call_main_with_standard_arguments_and(self, *additional_args):
         """Calls ``main()`` with standard arguments (such as ``--api-key``),
@@ -417,7 +417,7 @@ class MainTests(ToolTestsBase):
             msg = "key is '{}'".format(key)
             self.assertEqual(decompilation_args[1][key], value, msg)
 
-    def test_generates_and_saves_output_zip_archive_when_requested(self):
+    def test_generates_and_saves_archive_when_requested(self):
         self.call_main_with_standard_arguments_and(
             '--with-archive'
         )
@@ -426,4 +426,4 @@ class MainTests(ToolTestsBase):
             generate_archive=True
         )
         decompilation = self.get_run_decompilation()
-        decompilation.save_output_archive.assert_called_once_with(os.getcwd())
+        decompilation.save_archive.assert_called_once_with(os.getcwd())
