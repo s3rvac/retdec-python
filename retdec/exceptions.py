@@ -52,9 +52,10 @@ class ConnectionError(RetdecError):
     """Exception raised when there is a connection error."""
 
     def __init__(self, reason=None):
-        message = 'Connection to the API failed.'
-        if reason is not None:
-            message += ' Reason: {}'.format(reason)
+        message = _message_with_reason(
+            'Connection to the API failed.',
+            reason
+        )
         super().__init__(message)
 
 
@@ -62,9 +63,10 @@ class AnalysisFailedError(RetdecError):
     """Exception raised when a fileinfo analysis has failed."""
 
     def __init__(self, reason=None):
-        message = 'The analysis has failed.'
-        if reason is not None:
-            message += ' Reason: {}'.format(reason)
+        message = _message_with_reason(
+            'The analysis has failed.',
+            reason
+        )
         super().__init__(message)
 
 
@@ -72,9 +74,10 @@ class DecompilationFailedError(RetdecError):
     """Exception raised when a decompilation has failed."""
 
     def __init__(self, reason=None):
-        message = 'The decompilation has failed.'
-        if reason is not None:
-            message += ' Reason: {}'.format(reason)
+        message = _message_with_reason(
+            'The decompilation has failed.',
+            reason
+        )
         super().__init__(message)
 
 
@@ -90,12 +93,13 @@ class OutputNotRequestedError(RetdecError):
 
 
 class ArchiveGenerationFailedError(RetdecError):
-    """Exception raised when the generation of an output archive fails."""
+    """Exception raised when the generation of an archive fails."""
 
     def __init__(self, reason=None):
-        message = 'The output archive generation has failed.'
-        if reason is not None:
-            message += ' Reason: {}'.format(reason)
+        message = _message_with_reason(
+            'The archive generation has failed.',
+            reason
+        )
         super().__init__(message)
 
 
@@ -119,3 +123,13 @@ class UnknownAPIError(RetdecError):
         self.code = code
         self.message = message
         self.description = description
+
+
+def _message_with_reason(message, reason):
+    """Returns `message` with `reason`.
+
+    If `reason` is ``None``, it returns just `message`.
+    """
+    if reason is not None:
+        message += ' Reason: {}'.format(reason)
+    return message
