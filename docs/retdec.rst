@@ -27,6 +27,14 @@ retdec.conn module
     :undoc-members:
     :show-inheritance:
 
+retdec.decompilation module
+---------------------------
+
+.. automodule:: retdec.decompilation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 retdec.decompiler module
 ------------------------
 

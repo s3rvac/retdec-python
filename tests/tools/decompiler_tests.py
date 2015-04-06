@@ -11,8 +11,8 @@ import unittest
 from unittest import mock
 
 from retdec import DEFAULT_API_URL
-from retdec.decompiler import Decompilation
-from retdec.decompiler import DecompilationPhase
+from retdec.decompilation import Decompilation
+from retdec.decompilation import DecompilationPhase
 from retdec.decompiler import Decompiler
 from retdec.tools.decompiler import NoProgressDisplayer
 from retdec.tools.decompiler import ProgressBarDisplayer
