@@ -360,15 +360,6 @@ class Decompilation(Resource):
         """Returns a path to the given output file."""
         return '/{}/outputs/{}'.format(self.id, output_file)
 
-    def _handle_failure(self, on_failure, error):
-        """Handles the situation where a resource failed to succeed (e.g.
-        decompilation or archive generation).
-        """
-        if on_failure is not None:
-            obj = on_failure(error)
-            if isinstance(obj, Exception):
-                raise obj
-
     def __repr__(self):
         return '<{} id={!r}>'.format(
             __name__ + '.' + self.__class__.__qualname__,

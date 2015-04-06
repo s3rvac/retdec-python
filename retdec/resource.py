@@ -116,6 +116,22 @@ class Resource:
         """Obtains and returns the current status of the resource."""
         return self._conn.send_get_request('/{}/status'.format(self.id))
 
+    def _handle_failure(self, on_failure, error):
+        """Handles the situation where a resource failed to succeed.
+
+        :param callable on_failure: What should be done when the resource
+                                    failed?
+        :param str error: Error message.
+
+        If `on_failure` is ``None``, nothing is done when. Otherwise, it is
+        called with `error`. If the returned value is an exception, it is
+        raised.
+        """
+        if on_failure is not None:
+            obj = on_failure(error)
+            if isinstance(obj, Exception):
+                raise obj
+
     def _get_file_contents(self, file_path, is_text_file):
         """Obtains the contents of a file from the given path.
 

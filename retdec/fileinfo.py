@@ -87,10 +87,8 @@ class Analysis(Resource):
             self._wait_until_state_can_be_updated()
 
         # The analysis has finished.
-        if self._failed and on_failure is not None:
-            obj = on_failure(self._error)
-            if isinstance(obj, Exception):
-                raise obj
+        if self._failed:
+            self._handle_failure(on_failure, self._error)
 
     def get_output(self):
         """Obtains and returns the output from the analysis (`str`)."""
