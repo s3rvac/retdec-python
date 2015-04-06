@@ -35,6 +35,14 @@ retdec.decompilation module
     :undoc-members:
     :show-inheritance:
 
+retdec.decompilation_phase module
+---------------------------------
+
+.. automodule:: retdec.decompilation_phase
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 retdec.decompiler module
 ------------------------
 
