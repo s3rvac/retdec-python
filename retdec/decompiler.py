@@ -208,10 +208,8 @@ class Decompilation(Resource):
         # to call the callback.
         callback(self)
 
-        if self._failed and on_failure is not None:
-            obj = on_failure(self._error)
-            if isinstance(obj, Exception):
-                raise obj
+        if self._failed:
+            self._handle_failure(on_failure, self._error)
 
     def get_hll(self):
         """Obtains and returns the decompiled code in the high-level language
@@ -319,10 +317,8 @@ class Decompilation(Resource):
         while not self.archive_generation_has_finished():
             self._wait_until_state_can_be_updated()
 
-        if self._archive_status.failed and on_failure is not None:
-            obj = on_failure(self._archive_status.error)
-            if isinstance(obj, Exception):
-                raise obj
+        if self._archive_status.failed:
+            self._handle_failure(on_failure, self._archive_status.error)
 
     def save_archive(self, directory=None):
         """Saves the archive containing all outputs from the decompilation
@@ -361,6 +357,15 @@ class Decompilation(Resource):
     def _path_to_output_file(self, output_file):
         """Returns a path to the given output file."""
         return '/{}/outputs/{}'.format(self.id, output_file)
+
+    def _handle_failure(self, on_failure, error):
+        """Handles the situation where a resource failed to succeed (e.g.
+        decompilation or archive generation).
+        """
+        if on_failure is not None:
+            obj = on_failure(error)
+            if isinstance(obj, Exception):
+                raise obj
 
     def __repr__(self):
         return '<{} id={!r}>'.format(
