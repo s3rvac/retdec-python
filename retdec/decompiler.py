@@ -6,7 +6,9 @@
 
 """Access to the decompiler (decompilation of files)."""
 
+from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import DecompilationFailedError
+from retdec.exceptions import OutputNotRequestedError
 from retdec.file import File
 from retdec.resource import Resource
 from retdec.service import Service
@@ -261,6 +263,67 @@ class Decompilation(Resource):
             directory
         )
 
+    def archive_generation_has_finished(self):
+        """Checks if the archive generation has finished.
+
+        :raises OutputNotRequestedError: When the archive was not requested to
+                                         be generated.
+        """
+        self._update_state_if_needed()
+        return self._archive_status.finished
+
+    def archive_generation_has_succeeded(self):
+        """Checks if the archive generation has succeeded.
+
+        :raises OutputNotRequestedError: When the archive was not requested to
+                                         be generated.
+        """
+        self._update_state_if_needed()
+        return self._archive_status.generated
+
+    def archive_generation_has_failed(self):
+        """Checks if the archive has failed to generate.
+
+        :raises OutputNotRequestedError: When the archive was not requested to
+                                         be generated.
+        """
+        self._update_state_if_needed()
+        return self._archive_status.failed
+
+    def get_archive_generation_error(self):
+        """Returns the reason why the archive failed to generate.
+
+        :raises OutputNotRequestedError: When the archive was not requested to
+                                         be generated.
+
+        If the archive has not failed, it returns ``None``.
+        """
+        self._update_state_if_needed()
+        return self._archive_status.error
+
+    def wait_until_archive_is_generated(self,
+                                        on_failure=ArchiveGenerationFailedError):
+        """Waits until the ZIP archive containing all outputs from the
+        decompilation is generated.
+
+        :param callable on_failure: What should be done when the generation
+                                    fails?
+
+        :raises OutputNotRequestedError: When the archive was not requested to
+                                         be generated.
+
+        If `on_failure` is ``None``, nothing is done when the generation fails.
+        Otherwise, it is called with the error message. If the returned value
+        is an exception, it is raised.
+        """
+        while not self.archive_generation_has_finished():
+            self._wait_until_state_can_be_updated()
+
+        if self._archive_status.failed and on_failure is not None:
+            obj = on_failure(self._archive_status.error)
+            if isinstance(obj, Exception):
+                raise obj
+
     def save_archive(self, directory=None):
         """Saves the ZIP archive containing all outputs from the decompilation
         to the given directory.
@@ -282,11 +345,18 @@ class Decompilation(Resource):
         status = super()._update_state()
         self._completion = status['completion']
         self._phases = self._phases_from_status(status)
+        self._archive_status = self._archive_status_from_status(status)
         return status
 
     def _phases_from_status(self, status):
         """Creates a list of phases from the given status."""
         return [DecompilationPhase(**phase) for phase in status['phases']]
+
+    def _archive_status_from_status(self, status):
+        """Returns the archive generation status from the given status."""
+        if 'archive' not in status:
+            return _NotRequestedOutputStatus()
+        return _OutputGenerationStatus(**status['archive'])
 
     def _path_to_output_file(self, output_file):
         """Returns a path to the given output file."""
@@ -297,3 +367,50 @@ class Decompilation(Resource):
             __name__ + '.' + self.__class__.__qualname__,
             self.id
         )
+
+
+class _OutputGenerationStatus:
+    """A status of output generation.
+
+    :ivar bool generated: Has the output been generated?
+    :ivar bool failed: Has the generation failed?
+    :ivar str error: Reason why the generation failed.
+    """
+
+    def __init__(self, generated, failed, error):
+        """Initializes the status.
+
+        :param bool generated: Has the output been generated?
+        :param bool failed: Has the generation failed?
+        :param str error: Reason why the generation failed.
+        """
+        self.generated = generated
+        self.failed = failed
+        self.error = error
+
+    @property
+    def finished(self):
+        """Has the output generation finished?"""
+        return self.generated or self.failed
+
+
+class _NotRequestedOutputStatus:
+    """An output generation status that raises
+    :class:`.OutputNotRequestedError` whenever it is queried.
+    """
+
+    @property
+    def finished(self):
+        raise OutputNotRequestedError
+
+    @property
+    def generated(self):
+        raise OutputNotRequestedError
+
+    @property
+    def failed(self):
+        raise OutputNotRequestedError
+
+    @property
+    def error(self):
+        raise OutputNotRequestedError

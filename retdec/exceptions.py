@@ -78,6 +78,27 @@ class DecompilationFailedError(RetdecError):
         super().__init__(message)
 
 
+class OutputNotRequestedError(RetdecError):
+    """Exception raised when an output is queried which was not requested to be
+    generated.
+    """
+
+    def __init__(self):
+        super().__init__(
+            'The output was not requested to be generated.'
+        )
+
+
+class ArchiveGenerationFailedError(RetdecError):
+    """Exception raised when the generation of an output archive fails."""
+
+    def __init__(self, reason=None):
+        message = 'The output archive generation has failed.'
+        if reason is not None:
+            message += ' Reason: {}'.format(reason)
+        super().__init__(message)
+
+
 class UnknownAPIError(RetdecError):
     """Exception raised when there is an unknown API error.
 

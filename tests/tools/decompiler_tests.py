@@ -424,4 +424,5 @@ class MainTests(ToolTestsBase):
             generate_archive=True
         )
         decompilation = self.get_run_decompilation()
+        decompilation.wait_until_archive_is_generated.assert_called_once_with()
         decompilation.save_archive.assert_called_once_with(os.getcwd())

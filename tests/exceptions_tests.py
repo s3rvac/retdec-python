@@ -8,13 +8,15 @@
 
 import unittest
 
+from retdec.exceptions import AnalysisFailedError
+from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import AuthenticationError
 from retdec.exceptions import ConnectionError
+from retdec.exceptions import DecompilationFailedError
 from retdec.exceptions import InvalidValueError
 from retdec.exceptions import MissingAPIKeyError
 from retdec.exceptions import MissingParameterError
-from retdec.exceptions import DecompilationFailedError
-from retdec.exceptions import AnalysisFailedError
+from retdec.exceptions import OutputNotRequestedError
 from retdec.exceptions import UnknownAPIError
 
 
@@ -86,6 +88,26 @@ class DecompilationFailedErrorTests(unittest.TestCase):
 
     def test_includes_reason_when_given(self):
         ex = DecompilationFailedError('REASON')
+        self.assertIn('REASON', str(ex))
+
+
+class OutputNotRequestedErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.OutputNotRequestedError`."""
+
+    def test_has_correct_description(self):
+        ex = OutputNotRequestedError()
+        self.assertIn('not requested', str(ex))
+
+
+class ArchiveGenerationFailedErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.ArchiveGenerationFailedError`."""
+
+    def test_does_not_include_reason_when_not_given(self):
+        ex = ArchiveGenerationFailedError()
+        self.assertNotIn('reason', str(ex))
+
+    def test_includes_reason_when_given(self):
+        ex = ArchiveGenerationFailedError('REASON')
         self.assertIn('REASON', str(ex))
 
 

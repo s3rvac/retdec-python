@@ -12,8 +12,10 @@ from unittest import mock
 from retdec.decompiler import Decompilation
 from retdec.decompiler import DecompilationPhase
 from retdec.decompiler import Decompiler
+from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import DecompilationFailedError
 from retdec.exceptions import InvalidValueError
+from retdec.exceptions import OutputNotRequestedError
 from retdec.file import File
 from tests.conn_tests import AnyFilesWith
 from tests.conn_tests import AnyParamsWith
@@ -287,6 +289,12 @@ class DecompilationTestsBase(ResourceTestsBase):
 class DecompilationTests(DecompilationTestsBase):
     """Tests for :class:`retdec.decompiler.Decompilation`."""
 
+    def get_decompilation_that_did_not_to_request_archive_to_be_generated(self):
+        # This is signalized by a response that does not include the 'archive'
+        # key.
+        self.conn.send_get_request.return_value = self.status_with({})
+        return Decompilation('ID', self.conn)
+
     def test_get_completion_checks_status_on_first_call_and_returns_correct_value(self):
         self.conn.send_get_request.return_value = self.status_with({
             'completion': 20
@@ -323,6 +331,218 @@ class DecompilationTests(DecompilationTestsBase):
         self.assertEqual(phases[0].name, 'name1')
         self.assertEqual(phases[1].name, 'name2')
         self.assert_get_request_was_sent_with('/ID/status')
+
+    def test_archive_generation_has_finished_checks_status_on_first_call(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': True,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        d.archive_generation_has_finished()
+
+        self.assert_get_request_was_sent_with('/ID/status')
+
+    def test_archive_generation_has_finished_returns_true_when_generated(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': True,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertTrue(d.archive_generation_has_finished())
+
+    def test_archive_generation_has_finished_returns_true_when_failed(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': 'error message'
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertTrue(d.archive_generation_has_finished())
+
+    def test_archive_generation_has_finished_returns_false_when_not_finished(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertFalse(d.archive_generation_has_finished())
+
+    def test_archive_generation_has_finished_raises_exception_when_archive_not_requested(self):
+        d = self.get_decompilation_that_did_not_to_request_archive_to_be_generated()
+
+        with self.assertRaises(OutputNotRequestedError):
+            d.archive_generation_has_finished()
+
+    def test_archive_generation_has_succeeded_checks_status_on_first_call(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': True,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        d.archive_generation_has_succeeded()
+
+        self.assert_get_request_was_sent_with('/ID/status')
+
+    def test_archive_generation_has_succeeded_returns_true_when_succeeded(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': True,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertTrue(d.archive_generation_has_succeeded())
+
+    def test_archive_generation_has_succeeded_returns_false_when_not_finished(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertFalse(d.archive_generation_has_succeeded())
+
+    def test_archive_generation_has_succeeded_returns_false_when_failed(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': 'error message'
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertFalse(d.archive_generation_has_succeeded())
+
+    def test_archive_generation_has_succeeded_raises_exception_when_archive_not_requested(self):
+        d = self.get_decompilation_that_did_not_to_request_archive_to_be_generated()
+
+        with self.assertRaises(OutputNotRequestedError):
+            d.archive_generation_has_succeeded()
+
+    def test_archive_generation_has_failed_checks_status_on_first_call(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': 'error message'
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        d.archive_generation_has_failed()
+
+        self.assert_get_request_was_sent_with('/ID/status')
+
+    def test_archive_generation_has_failed_returns_true_when_failed(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': 'error message'
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertTrue(d.archive_generation_has_failed())
+
+    def test_archive_generation_has_failed_returns_false_when_succeeded(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': True,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertFalse(d.archive_generation_has_failed())
+
+    def test_archive_generation_has_failed_returns_false_when_not_finished(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertFalse(d.archive_generation_has_failed())
+
+    def test_archive_generation_has_failed_raises_exception_when_archive_not_requested(self):
+        d = self.get_decompilation_that_did_not_to_request_archive_to_be_generated()
+
+        with self.assertRaises(OutputNotRequestedError):
+            d.archive_generation_has_failed()
+
+    def test_get_archive_error_checks_status_on_first_call(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': 'error message'
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        d.get_archive_generation_error()
+
+        self.assert_get_request_was_sent_with('/ID/status')
+
+    def test_get_archive_generation_error_returns_none_when_succeeded(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': True,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertIsNone(d.get_archive_generation_error())
+
+    def test_get_archive_generation_error_returns_correct_error_when_failed(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': 'error message'
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertEqual(d.get_archive_generation_error(), 'error message')
+
+    def test_get_archive_generation_error_raises_exception_when_archive_not_requested(self):
+        d = self.get_decompilation_that_did_not_to_request_archive_to_be_generated()
+
+        with self.assertRaises(OutputNotRequestedError):
+            d.get_archive_generation_error()
 
     def test_repr_returns_correct_value(self):
         d = Decompilation('ID', self.conn)
@@ -421,6 +641,92 @@ class DecompilationWaitUntilFinishedTests(WithDisabledWaitingInterval,
         d = Decompilation('ID', self.conn)
 
         d.wait_until_finished(on_failure=None)
+
+
+# WithDisabledWaitingInterval has to be put as the first base class, see its
+# description for the reason why.
+class DecompilationWaitUntilArchiveIsGeneratedTests(WithDisabledWaitingInterval,
+                                                    DecompilationTestsBase):
+    """Tests for
+    :class:`retdec.decompilation.Decompilation.wait_until_archive_is_generated()`.
+    """
+
+    def test_returns_when_archive_is_generated(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': True,
+                'failed': False,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        d.wait_until_archive_is_generated()
+
+        self.assert_get_request_was_sent_with('/ID/status')
+
+    def test_waits_until_archive_is_generated(self):
+        self.conn.send_get_request.side_effect = [
+            self.status_with({
+                'archive': {
+                    'generated': False,
+                    'failed': False,
+                    'error': None
+                }
+            }), self.status_with({
+                'archive': {
+                    'generated': True,
+                    'failed': False,
+                    'error': None
+                }
+            })
+        ]
+        d = Decompilation('ID', self.conn)
+
+        d.wait_until_archive_is_generated()
+
+        self.assertEqual(len(self.conn.send_get_request.mock_calls), 2)
+
+    def test_raises_exception_by_default_when_generation_failed(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': 'error message'
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        with self.assertRaises(ArchiveGenerationFailedError) as cm:
+            d.wait_until_archive_is_generated()
+        self.assertRegex(str(cm.exception), r'.*error message.*')
+
+    def test_calls_on_failure_when_it_is_callable(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': 'error message'
+            }
+        })
+        d = Decompilation('ID', self.conn)
+        on_failure = mock.Mock()
+
+        d.wait_until_archive_is_generated(on_failure=on_failure)
+
+        on_failure.assert_called_once_with('error message')
+
+    def test_does_not_raise_exception_when_on_failure_is_none(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'archive': {
+                'generated': False,
+                'failed': True,
+                'error': None
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        d.wait_until_archive_is_generated(on_failure=None)
 
 
 # WithMockedIO has to be put as the first base class, see its description for

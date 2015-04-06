@@ -363,6 +363,7 @@ def main(argv=None):
     display_download_progress(displayer, file_path)
 
     if args.generate_archive:
+        decompilation.wait_until_archive_is_generated()
         file_path = decompilation.save_archive(output_dir)
         display_download_progress(displayer, file_path)
 
