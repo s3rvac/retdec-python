@@ -314,6 +314,8 @@ class Decompilation(Resource):
         Otherwise, it is called with the error message. If the returned value
         is an exception, it is raised.
         """
+        # Currently, the retdec.com API does not support push notifications, so
+        # we have to do polling.
         while not self.archive_generation_has_finished():
             self._wait_until_state_can_be_updated()
 
