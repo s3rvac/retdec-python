@@ -290,7 +290,7 @@ def parse_args(argv):
         '--with-archive',
         dest='generate_archive',
         action='store_true',
-        help='generate a ZIP archive containing all decompilation outputs'
+        help='generate an archive containing all decompilation outputs'
     )
     parser.add_argument(
         'input_file',

@@ -24,9 +24,9 @@ class Decompiler(Service):
         :type input_file: str or file-like object
         :param mode: Decompilation mode.
         :type mode: str
-        :param generate_archive: Should a ZIP archive containing all outputs
-                                 from the decompilation be generated? ``False``
-                                 by default.
+        :param generate_archive: Should a archive containing all outputs from
+                                 the decompilation be generated? ``False`` by
+                                 default.
         :type generate_archive: bool
 
         :returns: Started decompilation (:class:`Decompilation`).
@@ -81,8 +81,8 @@ class Decompiler(Service):
             return File(params['input_file'])
 
     def _get_generate_archive_param(self, params):
-        """Returns whether a ZIP archive with all decompilation outputs should
-        be generated based on the given parameters (``dict``).
+        """Returns whether a archive with all decompilation outputs should be
+        generated based on the given parameters (``dict``).
         """
         return self._get_param(
             'generate_archive',
@@ -303,7 +303,7 @@ class Decompilation(Resource):
 
     def wait_until_archive_is_generated(self,
                                         on_failure=ArchiveGenerationFailedError):
-        """Waits until the ZIP archive containing all outputs from the
+        """Waits until the archive containing all outputs from the
         decompilation is generated.
 
         :param callable on_failure: What should be done when the generation
@@ -325,7 +325,7 @@ class Decompilation(Resource):
                 raise obj
 
     def save_archive(self, directory=None):
-        """Saves the ZIP archive containing all outputs from the decompilation
+        """Saves the archive containing all outputs from the decompilation
         to the given directory.
 
         :param str directory: Path to a directory in which the file will be
