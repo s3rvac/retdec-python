@@ -164,8 +164,8 @@ class Decompilation(Resource):
         self._update_state_if_needed()
         return self._archive_status.error
 
-    def wait_until_archive_is_generated(self,
-                                        on_failure=ArchiveGenerationFailedError):
+    def wait_until_archive_is_generated(
+            self, on_failure=ArchiveGenerationFailedError):
         """Waits until the archive containing all outputs from the
         decompilation is generated.
 
