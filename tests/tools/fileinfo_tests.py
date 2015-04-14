@@ -60,7 +60,7 @@ class MainTests(ToolTestsBase):
 
         # Mock Fileinfo so that when it is instantiated, it returns our
         # fileinfo that can be used in the tests.
-        self.fileinfo = mock.MagicMock(spec_set=Fileinfo)
+        self.fileinfo = mock.Mock(spec_set=Fileinfo)
         self.FileinfoMock = mock.Mock()
         self.FileinfoMock.return_value = self.fileinfo
         self.patch(

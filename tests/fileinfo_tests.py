@@ -36,7 +36,7 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
     def setUp(self):
         super().setUp()
 
-        self.input_file = mock.MagicMock(spec_set=File)
+        self.input_file = mock.Mock(spec_set=File)
 
         self.fileinfo = Fileinfo(api_key='KEY')
 

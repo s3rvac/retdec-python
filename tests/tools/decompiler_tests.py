@@ -78,7 +78,7 @@ class ProgressLogDisplayerTests(ToolTestsBase):
 
     def test_display_decompilation_progress_displays_correct_value_successful_decompilation(self):
         displayer = ProgressLogDisplayer()
-        d = mock.MagicMock(spec_set=Decompilation)
+        d = mock.Mock(spec_set=Decompilation)
         d.id = 'ID'
         d.has_finished.return_value = True
         d.has_failed.return_value = False
@@ -117,7 +117,7 @@ Done (100%)...                                     \n""".lstrip())
 
     def test_display_decompilation_progress_displays_correct_value_failed_decompilation(self):
         displayer = ProgressLogDisplayer()
-        d = mock.MagicMock(spec_set=Decompilation)
+        d = mock.Mock(spec_set=Decompilation)
         d.id = 'ID'
         d.has_finished.return_value = True
         d.has_failed.return_value = True

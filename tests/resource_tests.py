@@ -132,7 +132,7 @@ class WithMockedIO(WithPatching):
 
         If `directory` is ``None``, the current working directory is used.
         """
-        file = mock.MagicMock()
+        file = mock.Mock()
         file.name = 'file_name'
         self.conn.get_file.return_value = file
 
