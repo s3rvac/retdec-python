@@ -35,7 +35,7 @@ docs-coverage:
 	@$(MAKE) -C docs coverage
 
 lint:
-	@flake8 retdec tests
+	@flake8 --ignore=E501 retdec tests
 
 tests:
 	@nosetests tests \
