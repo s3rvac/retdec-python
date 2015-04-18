@@ -5,3 +5,7 @@ __pycache__
 # Unit tests and coverage reports
 /.coverage
 /coverage
+
+# Tox
+/.tox
+/retdec_python.egg-info

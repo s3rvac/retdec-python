@@ -21,6 +21,7 @@ help:
 
 clean: clean-pyc
 	@rm -rf .coverage coverage
+	@rm -rf .tox retdec_python.egg-info
 	@$(MAKE) -C docs clean
 
 clean-pyc:
