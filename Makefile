@@ -6,10 +6,11 @@
 # A GNU Makefile for the project.
 #
 
-.PHONY: clean clean-pyc docs docs-coverage help lint tests tests-coverage tests-timings
+.PHONY: build clean clean-pyc docs docs-coverage help lint tests tests-coverage tests-timings
 
 help:
 	@echo "Use \`make <target>', where <target> is one of the following:"
+	@echo "  build          - builds the package for upload to pypi"
 	@echo "  clean          - remove all generated files"
 	@echo "  clean-pyc      - remove just Python file artifacts"
 	@echo "  docs           - generate documentation"
@@ -19,9 +20,13 @@ help:
 	@echo "  tests-coverage - obtain test coverage"
 	@echo "  tests-timings  - obtain test timings"
 
+build:
+	@python3 setup.py sdist bdist_wheel
+
 clean: clean-pyc
 	@rm -rf .coverage coverage
 	@rm -rf .tox retdec_python.egg-info
+	@rm -rf build dist
 	@$(MAKE) -C docs clean
 
 clean-pyc:
