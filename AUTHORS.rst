@@ -1,7 +1,7 @@
 Authors
 =======
 
-[retdec-python](https://github.com/s3rvac/retdec-python) is written and
+`retdec-python <https://github.com/s3rvac/retdec-python>`_ is written and
 maintained by Petr Zemek and various contributors:
 
 Development Lead

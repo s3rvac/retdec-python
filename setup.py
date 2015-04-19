@@ -21,7 +21,7 @@ setup(
         'A Python library and tools providing easy access to the retdec.com '
         'decompilation service through their public REST API.'
     ),
-    long_description=read_file('README.md'),
+    long_description=read_file('README.rst'),
     author='Petr Zemek',
     author_email='s3rvac@gmail.com',
     url='https://github.com/s3rvac/retdec-python',
