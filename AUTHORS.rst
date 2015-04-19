@@ -7,7 +7,7 @@ maintained by Petr Zemek and various contributors:
 Development Lead
 ----------------
 
-* Petr Zemek (<s3rvac@gmail.com>)
+* Petr Zemek (s3rvac@gmail.com)
 
 Contributors
 ------------

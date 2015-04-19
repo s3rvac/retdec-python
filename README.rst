@@ -13,7 +13,7 @@ The library is in a **very early stage of development.**
 License
 -------
 
-Copyright (c) 2015 Petr Zemek (<s3rvac@gmail.com>) and contributors.
+Copyright (c) 2015 Petr Zemek (s3rvac@gmail.com) and contributors.
 
 Distributed under the MIT license. See the `LICENSE
 <https://github.com/s3rvac/retdec-python/blob/master/LICENSE>`_ file for more
