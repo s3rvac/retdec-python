@@ -10,6 +10,13 @@ Development Status
 
 The library is in a **very early stage of development.**
 
+Dependencies
+------------
+
+The library and tools require Python >= 3.3 and the `requests
+<http://docs.python-requests.org>`_ module for making HTTPS calls to the
+`retdec.com API <https://retdec.com/api/>`_.
+
 License
 -------
 
