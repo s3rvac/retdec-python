@@ -1,6 +1,10 @@
 retdec-python
 =============
 
+.. image:: https://readthedocs.org/projects/retdec-python/badge/?version=latest
+    :target: https://readthedocs.org/projects/retdec-python/?badge=latest
+    :alt: Documentation Status
+
 A Python library and tools providing easy access to the `retdec.com
 <https://retdec.com>`_ decompilation service through their public `REST API
 <https://retdec.com/api/>`_.
@@ -54,12 +58,13 @@ The library and tools require Python >= 3.3 and the `requests
 Installation
 ------------
 
-Installation description will be available soon.
+Installation description **will be available soon**.
 
 Documentation
 -------------
 
-The documentation will be available soon.
+The documentation **will be available soon** `here
+<http://retdec-python.readthedocs.org/en/latest/>`_.
 
 Contact and Support
 -------------------

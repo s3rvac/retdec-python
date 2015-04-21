@@ -6,7 +6,7 @@ Welcome To retdec-python's Documentation!
 `retdec-python <https://github.com/s3rvac/retdec-python>`_ is a Python library and tools providing easy access to the `retdec.com <https://retdec.com>`_ decompilation service through their public `REST API
 <https://retdec.com/api/>`_.
 
-**Note:** The library is in a **very early stage of development.**
+**Note:** The library is in an **early stage of development**. Its documentation **will be available soon**.
 
 .. toctree::
    :maxdepth: 2
