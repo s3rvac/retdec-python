@@ -72,19 +72,16 @@ class Service:
         return api_url.rstrip('/')
 
     @staticmethod
-    def _get_param(name, params, required=False, choices=None, default=None):
+    def _get_param(name, params, choices=None, default=None):
         """Returns the value of the given parameter.
 
         :param str name: Name of the parameter.
         :param dict params: Parameters from which the value should be obtained.
-        :param bool required: Has the parameter be present and be non-``None``?
         :param set choices: Allowed values for the parameter.
-        :param object default: Default value to return when `required` is
-                               ``False`` and the parameter is not found.
+        :param object default: Default value to return when the parameter is
+                               not found.
         """
         if name not in params or params[name] is None:
-            if required:
-                raise MissingParameterError(name)
             return default
 
         value = params[name]
