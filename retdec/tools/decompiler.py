@@ -342,7 +342,7 @@ def main(argv=None):
         api_key=args.api_key
     )
 
-    decompilation = decompiler.run_decompilation(
+    decompilation = decompiler.start_decompilation(
         input_file=args.input_file,
         mode=args.mode,
         generate_archive=args.generate_archive

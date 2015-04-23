@@ -14,7 +14,7 @@ from retdec.service import Service
 class Decompiler(Service):
     """Access to the decompilation service."""
 
-    def run_decompilation(self, **kwargs):
+    def start_decompilation(self, **kwargs):
         """Starts a decompilation with the given parameters.
 
         :param input_file: File to be analyzed (**required**).

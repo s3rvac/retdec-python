@@ -31,8 +31,8 @@ class DecompilerTests(BaseServiceTests):
         )
 
 
-class DecompilerRunDecompilationTests(BaseServiceTests):
-    """Tests for :func:`retdec.decompiler.Decompiler.run_decompilation()`."""
+class DecompilerStartDecompilationTests(BaseServiceTests):
+    """Tests for :func:`retdec.decompiler.Decompiler.start_decompilation()`."""
 
     def setUp(self):
         super().setUp()
@@ -42,7 +42,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
         self.decompiler = Decompiler(api_key='KEY')
 
     def test_creates_api_connection_with_correct_url_and_api_key(self):
-        self.decompiler.run_decompilation(input_file=self.input_file)
+        self.decompiler.start_decompilation(input_file=self.input_file)
 
         self.APIConnectionMock.assert_called_once_with(
             'https://retdec.com/service/api/decompiler/decompilations',
@@ -50,7 +50,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
         )
 
     def test_sends_input_file(self):
-        self.decompiler.run_decompilation(input_file=self.input_file)
+        self.decompiler.start_decompilation(input_file=self.input_file)
 
         self.assert_post_request_was_sent_with(
             files=AnyFilesWith(input=AnyFileNamed(self.input_file.name))
@@ -59,7 +59,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def test_mode_is_set_to_c_when_not_given_and_file_name_ends_with_c(self):
         self.input_file.name = 'test.c'
 
-        self.decompiler.run_decompilation(input_file=self.input_file)
+        self.decompiler.start_decompilation(input_file=self.input_file)
 
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(mode='c')
@@ -68,7 +68,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def test_mode_is_set_to_bin_when_not_given_and_file_name_does_not_end_with_c(self):
         self.input_file.name = 'test.exe'
 
-        self.decompiler.run_decompilation(input_file=self.input_file)
+        self.decompiler.start_decompilation(input_file=self.input_file)
 
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(mode='bin')
@@ -77,7 +77,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def test_generate_archive_is_set_to_false_when_not_given(self):
         self.input_file.name = 'test.exe'
 
-        self.decompiler.run_decompilation(
+        self.decompiler.start_decompilation(
             input_file=self.input_file
         )
 
@@ -88,7 +88,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def test_generate_archive_is_set_to_true_when_given_as_true(self):
         self.input_file.name = 'test.exe'
 
-        self.decompiler.run_decompilation(
+        self.decompiler.start_decompilation(
             input_file=self.input_file,
             generate_archive=True
         )
@@ -100,7 +100,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def test_generate_archive_is_set_to_false_when_given_as_false(self):
         self.input_file.name = 'test.exe'
 
-        self.decompiler.run_decompilation(
+        self.decompiler.start_decompilation(
             input_file=self.input_file,
             generate_archive=False
         )
@@ -113,13 +113,13 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
         self.input_file.name = 'test.exe'
 
         with self.assertRaises(InvalidValueError):
-            self.decompiler.run_decompilation(
+            self.decompiler.start_decompilation(
                 input_file=self.input_file,
                 generate_archive='some data'
             )
 
     def test_mode_is_used_when_given(self):
-        self.decompiler.run_decompilation(
+        self.decompiler.start_decompilation(
             input_file=self.input_file,
             mode='bin'
         )
@@ -130,7 +130,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
 
     def test_raises_exception_when_mode_is_invalid(self):
         with self.assertRaises(InvalidValueError):
-            self.decompiler.run_decompilation(
+            self.decompiler.start_decompilation(
                 input_file=self.input_file,
                 mode='xxx'
             )
@@ -138,7 +138,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def test_file_name_extension_is_case_insensitive_during_mode_detection(self):
         self.input_file.name = 'test.C'
 
-        self.decompiler.run_decompilation(input_file=self.input_file)
+        self.decompiler.start_decompilation(input_file=self.input_file)
 
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(mode='c')
@@ -147,7 +147,7 @@ class DecompilerRunDecompilationTests(BaseServiceTests):
     def test_uses_returned_id_to_initialize_decompilation(self):
         self.conn.send_post_request.return_value = {'id': 'ID'}
 
-        decompilation = self.decompiler.run_decompilation(
+        decompilation = self.decompiler.start_decompilation(
             input_file=self.input_file
         )
 

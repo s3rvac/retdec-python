@@ -357,12 +357,12 @@ class MainTests(ToolTestsBase):
             self.DecompilerMock
         )
 
-    def get_run_decompilation(self):
-        """Returns the decompilation that run.
+    def get_started_decompilation(self):
+        """Returns a decompilation that has started.
 
-        This method assumes that a decompilation has run.
+        This method assumes that a decompilation has started.
         """
-        return self.decompiler.run_decompilation()
+        return self.decompiler.start_decompilation()
 
     def test_performs_correct_actions_when_only_api_key_and_input_file_are_given(self):
         main(['decompiler.py', '--api-key', 'API-KEY', 'prog.exe'])
@@ -373,15 +373,15 @@ class MainTests(ToolTestsBase):
             api_key='API-KEY'
         )
 
-        # Decompilation is run with correct arguments.
-        self.decompiler.run_decompilation.assert_called_once_with(
+        # Decompilation is started with correct arguments.
+        self.decompiler.start_decompilation.assert_called_once_with(
             input_file='prog.exe',
             mode=None,
             generate_archive=False
         )
 
         # The tool waits until the decompilation is finished.
-        decompilation = self.get_run_decompilation()
+        decompilation = self.get_started_decompilation()
         self.assertEqual(
             len(decompilation.wait_until_finished.mock_calls), 1
         )
@@ -403,11 +403,11 @@ class MainTests(ToolTestsBase):
         )
         main(standard_args + additional_args)
 
-    def assert_decompilation_was_run_also_with(self, *args, **kwargs):
-        """Asserts that the decompilation was also run with the given
+    def assert_decompilation_was_started_also_with(self, *args, **kwargs):
+        """Asserts that the decompilation was also started with the given
         arguments.
         """
-        decompilation_args = self.decompiler.run_decompilation.call_args
+        decompilation_args = self.decompiler.start_decompilation.call_args
         for arg in args:
             self.assertIn(arg, decompilation_args[0])
         for key, value in kwargs.items():
@@ -420,9 +420,9 @@ class MainTests(ToolTestsBase):
             '--with-archive'
         )
 
-        self.assert_decompilation_was_run_also_with(
+        self.assert_decompilation_was_started_also_with(
             generate_archive=True
         )
-        decompilation = self.get_run_decompilation()
+        decompilation = self.get_started_decompilation()
         decompilation.wait_until_archive_is_generated.assert_called_once_with()
         decompilation.save_archive.assert_called_once_with(os.getcwd())

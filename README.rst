@@ -24,7 +24,7 @@ You can either incorporate the library in your own scripts:
     from retdec.decompiler import Decompiler
 
     decompiler = Decompiler(api_key='YOUR-API-KEY')
-    decompilation = decompiler.run_decompilation(input_file='file.exe')
+    decompilation = decompiler.start_decompilation(input_file='file.exe')
     decompilation.wait_until_finished()
     decompilation.save_hll()
 
