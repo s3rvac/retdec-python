@@ -90,6 +90,6 @@ class Decompiler(Service):
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(
-            __name__ + '.' + self.__class__.__qualname__,
+            __name__ + '.' + self.__class__.__name__,
             self.api_url
         )

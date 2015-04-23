@@ -37,7 +37,7 @@ class Matcher(metaclass=abc.ABCMeta):
         return not self == other
 
     def __repr__(self):
-        name = self.__class__.__qualname__
+        name = self.__class__.__name__
         attr_list = ', '.join(
             '{}={!r}'.format(key, value) for key, value in self.__dict__.items()
         )
