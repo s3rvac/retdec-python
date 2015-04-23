@@ -1,0 +1,14 @@
+language: python
+python:
+  - 3.3
+  - 3.4
+install:
+  - pip install coverage
+  - pip install coveralls
+  - pip install nose
+  - pip install requests
+  - pip install responses
+script:
+  - nosetests tests --with-coverage --cover-package=retdec --cover-erase
+after_success:
+  - coveralls
