@@ -13,3 +13,7 @@ __pycache__
 /build
 /dist
 /retdec_python.egg-info
+
+# Virtual environments
+/venv
+/virtualenv
