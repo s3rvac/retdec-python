@@ -5,6 +5,10 @@ retdec-python
     :target: https://readthedocs.org/projects/retdec-python/?badge=latest
     :alt: Documentation Status
 
+.. image:: https://travis-ci.org/s3rvac/retdec-python.svg
+    :target: https://travis-ci.org/s3rvac/retdec-python
+    :alt: Build Status
+
 .. image:: https://coveralls.io/repos/s3rvac/retdec-python/badge.svg
     :target: https://coveralls.io/r/s3rvac/retdec-python
     :alt: Code Coverage Status
