@@ -14,7 +14,7 @@ from retdec.service import Service
 class Fileinfo(Service):
     """Access to the file-analyzing service."""
 
-    def run_analysis(self, **kwargs):
+    def start_analysis(self, **kwargs):
         """Starts an analysis with the given parameters.
 
         :param input_file: File to be analyzed (**required**).

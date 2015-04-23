@@ -69,7 +69,7 @@ class MainTests(ToolTestsBase):
         )
 
     def test_performs_correct_actions(self):
-        self.fileinfo.run_analysis.return_value.get_output.return_value = 'OUTPUT'
+        self.fileinfo.start_analysis.return_value.get_output.return_value = 'OUTPUT'
 
         main(['fileinfo.py', '--api-key', 'API-KEY', 'prog.exe'])
 
@@ -79,14 +79,14 @@ class MainTests(ToolTestsBase):
             api_key='API-KEY'
         )
 
-        # Analysis is run with correct arguments.
-        self.fileinfo.run_analysis.assert_called_once_with(
+        # Analysis is started with correct arguments.
+        self.fileinfo.start_analysis.assert_called_once_with(
             input_file='prog.exe',
             verbose=False
         )
 
         # The tool waits until the analysis is finished.
-        analysis = self.fileinfo.run_analysis()
+        analysis = self.fileinfo.start_analysis()
         analysis.wait_until_finished.assert_called_once_with()
 
         # The output from the analysis is written to the standard output.

@@ -51,7 +51,7 @@ def main(argv=None):
         api_url=args.api_url,
         api_key=args.api_key
     )
-    analysis = fileinfo.run_analysis(
+    analysis = fileinfo.start_analysis(
         input_file=args.input_file,
         verbose=args.verbose
     )

@@ -30,8 +30,8 @@ class FileinfoTests(BaseServiceTests):
         )
 
 
-class FileinfoRunAnalysisTests(BaseServiceTests):
-    """Tests for :func:`retdec.fileinfo.Fileinfo.run_analysis()`."""
+class FileinfoStartAnalysisTests(BaseServiceTests):
+    """Tests for :func:`retdec.fileinfo.Fileinfo.start_analysis()`."""
 
     def setUp(self):
         super().setUp()
@@ -41,7 +41,7 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
         self.fileinfo = Fileinfo(api_key='KEY')
 
     def test_creates_api_connection_with_correct_url_and_api_key(self):
-        self.fileinfo.run_analysis(input_file=self.input_file)
+        self.fileinfo.start_analysis(input_file=self.input_file)
 
         self.APIConnectionMock.assert_called_once_with(
             'https://retdec.com/service/api/fileinfo/analyses',
@@ -49,21 +49,21 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
         )
 
     def test_sends_input_file(self):
-        self.fileinfo.run_analysis(input_file=self.input_file)
+        self.fileinfo.start_analysis(input_file=self.input_file)
 
         self.assert_post_request_was_sent_with(
             files=AnyFilesWith(input=AnyFileNamed(self.input_file.name))
         )
 
     def test_verbose_is_set_to_flase_when_not_given(self):
-        self.fileinfo.run_analysis(input_file=self.input_file)
+        self.fileinfo.start_analysis(input_file=self.input_file)
 
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(verbose=False)
         )
 
     def test_verbose_is_set_to_False_when_given_but_false(self):
-        self.fileinfo.run_analysis(
+        self.fileinfo.start_analysis(
             input_file=self.input_file,
             verbose=False
         )
@@ -73,7 +73,7 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
         )
 
     def test_verbose_is_set_to_true_when_given_and_true(self):
-        self.fileinfo.run_analysis(
+        self.fileinfo.start_analysis(
             input_file=self.input_file,
             verbose=True
         )
@@ -85,7 +85,7 @@ class FileinfoRunAnalysisTests(BaseServiceTests):
     def test_uses_returned_id_to_initialize_analysis(self):
         self.conn.send_post_request.return_value = {'id': 'ID'}
 
-        analysis = self.fileinfo.run_analysis(
+        analysis = self.fileinfo.start_analysis(
             input_file=self.input_file
         )
 
