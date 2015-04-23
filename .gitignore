@@ -8,8 +8,8 @@ __pycache__
 
 # Tox
 /.tox
-/retdec_python.egg-info
 
 # Build and distribution
 /build
 /dist
+/retdec_python.egg-info
