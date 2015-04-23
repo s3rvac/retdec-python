@@ -7,7 +7,11 @@
 """Tests for the library and tools."""
 
 import abc
-from unittest import mock
+
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 
 
 # Do not inherit from unittest.TestCase because WithPatching is a mixin, not a

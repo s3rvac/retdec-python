@@ -9,7 +9,6 @@
 import io
 import platform
 import unittest
-from unittest import mock
 
 import requests
 import responses
@@ -20,6 +19,7 @@ from retdec.exceptions import ConnectionError
 from retdec.exceptions import UnknownAPIError
 from tests import AnyDictWith
 from tests import Anything
+from tests import mock
 
 
 class AnyURL(Anything):

@@ -8,12 +8,12 @@
 
 import os
 import unittest
-from unittest import mock
 
 from retdec.conn import APIConnection
 from retdec.exceptions import MissingAPIKeyError
 from retdec.service import Service
 from tests import WithPatching
+from tests import mock
 from tests.conn_tests import AnyFiles
 from tests.conn_tests import AnyParams
 from tests.conn_tests import AnyURL

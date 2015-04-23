@@ -6,12 +6,11 @@
 
 """Tests for the :mod:`retdec.tools.fileinfo` module."""
 
-from unittest import mock
-
 from retdec import DEFAULT_API_URL
 from retdec.fileinfo import Fileinfo
 from retdec.tools.fileinfo import main
 from retdec.tools.fileinfo import parse_args
+from tests import mock
 from tests.tools import ToolTestsBase
 
 

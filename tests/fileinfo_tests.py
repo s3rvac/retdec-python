@@ -6,10 +6,9 @@
 
 """Tests for the :mod:`retdec.fileinfo` module."""
 
-from unittest import mock
-
 from retdec.file import File
 from retdec.fileinfo import Fileinfo
+from tests import mock
 from tests.conn_tests import AnyFilesWith
 from tests.conn_tests import AnyParamsWith
 from tests.file_tests import AnyFileNamed

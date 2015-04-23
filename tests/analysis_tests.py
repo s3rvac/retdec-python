@@ -6,10 +6,9 @@
 
 """Tests for the :mod:`retdec.analysis` module."""
 
-from unittest import mock
-
 from retdec.analysis import Analysis
 from retdec.exceptions import AnalysisFailedError
+from tests import mock
 from tests.resource_tests import ResourceTestsBase
 from tests.resource_tests import WithDisabledWaitingInterval
 from tests.resource_tests import WithMockedIO

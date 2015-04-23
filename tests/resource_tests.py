@@ -10,11 +10,11 @@ import datetime
 import io
 import os
 import unittest
-from unittest import mock
 
 from retdec.conn import APIConnection
 from retdec.resource import Resource
 from tests import WithPatching
+from tests import mock
 
 
 class ResourceTestsBase(unittest.TestCase, WithPatching):

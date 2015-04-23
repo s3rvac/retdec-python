@@ -6,12 +6,11 @@
 
 """Tests for the :mod:`retdec.decompilation` module."""
 
-from unittest import mock
-
 from retdec.decompilation import Decompilation
 from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import DecompilationFailedError
 from retdec.exceptions import OutputNotRequestedError
+from tests import mock
 from tests.resource_tests import ResourceTestsBase
 from tests.resource_tests import WithDisabledWaitingInterval
 from tests.resource_tests import WithMockedIO

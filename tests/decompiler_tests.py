@@ -6,11 +6,10 @@
 
 """Tests for the :mod:`retdec.decompiler` module."""
 
-from unittest import mock
-
 from retdec.decompiler import Decompiler
 from retdec.exceptions import InvalidValueError
 from retdec.file import File
+from tests import mock
 from tests.conn_tests import AnyFilesWith
 from tests.conn_tests import AnyParamsWith
 from tests.file_tests import AnyFileNamed

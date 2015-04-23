@@ -8,7 +8,6 @@
 
 import os
 import unittest
-from unittest import mock
 
 from retdec import DEFAULT_API_URL
 from retdec.decompilation import Decompilation
@@ -22,6 +21,7 @@ from retdec.tools.decompiler import get_output_dir
 from retdec.tools.decompiler import get_progress_displayer
 from retdec.tools.decompiler import main
 from retdec.tools.decompiler import parse_args
+from tests import mock
 from tests.tools import ToolTestsBase
 
 
