@@ -12,7 +12,6 @@ from retdec import DEFAULT_API_URL
 from retdec.conn import APIConnection
 from retdec.exceptions import InvalidValueError
 from retdec.exceptions import MissingAPIKeyError
-from retdec.exceptions import MissingParameterError
 
 
 class Service:
