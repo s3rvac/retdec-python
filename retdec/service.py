@@ -53,10 +53,11 @@ class Service:
         if api_key is not None:
             return api_key
 
-        try:
-            return os.environ['RETDEC_API_KEY']
-        except KeyError:
-            raise MissingAPIKeyError from None
+        api_key = os.environ.get('RETDEC_API_KEY', None)
+        if api_key is not None:
+            return api_key
+
+        raise MissingAPIKeyError
 
     @staticmethod
     def _get_api_url_to_use(api_url):
