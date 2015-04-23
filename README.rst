@@ -68,7 +68,7 @@ basic support of the `decompilation
 <https://retdec.com/api/docs/fileinfo.html>`_, and `test
 <https://retdec.com/api/docs/test.html>`_ services.
 
-Dependencies
+Requirements
 ------------
 
 The library and tools require Python >= 3.3 and the `requests
