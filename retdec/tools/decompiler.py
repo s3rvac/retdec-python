@@ -49,7 +49,7 @@ class ProgressDisplayer(metaclass=abc.ABCMeta):
 
     def __repr__(self):
         return '<{}>'.format(
-            __name__ + '.' + self.__class__.__qualname__
+            __name__ + '.' + self.__class__.__name__
         )
 
 

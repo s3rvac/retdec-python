@@ -161,6 +161,6 @@ class APIConnection:
 
     def __repr__(self):
         return '<{} base_url={!r}>'.format(
-            __name__ + '.' + self.__class__.__qualname__,
+            __name__ + '.' + self.__class__.__name__,
             self._base_url
         )

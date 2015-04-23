@@ -39,6 +39,6 @@ class Analysis(Resource):
 
     def __repr__(self):
         return '<{} id={!r}>'.format(
-            __name__ + '.' + self.__class__.__qualname__,
+            __name__ + '.' + self.__class__.__name__,
             self.id
         )

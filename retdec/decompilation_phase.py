@@ -49,7 +49,7 @@ class DecompilationPhase:
 
     def __repr__(self):
         return '{}(name={!r}, part={!r}, description={!r}, completion={})'.format(
-            __name__ + '.' + self.__class__.__qualname__,
+            __name__ + '.' + self.__class__.__name__,
             self.name,
             self.part,
             self.description,

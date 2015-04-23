@@ -2,10 +2,12 @@ language: python
 python:
   - 3.3
   - 3.4
+  - pypy3
 install:
   - pip install flake8
   - pip install coverage
   - pip install coveralls
+  - pip install mock
   - pip install nose
   - pip install requests
   - pip install responses
