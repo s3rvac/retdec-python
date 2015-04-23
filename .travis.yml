@@ -3,6 +3,7 @@ python:
   - 3.3
   - 3.4
 install:
+  - pip install flake8
   - pip install coverage
   - pip install coveralls
   - pip install nose
@@ -10,5 +11,6 @@ install:
   - pip install responses
 script:
   - nosetests tests --with-coverage --cover-package=retdec --cover-erase
+  - flake8 --ignore=E501 retdec tests
 after_success:
   - coveralls
