@@ -71,9 +71,9 @@ basic support of the `decompilation
 Requirements
 ------------
 
-The library and tools require Python >= 3.3 and the `requests
-<http://docs.python-requests.org>`_ module for making HTTPS calls to the
-`retdec.com API <https://retdec.com/api/>`_.
+* Python >= 3.3 or PyPy3
+* `requests <http://docs.python-requests.org>`_ module for making HTTPS calls
+  to the `retdec.com API <https://retdec.com/api/>`_
 
 Installation
 ------------
