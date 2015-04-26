@@ -71,7 +71,7 @@ basic support of the `decompilation
 Requirements
 ------------
 
-* Python 3.2 - 3.4 or PyPy3
+* Python >= 3.2 or PyPy3 >= 2.4
 * `requests <http://docs.python-requests.org>`_ module for making HTTPS calls
   to the `retdec.com API <https://retdec.com/api/>`_
 
