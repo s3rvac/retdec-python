@@ -45,6 +45,9 @@ or you can use the built-in scripts for stand-alone decompilations:
     [..]
     Done (100%)...
 
+    Downloading:
+     - file.c
+
 Either way, ``file.c`` then contains the decompiled C code:
 
 .. code-block:: text
