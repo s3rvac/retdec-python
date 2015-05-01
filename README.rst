@@ -26,7 +26,7 @@ You can either incorporate the library in your own scripts:
     decompiler = Decompiler(api_key='YOUR-API-KEY')
     decompilation = decompiler.start_decompilation(input_file='file.exe')
     decompilation.wait_until_finished()
-    decompilation.save_hll()
+    decompilation.save_hll_code()
 
 or you can use the built-in scripts for stand-alone decompilations:
 

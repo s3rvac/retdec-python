@@ -386,8 +386,8 @@ class MainTests(ToolTestsBase):
             len(decompilation.wait_until_finished.mock_calls), 1
         )
 
-        # The generated HLL is saved.
-        decompilation.save_hll.assert_called_once_with(os.getcwd())
+        # The generated HLL code is saved.
+        decompilation.save_hll_code.assert_called_once_with(os.getcwd())
 
         # The generated DSM is saved.
         decompilation.save_dsm.assert_called_once_with(os.getcwd())

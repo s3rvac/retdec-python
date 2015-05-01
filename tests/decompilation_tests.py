@@ -480,26 +480,26 @@ class DecompilationGetOutputsTests(WithMockedIO, DecompilationTestsBase):
     :class:`retdec.decompilation.Decompilation`.
     """
 
-    def test_get_hll_obtains_file_contents(self):
+    def test_get_hll_code_obtains_file_contents(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_file_contents(
-            d.get_hll,
+            d.get_hll_code,
             '/ID/outputs/hll',
             is_text_file=True
         )
 
-    def test_save_hll_stores_file_to_cwd_when_directory_is_not_given(self):
+    def test_save_hll_code_stores_file_to_cwd_when_directory_is_not_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_hll,
+            d.save_hll_code,
             '/ID/outputs/hll',
             directory=None
         )
 
-    def test_save_hll_stores_file_to_directory_when_given(self):
+    def test_save_hll_code_stores_file_to_directory_when_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_hll,
+            d.save_hll_code,
             '/ID/outputs/hll',
             directory='dir'
         )

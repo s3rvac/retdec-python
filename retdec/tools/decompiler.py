@@ -356,7 +356,7 @@ def main(argv=None):
 
     output_dir = get_output_dir(args)
 
-    file_path = decompilation.save_hll(output_dir)
+    file_path = decompilation.save_hll_code(output_dir)
     display_download_progress(displayer, file_path)
 
     file_path = decompilation.save_dsm(output_dir)

@@ -76,7 +76,7 @@ class Decompilation(Resource):
         if self._failed:
             self._handle_failure(on_failure, self._error)
 
-    def get_hll(self):
+    def get_hll_code(self):
         """Obtains and returns the decompiled code in the high-level language
         (`str`).
         """
@@ -85,7 +85,7 @@ class Decompilation(Resource):
             is_text_file=True
         )
 
-    def save_hll(self, directory=None):
+    def save_hll_code(self, directory=None):
         """Saves the decompiled code in the high-level language to the given
         directory.
 
