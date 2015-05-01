@@ -101,7 +101,7 @@ class Decompilation(Resource):
             directory
         )
 
-    def get_dsm(self):
+    def get_dsm_code(self):
         """Obtains and returns the disassembled input file in assembly-like
         syntax (`str`).
         """
@@ -110,7 +110,7 @@ class Decompilation(Resource):
             is_text_file=True
         )
 
-    def save_dsm(self, directory=None):
+    def save_dsm_code(self, directory=None):
         """Saves the disassembled input file in assembly-like syntax to the
         given directory.
 

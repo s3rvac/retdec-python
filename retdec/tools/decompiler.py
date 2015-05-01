@@ -359,7 +359,7 @@ def main(argv=None):
     file_path = decompilation.save_hll_code(output_dir)
     display_download_progress(displayer, file_path)
 
-    file_path = decompilation.save_dsm(output_dir)
+    file_path = decompilation.save_dsm_code(output_dir)
     display_download_progress(displayer, file_path)
 
     if args.generate_archive:

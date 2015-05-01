@@ -504,26 +504,26 @@ class DecompilationGetOutputsTests(WithMockedIO, DecompilationTestsBase):
             directory='dir'
         )
 
-    def test_get_dsm_obtains_file_contents(self):
+    def test_get_dsm_code_obtains_file_contents(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_file_contents(
-            d.get_dsm,
+            d.get_dsm_code,
             '/ID/outputs/dsm',
             is_text_file=True
         )
 
-    def test_save_dsm_stores_file_to_cwd_when_directory_is_not_given(self):
+    def test_save_dsm_code_stores_file_to_cwd_when_directory_is_not_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_dsm,
+            d.save_dsm_code,
             '/ID/outputs/dsm',
             directory=None
         )
 
-    def test_save_dsm_stores_file_to_directory_when_given(self):
+    def test_save_dsm_code_stores_file_to_directory_when_given(self):
         d = Decompilation('ID', self.conn)
         self.assert_obtains_and_saves_file(
-            d.save_dsm,
+            d.save_dsm_code,
             '/ID/outputs/dsm',
             directory='dir'
         )

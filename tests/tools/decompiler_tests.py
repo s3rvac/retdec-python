@@ -389,8 +389,8 @@ class MainTests(ToolTestsBase):
         # The generated HLL code is saved.
         decompilation.save_hll_code.assert_called_once_with(os.getcwd())
 
-        # The generated DSM is saved.
-        decompilation.save_dsm.assert_called_once_with(os.getcwd())
+        # The generated DSM code is saved.
+        decompilation.save_dsm_code.assert_called_once_with(os.getcwd())
 
     def call_main_with_standard_arguments_and(self, *additional_args):
         """Calls ``main()`` with standard arguments (such as ``--api-key``),
