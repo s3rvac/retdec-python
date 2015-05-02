@@ -55,5 +55,9 @@ setup(
     ],
     keywords='retdec decompiler decompilation analysis fileinfo',
     packages=['retdec'],
-    install_requires=['requests']
+    install_requires=['requests'],
+    scripts=[
+        os.path.join('scripts', 'decompiler'),
+        os.path.join('scripts', 'fileinfo')
+    ]
 )
