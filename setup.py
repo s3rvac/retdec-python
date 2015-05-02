@@ -7,6 +7,9 @@
 # A setuptools-based setup module for the project.
 #
 
+import ast
+import os
+import re
 from setuptools import setup
 
 # Utility function to read the contents of the given file.
@@ -14,9 +17,22 @@ def read_file(file_path):
     with open(file_path, encoding='utf-8') as f:
         return f.read()
 
+def get_project_version():
+    # Based on:
+    #
+    #   https://packaging.python.org/en/latest/single_source_version.html
+    #   https://github.com/mitsuhiko/flask/blob/master/setup.py
+    #
+    return ast.literal_eval(
+        re.search(
+            r'__version__\s+=\s+(.*)',
+            read_file(os.path.join('retdec', '__init__.py'))
+        ).group(1)
+    )
+
 setup(
     name='retdec-python',
-    version='0.0',
+    version=get_project_version(),
     description=(
         'A Python library and tools providing easy access to the retdec.com '
         'decompilation service through their public REST API.'
