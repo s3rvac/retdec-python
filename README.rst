@@ -28,11 +28,11 @@ You can either incorporate the library in your own scripts:
     decompilation.wait_until_finished()
     decompilation.save_hll_code()
 
-or you can use the built-in tools for stand-alone decompilations:
+or you can use the provided script for stand-alone decompilations:
 
 .. code-block:: text
 
-    $ python -m retdec.tools.decompiler -k YOUR-API-KEY file.exe
+    $ decompiler -k YOUR-API-KEY file.exe
     v23bmYb67R
     ----------
 
