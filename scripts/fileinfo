@@ -18,9 +18,8 @@ sys.path.append('.')
 
 from retdec.tools import fileinfo
 
-if __name__ == '__main__':
-    try:
-        sys.exit(fileinfo.main())
-    except Exception as ex:
-        sys.stderr.write('error: {}\n'.format(str(ex)))
-        sys.exit(1)
+try:
+    sys.exit(fileinfo.main())
+except Exception as ex:
+    sys.stderr.write('error: {}\n'.format(str(ex)))
+    sys.exit(1)
