@@ -94,7 +94,7 @@ Contact and Support
 
 I will be very glad to get your feedback, `pull requests
 <https://github.com/s3rvac/retdec-python/pulls>`_, `issues
-<https://github.com/s3rvac/retdec-python/issues>`_, or a just simple *Thanks*.
+<https://github.com/s3rvac/retdec-python/issues>`_, or just a simple *Thanks*.
 Feel free to contact me for any questions you might have!
 
 License
