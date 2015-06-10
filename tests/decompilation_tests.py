@@ -33,7 +33,7 @@ class DecompilationTestsBase(ResourceTestsBase):
 class DecompilationTests(DecompilationTestsBase):
     """Tests for :class:`retdec.decompilation.Decompilation`."""
 
-    def get_decompilation_that_did_not_to_request_archive_to_be_generated(self):
+    def get_decompilation_that_did_not_request_archive_to_be_generated(self):
         # This is signalized by a response that does not include the 'archive'
         # key.
         self.conn.send_get_request.return_value = self.status_with({})
@@ -127,7 +127,7 @@ class DecompilationTests(DecompilationTestsBase):
         self.assertFalse(d.archive_generation_has_finished())
 
     def test_archive_generation_has_finished_raises_exception_when_archive_not_requested(self):
-        d = self.get_decompilation_that_did_not_to_request_archive_to_be_generated()
+        d = self.get_decompilation_that_did_not_request_archive_to_be_generated()
 
         with self.assertRaises(OutputNotRequestedError):
             d.archive_generation_has_finished()
@@ -183,7 +183,7 @@ class DecompilationTests(DecompilationTestsBase):
         self.assertFalse(d.archive_generation_has_succeeded())
 
     def test_archive_generation_has_succeeded_raises_exception_when_archive_not_requested(self):
-        d = self.get_decompilation_that_did_not_to_request_archive_to_be_generated()
+        d = self.get_decompilation_that_did_not_request_archive_to_be_generated()
 
         with self.assertRaises(OutputNotRequestedError):
             d.archive_generation_has_succeeded()
@@ -239,7 +239,7 @@ class DecompilationTests(DecompilationTestsBase):
         self.assertFalse(d.archive_generation_has_failed())
 
     def test_archive_generation_has_failed_raises_exception_when_archive_not_requested(self):
-        d = self.get_decompilation_that_did_not_to_request_archive_to_be_generated()
+        d = self.get_decompilation_that_did_not_request_archive_to_be_generated()
 
         with self.assertRaises(OutputNotRequestedError):
             d.archive_generation_has_failed()
@@ -283,7 +283,7 @@ class DecompilationTests(DecompilationTestsBase):
         self.assertEqual(d.get_archive_generation_error(), 'error message')
 
     def test_get_archive_generation_error_raises_exception_when_archive_not_requested(self):
-        d = self.get_decompilation_that_did_not_to_request_archive_to_be_generated()
+        d = self.get_decompilation_that_did_not_request_archive_to_be_generated()
 
         with self.assertRaises(OutputNotRequestedError):
             d.get_archive_generation_error()
