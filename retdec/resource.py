@@ -30,10 +30,10 @@ class Resource:
         self._conn = conn
 
         # To prevent abuse of the API, we update the state of the resource only
-        # once in a while. In order to track whether we should perform an
-        # update, we keep a date and time of the last update. By initializing
-        # it to the minimal representable date, we ensure that the resource
-        # gets updated upon the first call of a state-checking method, like
+        # once in a while. To keep track whether we should perform an update,
+        # we store the date and time of the last update. By initializing it to
+        # the minimal representable date, we ensure that the resource gets
+        # updated upon the first call of a state-checking method, like
         # has_finished().
         # See the implementation of _state_should_be_updated() for more
         # details.
