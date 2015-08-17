@@ -227,8 +227,8 @@ class ResourceTests(ResourceTestsBase):
         self.conn.send_get_request.assert_called_once_with('/ID/status')
 
     def test_two_successive_state_queries_do_not_result_into_two_status_checks(self):
-        # A certain time interval has to pass between checks successive checks
-        # for the resource to query its status.
+        # A certain time interval has to pass between successive checks for the
+        # resource to query its status.
         self.conn.send_get_request.side_effect = [
             self.status_with({
                 'pending': True
