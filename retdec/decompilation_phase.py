@@ -11,7 +11,7 @@ class DecompilationPhase:
     """Phase of a decompilation."""
 
     def __init__(self, name, part, description, completion):
-        """Initializes a phase."""
+        """Initializes the phase."""
         self._name = name
         self._part = part
         self._description = description
