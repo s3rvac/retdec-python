@@ -21,7 +21,7 @@ class Decompiler(Service):
         :type input_file: str or file-like object
         :param mode: Decompilation mode.
         :type mode: str
-        :param generate_archive: Should a archive containing all outputs from
+        :param generate_archive: Should an archive containing all outputs from
                                  the decompilation be generated? ``False`` by
                                  default.
         :type generate_archive: bool
@@ -78,7 +78,7 @@ class Decompiler(Service):
             return File(params['input_file'])
 
     def _get_generate_archive_param(self, params):
-        """Returns whether a archive with all decompilation outputs should be
+        """Returns whether an archive with all decompilation outputs should be
         generated based on the given parameters (``dict``).
         """
         return self._get_param(
