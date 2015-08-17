@@ -123,9 +123,9 @@ class Resource:
                                     failed?
         :param str error: Error message.
 
-        If `on_failure` is ``None``, nothing is done when. Otherwise, it is
-        called with `error`. If the returned value is an exception, it is
-        raised.
+        If `on_failure` is ``None``, nothing is done when the resource failed.
+        Otherwise, it is called with `error`. If the returned value is an
+        exception, it is raised.
         """
         if on_failure is not None:
             obj = on_failure(error)
