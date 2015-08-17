@@ -25,9 +25,9 @@ class Decompilation(Resource):
         return self._completion
 
     def get_phases(self):
-        """Obtains and returns a list of phases.
+        """Obtains and returns the list of phases.
 
-        The returned type is a list of
+        The list contains instances of type
         :class:`retdec.decompilation.DecompilationPhase`.
         """
         self._update_state_if_needed()
@@ -38,7 +38,7 @@ class Decompilation(Resource):
         """Waits until the decompilation is finished.
 
         :param callable callback: Function to be called when the status of the
-                                  decompilation is changed or it finishes.
+                                  decompilation is changed or when it finishes.
         :param callable on_failure: What should be done when the decompilation
                                     fails?
 
@@ -89,8 +89,8 @@ class Decompilation(Resource):
         """Saves the decompiled code in the high-level language to the given
         directory.
 
-        :param str directory: Path to a directory in which the decompiled
-                              code will be stored.
+        :param str directory: Path to a directory in which the decompiled code
+                              will be stored.
 
         :returns: Path to the saved file (`str`).
 
