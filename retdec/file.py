@@ -23,7 +23,7 @@ class File:
         """
         if isinstance(file, str):
             # We got a path to the file. Since we do not know whether the file
-            # is a binary or text file, so open it in the binary mode to ensure
+            # is a binary or text file, open it in the binary mode to ensure
             # that no conversions are done during reading.
             file = open(file, 'rb')
 
