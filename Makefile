@@ -10,7 +10,7 @@
 
 help:
 	@echo "Use \`make <target>', where <target> is one of the following:"
-	@echo "  build          - builds the package for upload to pypi"
+	@echo "  build          - builds the package for upload to PyPI"
 	@echo "  clean          - remove all generated files"
 	@echo "  clean-pyc      - remove just Python file artifacts"
 	@echo "  docs           - generate documentation"
