@@ -18,7 +18,7 @@ Welcome To retdec-python's Documentation!
    :maxdepth: 2
 
 Indices
-=======
+-------
 
 * :ref:`genindex`
 * :ref:`modindex`
