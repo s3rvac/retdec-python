@@ -17,9 +17,9 @@ from retdec.conn import APIConnection
 from retdec.exceptions import AuthenticationError
 from retdec.exceptions import ConnectionError
 from retdec.exceptions import UnknownAPIError
-from tests import AnyDictWith
-from tests import Anything
 from tests import mock
+from tests.matchers import AnyDictWith
+from tests.matchers import Anything
 
 
 class AnyURL(Anything):

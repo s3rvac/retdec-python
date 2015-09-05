@@ -10,8 +10,8 @@ import io
 import unittest
 
 from retdec.file import File
-from tests import Matcher
 from tests import mock
+from tests.matchers import Matcher
 
 
 class AnyFile(Matcher):
