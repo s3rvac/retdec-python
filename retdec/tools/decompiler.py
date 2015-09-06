@@ -278,6 +278,7 @@ def parse_args(argv):
     parser.add_argument(
         '-o', '--output-dir',
         dest='output_dir',
+        metavar='DIR',
         help='save the outputs into this directory'
     )
     parser.add_argument(
