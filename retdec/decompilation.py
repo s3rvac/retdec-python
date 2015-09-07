@@ -28,7 +28,7 @@ class Decompilation(Resource):
         """Obtains and returns the list of phases.
 
         The list contains instances of type
-        :class:`retdec.decompilation.DecompilationPhase`.
+        :class:`~retdec.decompilation_phase.DecompilationPhase`.
         """
         self._update_state_if_needed()
         return self._phases
@@ -259,7 +259,7 @@ class _OutputGenerationStatus:
 
 class _NotRequestedOutputStatus:
     """An output generation status that raises
-    :class:`.OutputNotRequestedError` whenever it is queried.
+    :class:`~retdec.exceptions.OutputNotRequestedError` whenever it is queried.
     """
 
     @property

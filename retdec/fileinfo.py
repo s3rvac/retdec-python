@@ -22,7 +22,7 @@ class Fileinfo(Service):
         :param verbose: Should the analysis produce a detailed output?
         :type verbose: bool
 
-        :returns: Started analysis (:class:`Analysis`).
+        :returns: Started analysis (:class:`~retdec.analysis.Analysis`).
         """
         conn = self._create_new_api_connection('/fileinfo/analyses')
         id = self._start_analysis(conn, **kwargs)

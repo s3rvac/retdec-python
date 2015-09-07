@@ -73,7 +73,7 @@ class APIConnection:
         :param str path: Path to which the request should be sent.
         :param dict params: Request parameters.
 
-        :returns: File from `path` (:class:`retdec.file.File`).
+        :returns: File from `path` (:class:`~retdec.file.File`).
 
         If `path` is the empty string, it sends the request to the base URL
         from which the connection was initialized.

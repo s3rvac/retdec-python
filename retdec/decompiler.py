@@ -26,7 +26,8 @@ class Decompiler(Service):
                                  default.
         :type generate_archive: bool
 
-        :returns: Started decompilation (:class:`Decompilation`).
+        :returns: Started decompilation
+                  (:class:`~retdec.decompilation.Decompilation`).
 
         If `mode` is not given, it is automatically determined based on the
         name of ``input_file``. If the input file ends with ``.c`` or ``.C``,
