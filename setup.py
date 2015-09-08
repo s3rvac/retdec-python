@@ -56,7 +56,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     keywords='retdec decompiler decompilation analysis fileinfo',
-    packages=['retdec'],
+    packages=['retdec', 'retdec.tools'],
     install_requires=['requests'],
     scripts=[
         os.path.join('scripts', 'decompiler'),
