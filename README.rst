@@ -65,8 +65,7 @@ Either way, ``file.c`` then contains the decompiled C code:
 Development Status
 ------------------
 
-The library is in an **early stage of development.** It currently provides
-basic support of the `decompilation
+The library currently provides basic support of the `decompilation
 <https://retdec.com/api/docs/decompiler.html>`_, `fileinfo
 <https://retdec.com/api/docs/fileinfo.html>`_, and `test
 <https://retdec.com/api/docs/test.html>`_ services.
@@ -86,7 +85,7 @@ Installation description **will be available soon**.
 Documentation
 -------------
 
-The documentation **will be available soon** `here
+The documentation is available `here
 <http://retdec-python.readthedocs.org/en/latest/>`_.
 
 Contact and Support
