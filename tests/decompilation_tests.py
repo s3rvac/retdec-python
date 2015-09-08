@@ -76,6 +76,25 @@ class DecompilationTests(DecompilationTestsBase):
         self.assertEqual(phases[1].name, 'name2')
         self.assert_get_request_was_sent_with('/ID/status')
 
+    def test_get_phases_ignores_unknown_phase_attributes(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'phases': [
+                {
+                    'name': 'name',
+                    'part': 'part',
+                    'description': 'description',
+                    'completion': 0,
+                    'unknown_attr': None  # This attribute is to be ignored.
+                }
+            ]
+        })
+        d = Decompilation('ID', self.conn)
+
+        phases = d.get_phases()
+
+        self.assertEqual(len(phases), 1)
+        self.assertFalse(hasattr(phases[0], 'unknown_attr'))
+
     def test_archive_generation_has_finished_checks_status_on_first_call(self):
         self.conn.send_get_request.return_value = self.status_with({
             'archive': {

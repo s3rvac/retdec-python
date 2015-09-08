@@ -213,7 +213,14 @@ class Decompilation(Resource):
 
     def _phases_from_status(self, status):
         """Creates a list of phases from the given status."""
-        return [DecompilationPhase(**phase) for phase in status['phases']]
+        return [
+            DecompilationPhase(
+                phase['name'],
+                phase['part'],
+                phase['description'],
+                phase['completion']
+            ) for phase in status['phases']
+        ]
 
     def _archive_status_from_status(self, status):
         """Returns the archive generation status from the given status."""
