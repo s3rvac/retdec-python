@@ -29,8 +29,7 @@ class APIConnection:
     """
 
     def __init__(self, base_url, api_key):
-        """Initializes an API connection.
-
+        """
         :param str base_url: Base URL from which all subsequent URLs are
                              constructed.
         :param str api_key: API key to be used for authentication.

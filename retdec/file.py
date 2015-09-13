@@ -11,8 +11,7 @@ class File:
     """Representation of a file."""
 
     def __init__(self, file, name=None):
-        """Initializes the file.
-
+        """
         :param str/file-like object file: Either path to the file (`str`) or an
                                           opened file (a file-like object).
         :param str name: Name of the file to be used.

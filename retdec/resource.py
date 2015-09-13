@@ -20,8 +20,7 @@ class Resource:
     _STATE_UPDATE_INTERVAL = datetime.timedelta(seconds=0.5)
 
     def __init__(self, id, conn):
-        """Initializes the resource.
-
+        """
         :param str id: Unique identifier of the resource.
         :param retdec.conn.APIConnection conn: Connection to the API to be used
                                                for sending API requests.

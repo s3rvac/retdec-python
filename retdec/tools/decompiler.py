@@ -101,7 +101,6 @@ class ProgressLogDisplayer(ProgressDisplayer):
     """Displays a progress log during decompilation."""
 
     def __init__(self):
-        """Initializes the displayer."""
         self._last_part = None
         self._last_phase_index = 0
         self._prologue_printed = False

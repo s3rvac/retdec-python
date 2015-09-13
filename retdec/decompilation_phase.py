@@ -11,8 +11,7 @@ class DecompilationPhase:
     """Phase of a decompilation."""
 
     def __init__(self, name, part, description, completion):
-        """Initializes the phase.
-
+        """
         :param str name: Name of the phase.
         :param str part: Part into which the phase belongs.
         :param str description: Description of the phase.

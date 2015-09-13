@@ -18,8 +18,7 @@ class Service:
     """Base class of all services."""
 
     def __init__(self, *, api_key=None, api_url=None):
-        """Initializes the service.
-
+        """
         :param str api_key: API key to be used for authentication.
         :param str api_url: URL to the API.
         """

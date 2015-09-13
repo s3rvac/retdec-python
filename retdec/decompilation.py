@@ -248,8 +248,7 @@ class _OutputGenerationStatus:
     """
 
     def __init__(self, generated, failed, error):
-        """Initializes the status.
-
+        """
         :param bool generated: Has the output been generated?
         :param bool failed: Has the generation failed?
         :param str error: Reason why the generation failed.
