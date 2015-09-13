@@ -14,7 +14,13 @@ Requirements
 Installation
 ------------
 
-Installation description **will be available soon**.
+The recommended way to install is from `Python Package Index <https://pypi.python.org>`_ (PyPI) with `pip <http://www.pip-installer.org/>`_:
+
+.. code-block:: shell
+
+    $ pip install retdec-python
+
+This will install the latest stable version, including all dependencies. You can also use `virtualenv <https://docs.python.org/3/tutorial/venv.html>`_ if you want to install the package into an isolated environment.
 
 Prerequisites
 -------------
