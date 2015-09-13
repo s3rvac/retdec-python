@@ -62,8 +62,8 @@ Either way, ``file.c`` then contains the decompiled C code:
     #include <stdio.h>
     [..]
 
-Development Status
-------------------
+Status
+------
 
 The library currently provides basic support of the `decompilation
 <https://retdec.com/api/docs/decompiler.html>`_, `fileinfo
