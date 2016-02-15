@@ -37,7 +37,7 @@ docs-coverage:
 	@$(MAKE) -C docs coverage
 
 lint:
-	@flake8 --max-line-length=100 retdec tests
+	@flake8 --max-line-length=100 --jobs=auto retdec tests
 
 tests:
 	@nosetests tests \
