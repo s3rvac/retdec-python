@@ -80,7 +80,8 @@ Requirements
 Installation
 ------------
 
-The recommended way to install is from `Python Package Index <https://pypi.python.org>`_ (PyPI) with `pip <http://www.pip-installer.org/>`_:
+The recommended way to install is from `Python Package Index
+<https://pypi.python.org>`_ (PyPI) with `pip <http://www.pip-installer.org/>`_:
 
 .. code-block:: shell
 
