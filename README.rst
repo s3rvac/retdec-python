@@ -93,7 +93,7 @@ Documentation
 -------------
 
 The documentation is available `here
-<http://retdec-python.readthedocs.org/en/latest/>`_.
+<http://retdec-python.readthedocs.io/en/latest/>`_.
 
 Contact and Support
 -------------------
