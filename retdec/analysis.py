@@ -4,7 +4,7 @@
 # License:   MIT, see the LICENSE file for more details
 #
 
-"""A representation of a fileinfo analysis."""
+"""A representation of fileinfo analyses."""
 
 from retdec.exceptions import AnalysisFailedError
 from retdec.resource import Resource

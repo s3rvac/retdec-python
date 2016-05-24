@@ -23,7 +23,7 @@
 #     in all copies or substantial portions of the Software.
 #
 
-"""A tool for decompiling files. It uses the library."""
+"""A tool for decompilation of files. It uses the library."""
 
 import abc
 import argparse

@@ -4,7 +4,7 @@
 # License:   MIT, see the LICENSE file for more details
 #
 
-"""Access to the decompiler (decompilation of files)."""
+"""A representation of decompilations."""
 
 from retdec.decompilation_phase import DecompilationPhase
 from retdec.exceptions import ArchiveGenerationFailedError
@@ -25,10 +25,8 @@ class Decompilation(Resource):
         return self._completion
 
     def get_phases(self):
-        """Obtains and returns the list of phases.
-
-        The list contains instances of type
-        :class:`~retdec.decompilation_phase.DecompilationPhase`.
+        """Obtains and returns the list of phases
+        (:class:`~retdec.decompilation_phase.DecompilationPhase`).
         """
         self._update_state_if_needed()
         return self._phases
