@@ -23,14 +23,14 @@ or set the ``RETDEC_API_KEY`` environment variable:
     $ export RETDEC_API_KEY=YOUR-API-KEY
     $ decompiler file.exe
 
-The advantage of the environment variable is that you do not have to specify the API key every time you run a script.
+An advantage of the environment variable is that you do not have to specify the API key every time you run a script.
 
 .. _decompiler:
 
 Decompiler
 ----------
 
-The ``decompiler`` script provides access to the `decompilation service <https://retdec.com/api/docs/fileinfo.html>`_. It allows you to decompile binary files into a high-level language representation, such as C.
+The ``decompiler`` script provides access to the `decompilation service <https://retdec.com/api/docs/decompiler.html>`_. It allows you to decompile binary files into a high-level language representation, such as C.
 
 Usage
 ^^^^^

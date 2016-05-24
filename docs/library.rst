@@ -48,7 +48,7 @@ See the :mod:`retdec.exceptions` module for a list of all custom exceptions.
 Decompiler
 ----------
 
-The :mod:`retdec.decompiler` module provides access to the `decompilation service <https://retdec.com/api/docs/fileinfo.html>`_. It allows you to decompile binary files into a high-level language representation, such as C.
+The :mod:`retdec.decompiler` module provides access to the `decompilation service <https://retdec.com/api/docs/decompiler.html>`_. It allows you to decompile binary files into a high-level language representation, such as C.
 
 Creating a Decompiler
 ^^^^^^^^^^^^^^^^^^^^^
