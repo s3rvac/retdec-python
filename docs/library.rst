@@ -25,7 +25,7 @@ or set the ``RETDEC_API_KEY`` environment variable:
 
     $ export RETDEC_API_KEY=YOUR-API-KEY
 
-The advantage of the environment variable is that you do not need to specify the API key every time you use the library:
+An advantage of the environment variable is that you do not need to specify the API key every time you use the library:
 
 .. code-block:: python
 
@@ -34,7 +34,7 @@ The advantage of the environment variable is that you do not need to specify the
 Error Handling
 --------------
 
-The library uses exceptions to signalize errors. Every custom exception raised by the library inherits from :class:`retdec.exceptions.RetdecError`, which you can use to catch any custom exception raised by the library:
+The library uses exceptions to signalize errors. Every custom exception raised by the library inherits from :class:`retdec.exceptions.RetdecError`, which you can use to catch all custom exceptions raised by the library:
 
 .. code-block:: python
 
