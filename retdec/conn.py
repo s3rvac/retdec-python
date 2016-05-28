@@ -20,6 +20,10 @@ from retdec.file import File
 class APIConnection:
     """Connection to the API.
 
+    :param str base_url: Base URL from which all subsequent URLs are
+                         constructed.
+    :param str api_key: API key to be used for authentication.
+
     The methods of this class may raise the following exceptions:
 
     * ``ConnectionError``: When there is a connection error.
@@ -29,11 +33,6 @@ class APIConnection:
     """
 
     def __init__(self, base_url, api_key):
-        """
-        :param str base_url: Base URL from which all subsequent URLs are
-                             constructed.
-        :param str api_key: API key to be used for authentication.
-        """
         self._base_url = base_url
         self._api_key = api_key
 

@@ -240,17 +240,12 @@ class Decompilation(Resource):
 class _OutputGenerationStatus:
     """A status of output generation.
 
-    :ivar bool generated: Has the output been generated?
-    :ivar bool failed: Has the generation failed?
-    :ivar str error: Reason why the generation failed.
+    :param bool generated: Has the output been generated?
+    :param bool failed: Has the generation failed?
+    :param str error: Reason why the generation failed.
     """
 
     def __init__(self, generated, failed, error):
-        """
-        :param bool generated: Has the output been generated?
-        :param bool failed: Has the generation failed?
-        :param str error: Reason why the generation failed.
-        """
         self.generated = generated
         self.failed = failed
         self.error = error

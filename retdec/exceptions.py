@@ -106,18 +106,12 @@ class ArchiveGenerationFailedError(RetdecError):
 class UnknownAPIError(RetdecError):
     """Exception raised when there is an unknown API error.
 
-    :ivar int code: Error code.
-    :ivar str message: Short message of what went wrong.
-    :ivar str description: Longer description of what went wrong.
+    :param int code: Error code.
+    :param str message: Short message describing what went wrong.
+    :param str description: Longer description of what went wrong.
     """
 
     def __init__(self, code, message, description):
-        """Initializes the exception.
-
-        :param int code: Error code.
-        :param str message: Short message describing what went wrong.
-        :param str description: Longer description of what went wrong.
-        """
         super().__init__(description)
 
         self.code = code
