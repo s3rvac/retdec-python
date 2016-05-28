@@ -178,3 +178,14 @@ To check whether you can authenticate successfully, use :func:`retdec.test.Test.
         print('authentication succeeded')
     except retdec.exceptions.AuthenticationError as ex:
         print('authentication failed:', ex)
+
+Parameter Passing
+^^^^^^^^^^^^^^^^^
+
+To check that parameters are passed correctly when performing requests to the `retdec.com API <https://retdec.com/api/>`_, use :func:`retdec.test.Test.echo()`:
+
+.. code-block:: python
+
+    test = retdec.test.Test(api_key='YOUR-API-KEY')
+    result = test.echo(param='value')
+    print(result)  # Prints {'param': 'value'}.

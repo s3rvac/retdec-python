@@ -19,8 +19,16 @@ class Test(Service):
 
         Does nothing when the authentication succeeds.
         """
+        # Simply send a GET request to /test/echo, and if the authentication
+        # fails, send_get_request() raises AuthenticationError.
+        self.echo()
+
+    def echo(self, **params):
+        """Echoes the given parameters.
+
+        :returns: Echoed `params` (`dict`).
+
+        :raises ``AuthenticationError``: When the authentication fails.
+        """
         conn = self._create_new_api_connection('/test/echo')
-        # We do not need any parameters; simply send a GET request to
-        # /test/echo, and if authentication fails, send_get_request() raises
-        # AuthenticationError.
-        conn.send_get_request()
+        return conn.send_get_request(params=params)
