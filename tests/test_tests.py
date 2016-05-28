@@ -30,3 +30,21 @@ class TestTests(BaseServiceTests):
         test = Test(api_key='INVALID-API-KEY')
         with self.assertRaises(AuthenticationError):
             test.auth()
+
+    def test_echo_sends_correct_request_and_returns_correct_result(self):
+        test = Test(api_key='API-KEY')
+
+        result = test.echo(param='value')
+
+        self.APIConnectionMock.assert_called_once_with(
+            'https://retdec.com/service/api/test/echo',
+            'API-KEY'
+        )
+        self.conn.send_get_request.assert_called_once_with(params={'param': 'value'})
+        self.assertEqual(result, self.conn.send_get_request.return_value)
+
+    def test_echo_raises_exception_when_authentication_fails(self):
+        self.conn.send_get_request.side_effect = AuthenticationError
+        test = Test(api_key='INVALID-API-KEY')
+        with self.assertRaises(AuthenticationError):
+            test.echo()

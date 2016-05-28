@@ -24,3 +24,13 @@ class Test(Service):
         # /test/echo, and if authentication fails, send_get_request() raises
         # AuthenticationError.
         conn.send_get_request()
+
+    def echo(self, **params):
+        """Echoes the given parameters.
+
+        :returns: Echoed `params` (`dict`).
+
+        :raises ``AuthenticationError``: When the authentication fails.
+        """
+        conn = self._create_new_api_connection('/test/echo')
+        return conn.send_get_request(params=params)
