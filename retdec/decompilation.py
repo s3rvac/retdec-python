@@ -246,9 +246,24 @@ class _OutputGenerationStatus:
     """
 
     def __init__(self, generated, failed, error):
-        self.generated = generated
-        self.failed = failed
-        self.error = error
+        self._generated = generated
+        self._failed = failed
+        self._error = error
+
+    @property
+    def generated(self):
+        """Has the output been generated?"""
+        return self._generated
+
+    @property
+    def failed(self):
+        """Has the generation failed?"""
+        return self._failed
+
+    @property
+    def error(self):
+        """Reason why the generation failed (`str`)."""
+        return self._error
 
     @property
     def finished(self):
@@ -262,10 +277,6 @@ class _NotRequestedOutputStatus:
     """
 
     @property
-    def finished(self):
-        raise OutputNotRequestedError
-
-    @property
     def generated(self):
         raise OutputNotRequestedError
 
@@ -275,4 +286,8 @@ class _NotRequestedOutputStatus:
 
     @property
     def error(self):
+        raise OutputNotRequestedError
+
+    @property
+    def finished(self):
         raise OutputNotRequestedError

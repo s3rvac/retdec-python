@@ -114,9 +114,24 @@ class UnknownAPIError(RetdecError):
     def __init__(self, code, message, description):
         super().__init__(description)
 
-        self.code = code
-        self.message = message
-        self.description = description
+        self._code = code
+        self._message = message
+        self._description = description
+
+    @property
+    def code(self):
+        """Error code (`int`)."""
+        return self._code
+
+    @property
+    def message(self):
+        """Short message describing what went wrong (`str`)."""
+        return self._message
+
+    @property
+    def description(self):
+        """Longer description of what went wrong (`str`)."""
+        return self._description
 
 
 def _message_with_reason(message, reason):
