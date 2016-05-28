@@ -23,7 +23,7 @@ class TestTests(BaseServiceTests):
             'https://retdec.com/service/api/test/echo',
             'API-KEY'
         )
-        self.conn.send_get_request.assert_called_once_with()
+        self.conn.send_get_request.assert_called_once_with(params={})
 
     def test_auth_raises_exception_when_authentication_fails(self):
         self.conn.send_get_request.side_effect = AuthenticationError

@@ -19,11 +19,9 @@ class Test(Service):
 
         Does nothing when the authentication succeeds.
         """
-        conn = self._create_new_api_connection('/test/echo')
-        # We do not need any parameters; simply send a GET request to
-        # /test/echo, and if authentication fails, send_get_request() raises
-        # AuthenticationError.
-        conn.send_get_request()
+        # Simply send a GET request to /test/echo, and if the authentication
+        # fails, send_get_request() raises AuthenticationError.
+        self.echo()
 
     def echo(self, **params):
         """Echoes the given parameters.
