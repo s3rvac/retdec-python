@@ -103,11 +103,6 @@ modindex_common_prefix = ['retdec.']
 # source code.
 autodoc_member_order = 'bysource'
 
-# Insert the both the docstring of a class and its __init__() method in the
-# generated description of the class. By default, only the class docstring is
-# used, so the description of the __init__() parameters would not be generated.
-autoclass_content = 'both'
-
 
 # -- Options for HTML output ----------------------------------------------
 

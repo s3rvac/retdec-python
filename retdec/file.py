@@ -8,18 +8,18 @@
 
 
 class File:
-    """Representation of a file."""
+    """Representation of a file.
+
+    :param str/file-like object file: Either path to the file (`str`) or an
+                                      opened file (a file-like object).
+    :param str name: Name of the file to be used.
+
+    When `name` is not given or it is ``None``, the name is taken from `file`.
+    You can use `name` to set a custom file name that may be different from the
+    real file's name.
+    """
 
     def __init__(self, file, name=None):
-        """
-        :param str/file-like object file: Either path to the file (`str`) or an
-                                          opened file (a file-like object).
-        :param str name: Name of the file to be used.
-
-        When `name` is not given or it is ``None``, the name is taken from
-        `file`. You can use `name` to set a custom file name that may be
-        different from the real file's name.
-        """
         if isinstance(file, str):
             # We got a path to the file. Since we do not know whether the file
             # is a binary or text file, open it in the binary mode to ensure

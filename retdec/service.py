@@ -15,13 +15,13 @@ from retdec.exceptions import MissingAPIKeyError
 
 
 class Service:
-    """Base class of all services."""
+    """Base class of all services.
+
+    :param str api_key: API key to be used for authentication.
+    :param str api_url: URL to the API.
+    """
 
     def __init__(self, *, api_key=None, api_url=None):
-        """
-        :param str api_key: API key to be used for authentication.
-        :param str api_url: URL to the API.
-        """
         self._api_key = self._get_api_key_to_use(api_key)
         self._api_url = self._get_api_url_to_use(api_url)
 

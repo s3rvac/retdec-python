@@ -14,17 +14,17 @@ import time
 
 
 class Resource:
-    """Base class of all resources."""
+    """Base class of all resources.
+
+    :param str id: Unique identifier of the resource.
+    :param retdec.conn.APIConnection conn: Connection to the API to be used for
+                                           sending API requests.
+    """
 
     #: Time interval after which we can update resource's state.
     _STATE_UPDATE_INTERVAL = datetime.timedelta(seconds=0.5)
 
     def __init__(self, id, conn):
-        """
-        :param str id: Unique identifier of the resource.
-        :param retdec.conn.APIConnection conn: Connection to the API to be used
-                                               for sending API requests.
-        """
         self._id = id
         self._conn = conn
 
