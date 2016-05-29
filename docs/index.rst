@@ -15,6 +15,7 @@ Contents
    library
    scripts
    contributing
+   status
 
 Indices
 -------
