@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 #
 # Project:   retdec-python
 # Copyright: (c) 2015-2016 by Petr Zemek <s3rvac@gmail.com> and contributors
