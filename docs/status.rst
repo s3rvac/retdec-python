@@ -34,7 +34,7 @@ The decompilation service.
         * ``decomp_emit_addresses`` ✗
         * ``generate_cg`` ✗
         * ``generate_cfgs`` ✗
-        * ``generate_archive`` ✗
+        * ``generate_archive`` ✔
 
     * `Parameters for the bin mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-bin-mode>`_ ✗
 
@@ -83,6 +83,7 @@ The decompilation service.
     * ``cg`` ✗
     * ``cfgs`` ✗
     * ``archive`` ✔
+    * ``binary`` ✗
 
 * `Error reporting <https://retdec.com/api/docs/decompiler.html#error-reporting>`_ ✔
 
