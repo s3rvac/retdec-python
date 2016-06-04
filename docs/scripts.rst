@@ -45,7 +45,7 @@ Output files are stored into the same directory where the input file is located.
 * ``-m MODE, --mode MODE`` -- Decompilation mode. `Supported modes <https://retdec.com/api/docs/decompiler.html#decompilation-modes>`_: ``bin``, ``c``. By default, the script performs an automatic detection based on the file's extension.
 * ``-o DIR, --output-dir DIR`` -- Saves the outputs into this directory.
 * ``-q, --quiet`` -- Prints only errors, nothing else (not even progress).
-* ``--with-archive`` -- Generates an archive containing all decompilation outputs. At the moment, the archive contains only the C source code and disassembled code.
+* ``--with-archive`` -- Generates an archive containing all decompilation outputs.
 
 Example
 ^^^^^^^
