@@ -78,8 +78,8 @@ class Decompiler(Service):
 
     def _get_input_file(self, params):
         """Returns an input file from the given parameters (``dict``)."""
-        if 'input_file' in params:
-            return File(params['input_file'])
+        input_file = params.get('input_file', None)
+        return File(input_file) if input_file is not None else None
 
     def _add_pdb_file_when_given(self, files, params):
         """Adds a PDB file to `files` when given in `params` (``dict``)."""
