@@ -68,7 +68,9 @@ Status
 The library currently provides basic support of the `decompilation
 <https://retdec.com/api/docs/decompiler.html>`_, `fileinfo
 <https://retdec.com/api/docs/fileinfo.html>`_, and `test
-<https://retdec.com/api/docs/test.html>`_ services.
+<https://retdec.com/api/docs/test.html>`_ services. For a more detailed list,
+see the `status <https://retdec-python.readthedocs.io/en/latest/status.html>`_
+page in the documentation.
 
 Requirements
 ------------
