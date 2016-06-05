@@ -384,7 +384,6 @@ class MainTests(ToolTestsBase):
         # Decompilation is started with correct arguments.
         self.decompiler.start_decompilation.assert_called_once_with(
             input_file='prog.exe',
-            mode=None,
             generate_archive=False
         )
 

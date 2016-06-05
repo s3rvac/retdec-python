@@ -335,6 +335,15 @@ def display_download_progress(displayer, file_path):
     displayer.display_download_progress(os.path.basename(file_path))
 
 
+def add_decompilation_param_when_given(args, params, param_name):
+    """Adds a parameter with `param_name` from `args` to `params`, provided
+    that the parameter is set.
+    """
+    param_value = getattr(args, param_name)
+    if param_value is not None:
+        params[param_name] = param_value
+
+
 def main(argv=None):
     """Runs the tool.
 
@@ -349,13 +358,11 @@ def main(argv=None):
         api_key=args.api_key
     )
 
-    params = {
-        'input_file': args.input_file,
-        'mode': args.mode,
-        'generate_archive': args.generate_archive
-    }
-    if args.pdb_file is not None:
-        params['pdb_file'] = args.pdb_file
+    params = {}
+    add_decompilation_param_when_given(args, params, 'input_file')
+    add_decompilation_param_when_given(args, params, 'pdb_file')
+    add_decompilation_param_when_given(args, params, 'mode')
+    add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 
     displayer = get_progress_displayer(args)
