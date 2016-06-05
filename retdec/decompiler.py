@@ -19,6 +19,9 @@ class Decompiler(Service):
 
         :param input_file: File to be analyzed (**required**).
         :type input_file: str or file-like object
+        :param pdb_file: A PDB file associated with `input_file` containing
+            debugging information.
+        :type pdb_file: str or file-like object
         :param mode: Decompilation mode.
         :type mode: str
         :param generate_archive: Should an archive containing all outputs from
@@ -55,6 +58,7 @@ class Decompiler(Service):
         files = {
             'input': input_file
         }
+        self._add_pdb_file_when_given(files, kwargs)
         response = conn.send_post_request('', params=params, files=files)
         return response['id']
 
@@ -77,6 +81,12 @@ class Decompiler(Service):
         """Returns an input file from the given parameters (``dict``)."""
         if 'input_file' in params:
             return File(params['input_file'])
+
+    def _add_pdb_file_when_given(self, files, params):
+        """Adds a PDB file to `files` when given in `params` (``dict``)."""
+        pdb_file = params.get('pdb_file', None)
+        if pdb_file is not None:
+            files['pdb'] = File(pdb_file)
 
     def _get_generate_archive_param(self, params):
         """Returns whether an archive with all decompilation outputs should be

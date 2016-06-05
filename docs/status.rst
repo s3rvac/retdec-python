@@ -20,7 +20,7 @@ The decompilation service.
 * `Input files <https://retdec.com/api/docs/decompiler.html#input-files>`_ ✔
 
     * ``input`` ✔
-    * ``pdb`` ✗
+    * ``pdb`` ✔
 
 * `Decompilation parameters <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ ✔
 

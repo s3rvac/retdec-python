@@ -236,6 +236,14 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--output-dir', 'dir', 'prog.exe'])
         self.assertEqual(args.output_dir, 'dir')
 
+    def test_pdb_file_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-p', 'prog.pdb', 'prog.exe'])
+        self.assertEqual(args.pdb_file, 'prog.pdb')
+
+    def test_pdb_file_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--pdb-file', 'prog.pdb', 'prog.exe'])
+        self.assertEqual(args.pdb_file, 'prog.pdb')
+
     def test_quiet_is_set_to_false_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
         self.assertFalse(args.quiet)
@@ -426,3 +434,12 @@ class MainTests(ToolTestsBase):
         decompilation = self.get_started_decompilation()
         decompilation.wait_until_archive_is_generated.assert_called_once_with()
         decompilation.save_archive.assert_called_once_with(os.getcwd())
+
+    def test_sends_pdb_file_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--pdb-file', 'prog.pdb'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            pdb_file='prog.pdb'
+        )

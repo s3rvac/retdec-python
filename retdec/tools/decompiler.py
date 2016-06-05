@@ -282,6 +282,12 @@ def parse_args(argv):
         help='save the outputs into this directory'
     )
     parser.add_argument(
+        '-p', '--pdb-file',
+        dest='pdb_file',
+        metavar='FILE',
+        help='PDB file associated with the input file'
+    )
+    parser.add_argument(
         '-q', '--quiet',
         dest='quiet',
         action='store_true',
@@ -343,11 +349,14 @@ def main(argv=None):
         api_key=args.api_key
     )
 
-    decompilation = decompiler.start_decompilation(
-        input_file=args.input_file,
-        mode=args.mode,
-        generate_archive=args.generate_archive
-    )
+    params = {
+        'input_file': args.input_file,
+        'mode': args.mode,
+        'generate_archive': args.generate_archive
+    }
+    if args.pdb_file is not None:
+        params['pdb_file'] = args.pdb_file
+    decompilation = decompiler.start_decompilation(**params)
 
     displayer = get_progress_displayer(args)
     displayer.display_decompilation_progress(decompilation)
