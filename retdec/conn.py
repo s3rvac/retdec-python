@@ -21,7 +21,7 @@ class APIConnection:
     """Connection to the API.
 
     :param str base_url: Base URL from which all subsequent URLs are
-                         constructed.
+        constructed.
     :param str api_key: API key to be used for authentication.
 
     The methods of this class may raise the following exceptions:

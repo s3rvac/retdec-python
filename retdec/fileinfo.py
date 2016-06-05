@@ -20,7 +20,7 @@ class Fileinfo(Service):
         :param input_file: File to be analyzed (**required**).
         :type input_file: str or file-like object
         :param verbose: Should the analysis produce a detailed output?
-                        ``False`` by default.
+            ``False`` by default.
         :type verbose: bool
 
         :returns: Started analysis (:class:`~retdec.analysis.Analysis`).
@@ -33,7 +33,7 @@ class Fileinfo(Service):
         """Starts an analysis with the given parameters.
 
         :param retdec.conn.APIConnection conn: Connection to the API to be used
-                                               for sending API requests.
+            for sending API requests.
 
         :returns: Unique identifier of the analysis.
         """

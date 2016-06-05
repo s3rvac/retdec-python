@@ -78,7 +78,7 @@ class Service:
         :param dict params: Parameters from which the value should be obtained.
         :param set choices: Allowed values for the parameter.
         :param object default: Default value to return when the parameter is
-                               not found.
+            not found.
         """
         if name not in params or params[name] is None:
             return default

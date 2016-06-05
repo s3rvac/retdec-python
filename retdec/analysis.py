@@ -17,7 +17,7 @@ class Analysis(Resource):
         """Waits until the analysis is finished.
 
         :param callable on_failure: What should be done when the analysis
-                                    fails?
+            fails?
 
         If `on_failure` is ``None``, nothing is done when the analysis fails.
         Otherwise, it is called with the error message. If the returned value

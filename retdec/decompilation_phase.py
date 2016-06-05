@@ -14,7 +14,7 @@ class DecompilationPhase:
     :param str part: Part into which the phase belongs.
     :param str description: Description of the phase.
     :param int completion: What percentage of the decompilation has been
-                           completed?
+        completed?
 
     `part` may be ``None`` if the phase does not belong to any part.
     """

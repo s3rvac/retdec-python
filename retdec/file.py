@@ -11,7 +11,7 @@ class File:
     """Representation of a file.
 
     :param str/file-like object file: Either path to the file (`str`) or an
-                                      opened file (a file-like object).
+        opened file (a file-like object).
     :param str name: Name of the file to be used.
 
     When `name` is not given or it is ``None``, the name is taken from `file`.

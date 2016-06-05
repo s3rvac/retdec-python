@@ -18,7 +18,7 @@ class Resource:
 
     :param str id: Unique identifier of the resource.
     :param retdec.conn.APIConnection conn: Connection to the API to be used for
-                                           sending API requests.
+        sending API requests.
     """
 
     #: Time interval after which we can update resource's state.
@@ -119,7 +119,7 @@ class Resource:
         """Handles the situation where a resource failed to succeed.
 
         :param callable on_failure: What should be done when the resource
-                                    failed?
+            failed?
         :param str error: Error message.
 
         If `on_failure` is ``None``, nothing is done when the resource failed.

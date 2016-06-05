@@ -36,9 +36,9 @@ class Decompilation(Resource):
         """Waits until the decompilation is finished.
 
         :param callable callback: Function to be called when the status of the
-                                  decompilation is changed or when it finishes.
+            decompilation is changed or when it finishes.
         :param callable on_failure: What should be done when the decompilation
-                                    fails?
+            fails?
 
         If `callback` is not ``None``, it is called with the decompilation as
         its argument when the status of the decompilation is changed or when it
@@ -88,7 +88,7 @@ class Decompilation(Resource):
         directory.
 
         :param str directory: Path to a directory in which the decompiled code
-                              will be stored.
+            will be stored.
 
         :returns: Path to the saved file (`str`).
 
@@ -113,7 +113,7 @@ class Decompilation(Resource):
         given directory.
 
         :param str directory: Path to a directory in which the file will be
-                              stored.
+            stored.
 
         :returns: Path to the saved file (`str`).
 
@@ -128,7 +128,7 @@ class Decompilation(Resource):
         """Checks if the archive generation has finished.
 
         :raises OutputNotRequestedError: When the archive was not requested to
-                                         be generated.
+            be generated.
         """
         self._update_state_if_needed()
         return self._archive_status.finished
@@ -137,7 +137,7 @@ class Decompilation(Resource):
         """Checks if the archive generation has succeeded.
 
         :raises OutputNotRequestedError: When the archive was not requested to
-                                         be generated.
+            be generated.
         """
         self._update_state_if_needed()
         return self._archive_status.generated
@@ -146,7 +146,7 @@ class Decompilation(Resource):
         """Checks if the archive has failed to generate.
 
         :raises OutputNotRequestedError: When the archive was not requested to
-                                         be generated.
+            be generated.
         """
         self._update_state_if_needed()
         return self._archive_status.failed
@@ -155,7 +155,7 @@ class Decompilation(Resource):
         """Returns the reason why the archive failed to generate.
 
         :raises OutputNotRequestedError: When the archive was not requested to
-                                         be generated.
+            be generated.
 
         If the archive has not failed, it returns ``None``.
         """
@@ -168,10 +168,10 @@ class Decompilation(Resource):
         decompilation is generated.
 
         :param callable on_failure: What should be done when the generation
-                                    fails?
+            fails?
 
         :raises OutputNotRequestedError: When the archive was not requested to
-                                         be generated.
+            be generated.
 
         If `on_failure` is ``None``, nothing is done when the generation fails.
         Otherwise, it is called with the error message. If the returned value
@@ -190,7 +190,7 @@ class Decompilation(Resource):
         to the given directory.
 
         :param str directory: Path to a directory in which the file will be
-                              stored.
+            stored.
 
         :returns: Path to the saved file (`str`).
 

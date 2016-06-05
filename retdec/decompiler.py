@@ -22,12 +22,12 @@ class Decompiler(Service):
         :param mode: Decompilation mode.
         :type mode: str
         :param generate_archive: Should an archive containing all outputs from
-                                 the decompilation be generated? ``False`` by
-                                 default.
+            the decompilation be generated? ``False`` by
+            default.
         :type generate_archive: bool
 
         :returns: Started decompilation
-                  (:class:`~retdec.decompilation.Decompilation`).
+            (:class:`~retdec.decompilation.Decompilation`).
 
         If `mode` is not given, it is automatically determined based on the
         name of ``input_file``. If the input file ends with ``.c`` or ``.C``,
@@ -41,7 +41,7 @@ class Decompiler(Service):
         """Starts a decompilation with the given parameters.
 
         :param retdec.conn.APIConnection conn: Connection to the API to be used
-                                               for sending API requests.
+            for sending API requests.
 
         :returns: Unique identifier of the decompilation.
         """
