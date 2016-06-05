@@ -55,6 +55,18 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             files=AnyFilesWith(input=AnyFileNamed(self.input_file.name))
         )
 
+    def test_sends_pdb_file_when_given(self):
+        pdb_file = mock.Mock(spec_set=File)
+
+        self.decompiler.start_decompilation(
+            input_file=self.input_file,
+            pdb_file=pdb_file
+        )
+
+        self.assert_post_request_was_sent_with(
+            files=AnyFilesWith(pdb=AnyFileNamed(pdb_file.name))
+        )
+
     def test_mode_is_set_to_c_when_not_given_and_file_name_ends_with_c(self):
         self.input_file.name = 'test.c'
 

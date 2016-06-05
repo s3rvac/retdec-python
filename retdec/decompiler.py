@@ -19,11 +19,13 @@ class Decompiler(Service):
 
         :param input_file: File to be analyzed (**required**).
         :type input_file: str or file-like object
+        :param pdb_file: A PDB file associated with `input_file` containing
+            debugging information.
+        :type pdb_file: str or file-like object
         :param mode: Decompilation mode.
         :type mode: str
         :param generate_archive: Should an archive containing all outputs from
-            the decompilation be generated? ``False`` by
-            default.
+            the decompilation be generated? ``False`` by default.
         :type generate_archive: bool
 
         :returns: Started decompilation
@@ -55,11 +57,12 @@ class Decompiler(Service):
         files = {
             'input': input_file
         }
+        self._add_pdb_file_when_given(files, kwargs)
         response = conn.send_post_request('', params=params, files=files)
         return response['id']
 
     def _get_mode_param(self, input_file, params):
-        """Returns a mode from the given parameters (``dict``)."""
+        """Returns a mode from `params`."""
         return self._get_param(
             'mode',
             params,
@@ -74,13 +77,19 @@ class Decompiler(Service):
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
 
     def _get_input_file(self, params):
-        """Returns an input file from the given parameters (``dict``)."""
-        if 'input_file' in params:
-            return File(params['input_file'])
+        """Returns an input file from `params`."""
+        input_file = params.get('input_file', None)
+        return File(input_file) if input_file is not None else None
+
+    def _add_pdb_file_when_given(self, files, params):
+        """Adds a PDB file to `files` when given in `params`."""
+        pdb_file = params.get('pdb_file', None)
+        if pdb_file is not None:
+            files['pdb'] = File(pdb_file)
 
     def _get_generate_archive_param(self, params):
         """Returns whether an archive with all decompilation outputs should be
-        generated based on the given parameters (``dict``).
+        generated based on `params`.
         """
         return self._get_param(
             'generate_archive',
