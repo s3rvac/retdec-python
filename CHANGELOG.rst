@@ -13,7 +13,6 @@ dev
   <https://retdec.com/api/docs/index.html>`_ into the `documentation
   <https://retdec-python.readthedocs.io/en/latest/>`_.
 
-
 0.1 (2015-09-13)
 ----------------
 
