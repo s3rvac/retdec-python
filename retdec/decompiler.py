@@ -25,8 +25,7 @@ class Decompiler(Service):
         :param mode: Decompilation mode.
         :type mode: str
         :param generate_archive: Should an archive containing all outputs from
-            the decompilation be generated? ``False`` by
-            default.
+            the decompilation be generated? ``False`` by default.
         :type generate_archive: bool
 
         :returns: Started decompilation
