@@ -62,7 +62,7 @@ class Decompiler(Service):
         return response['id']
 
     def _get_mode_param(self, input_file, params):
-        """Returns a mode from the given parameters (``dict``)."""
+        """Returns a mode from `params`."""
         return self._get_param(
             'mode',
             params,
@@ -77,19 +77,19 @@ class Decompiler(Service):
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
 
     def _get_input_file(self, params):
-        """Returns an input file from the given parameters (``dict``)."""
+        """Returns an input file from `params`."""
         input_file = params.get('input_file', None)
         return File(input_file) if input_file is not None else None
 
     def _add_pdb_file_when_given(self, files, params):
-        """Adds a PDB file to `files` when given in `params` (``dict``)."""
+        """Adds a PDB file to `files` when given in `params`."""
         pdb_file = params.get('pdb_file', None)
         if pdb_file is not None:
             files['pdb'] = File(pdb_file)
 
     def _get_generate_archive_param(self, params):
         """Returns whether an archive with all decompilation outputs should be
-        generated based on the given parameters (``dict``).
+        generated based on `params`.
         """
         return self._get_param(
             'generate_archive',
