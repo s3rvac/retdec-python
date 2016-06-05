@@ -36,12 +36,12 @@ or you can use the provided script for stand-alone decompilations:
     v23bmYb67R
     ----------
 
-    Waiting for resources (0%)...                      [OK]
+    Waiting for resources (0%)...                    [OK]
     Pre-Processing:
-        Obtaining file information (5%)...             [OK]
-        Unpacking (10%)...                             [OK]
+      Obtaining file information (5%)...             [OK]
+      Unpacking (10%)...                             [OK]
     Front-End:
-        Initializing (20%)...                          [OK]
+      Initializing (20%)...                          [OK]
     [..]
     Done (100%)...
 

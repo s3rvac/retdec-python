@@ -112,7 +112,7 @@ ID
 
 Waiting for resources (0%)...                      [OK]
 Pre-Processing:
-    Obtaining file information (5%)...             [OK]
+  Obtaining file information (5%)...               [OK]
 Done (100%)...                                     \n""".lstrip())
 
     def test_display_decompilation_progress_displays_correct_value_failed_decompilation(self):

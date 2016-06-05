@@ -112,28 +112,28 @@ class ProgressLogDisplayer(ProgressDisplayer):
         #    8DRerEdKop
         #    ----------
         #
-        #    Waiting for resources (0%)...                   [OK]
+        #    Waiting for resources (0%)...                 [OK]
         #    Pre-Processing:
-        #        Obtaining file information (5%)...          [OK]
+        #      Obtaining file information (5%)...          [OK]
         #    Front-End:
-        #        Initializing (20%)...                       [OK]
-        #        Creating instruction decoders (22%)...      [OK]
-        #        Detecting statically linked code (25%)...   [OK]
-        #        Instruction decoding (28%)...               [OK]
-        #        Control-flow analysis (31%)...              [OK]
-        #        Data-flow analysis (34%)...                 [OK]
-        #        Type recovery (37%)...                      [OK]
-        #        Generating LLVM IR (40%)...                 [OK]
+        #      Initializing (20%)...                       [OK]
+        #      Creating instruction decoders (22%)...      [OK]
+        #      Detecting statically linked code (25%)...   [OK]
+        #      Instruction decoding (28%)...               [OK]
+        #      Control-flow analysis (31%)...              [OK]
+        #      Data-flow analysis (34%)...                 [OK]
+        #      Type recovery (37%)...                      [OK]
+        #      Generating LLVM IR (40%)...                 [OK]
         #    Middle-End:
-        #        Initializing (45%)...                       [OK]
-        #        Validating the LLVM IR (50%)...             [OK]
-        #        Optimizing the LLVM IR (55%)...             [OK]
+        #      Initializing (45%)...                       [OK]
+        #      Validating the LLVM IR (50%)...             [OK]
+        #      Optimizing the LLVM IR (55%)...             [OK]
         #    Back-End:
-        #        Initializing (60%)...                       [OK]
-        #        Converting the LLVM IR into BIR (65%)...    [OK]
-        #        Optimizing the BIR (70%)...                 [OK]
-        #        Validating the BIR (90%)...                 [OK]
-        #        Generating the target code (95%)...         [OK]
+        #      Initializing (60%)...                       [OK]
+        #      Converting the LLVM IR into BIR (65%)...    [OK]
+        #      Optimizing the BIR (70%)...                 [OK]
+        #      Validating the BIR (90%)...                 [OK]
+        #      Generating the target code (95%)...         [OK]
         #    Done (100%)...
         #
 
@@ -183,12 +183,13 @@ class ProgressLogDisplayer(ProgressDisplayer):
             if phase.part != self._last_part:
                 # Entering a new part.
                 sys.stdout.write('{}:\n'.format(phase.part))
-            phase_str += '    '
+            phase_str += '  '
 
         phase_str += '{} ({}%)...'.format(phase.description, phase.completion)
 
         # Print the phase in an aligned way so the status can be printed
-        # afterwards.
+        # afterwards. The number below has been chosen experimentally based on
+        # the longest phase string that we can have.
         sys.stdout.write('{0:<50} '.format(phase_str))
 
     def _print_decompilation_end(self, d):

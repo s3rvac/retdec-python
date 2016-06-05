@@ -12,6 +12,8 @@ dev
   supported parts of the `retdec.com API
   <https://retdec.com/api/docs/index.html>`_ into the `documentation
   <https://retdec-python.readthedocs.io/en/latest/>`_.
+* Re-formatted the progress-log output from the ``decompiler`` tool to ensure
+  that the ``[OK]`` parts are aligned properly.
 
 0.1 (2015-09-13)
 ----------------
