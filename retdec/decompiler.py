@@ -56,7 +56,7 @@ class Decompiler(Service):
             'mode': self._get_mode_param(files['input'], kwargs),
             'generate_archive': self._get_generate_archive_param(kwargs)
         }
-        response = conn.send_post_request('', files=files, params=params)
+        response = conn.send_post_request(files=files, params=params)
         return response['id']
 
     def _get_input_file(self, kwargs):

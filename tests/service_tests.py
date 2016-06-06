@@ -16,7 +16,6 @@ from tests import WithPatching
 from tests import mock
 from tests.conn_tests import AnyFiles
 from tests.conn_tests import AnyParams
-from tests.conn_tests import AnyURL
 
 
 class BaseServiceTests(unittest.TestCase, WithPatching):
@@ -33,16 +32,25 @@ class BaseServiceTests(unittest.TestCase, WithPatching):
             self.APIConnectionMock
         )
 
-    def assert_post_request_was_sent_with(self, url=AnyURL(), params=AnyParams(),
+    def assert_post_request_was_sent_with(self, path=None, params=AnyParams(),
                                           files=AnyFiles()):
-        """Asserts that a POST request was sent with the given parameters and
-        files.
+        """Asserts that a POST request was sent with the given path,
+        parameters, and files.
+
+        When `path` is ``None``, it is asserted that no path was given when
+        sending the POST request.
         """
-        self.conn.send_post_request.assert_called_once_with(
-            url,
-            params=params,
-            files=files
-        )
+        if path is not None:
+            self.conn.send_post_request.assert_called_once_with(
+                path,
+                params=params,
+                files=files
+            )
+        else:
+            self.conn.send_post_request.assert_called_once_with(
+                params=params,
+                files=files
+            )
 
 
 class ServiceTests(unittest.TestCase):
