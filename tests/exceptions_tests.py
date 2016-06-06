@@ -30,7 +30,7 @@ class MissingAPIKeyErrorTests(unittest.TestCase):
 
 
 class MissingParameterErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.MissingAPIKeyError`."""
+    """Tests for :class:`retdec.exceptions.MissingParameterError`."""
 
     def test_has_correct_description(self):
         ex = MissingParameterError('PARAM_NAME')
