@@ -26,14 +26,15 @@ class Fileinfo(Service):
         :returns: Started analysis (:class:`~retdec.analysis.Analysis`).
         """
         conn = self._create_new_api_connection('/fileinfo/analyses')
-        id = self._start_analysis(conn, **kwargs)
+        id = self._start_analysis(conn, kwargs)
         return Analysis(id, conn)
 
-    def _start_analysis(self, conn, **kwargs):
+    def _start_analysis(self, conn, kwargs):
         """Starts an analysis with the given parameters.
 
         :param retdec.conn.APIConnection conn: Connection to the API to be used
             for sending API requests.
+        :param dict kwargs: Parameters for the analysis.
 
         :returns: Unique identifier of the analysis.
         """
@@ -46,20 +47,20 @@ class Fileinfo(Service):
         response = conn.send_post_request('', params=params, files=files)
         return response['id']
 
-    def _get_verbose_param(self, params):
+    def _get_verbose_param(self, kwargs):
         """Returns the value of the ``verbose`` parameter to be used when
         starting an analysis.
         """
         return self._get_param(
             'verbose',
-            params,
+            kwargs,
             default=False
         )
 
-    def _get_input_file(self, params):
-        """Returns an input file from the given parameters (``dict``)."""
-        if 'input_file' in params:
-            return File(params['input_file'])
+    def _get_input_file(self, kwargs):
+        """Returns an input file to be analyzed."""
+        if 'input_file' in kwargs:
+            return File(kwargs['input_file'])
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(
