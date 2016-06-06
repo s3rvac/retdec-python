@@ -38,13 +38,13 @@ class Fileinfo(Service):
 
         :returns: Unique identifier of the analysis.
         """
-        params = {
-            'verbose': self._get_verbose_param(kwargs)
-        }
         files = {
             'input': self._get_input_file(kwargs),
         }
-        response = conn.send_post_request('', params=params, files=files)
+        params = {
+            'verbose': self._get_verbose_param(kwargs)
+        }
+        response = conn.send_post_request('', files=files, params=params)
         return response['id']
 
     def _get_verbose_param(self, kwargs):

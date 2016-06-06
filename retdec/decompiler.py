@@ -48,19 +48,27 @@ class Decompiler(Service):
 
         :returns: Unique identifier of the decompilation.
         """
-        # The input file is always required.
-        input_file = self._get_input_file(kwargs)
-
-        params = {
-            'mode': self._get_mode_param(input_file, kwargs),
-            'generate_archive': self._get_generate_archive_param(kwargs)
-        }
         files = {
-            'input': input_file
+            'input': self._get_input_file(kwargs)
         }
         self._add_pdb_file_when_given(files, kwargs)
-        response = conn.send_post_request('', params=params, files=files)
+        params = {
+            'mode': self._get_mode_param(files['input'], kwargs),
+            'generate_archive': self._get_generate_archive_param(kwargs)
+        }
+        response = conn.send_post_request('', files=files, params=params)
         return response['id']
+
+    def _get_input_file(self, kwargs):
+        """Returns an input file to be decompiled."""
+        input_file = kwargs.get('input_file', None)
+        return File(input_file) if input_file is not None else None
+
+    def _add_pdb_file_when_given(self, files, kwargs):
+        """Adds a PDB file to `files` when it was given."""
+        pdb_file = kwargs.get('pdb_file', None)
+        if pdb_file is not None:
+            files['pdb'] = File(pdb_file)
 
     def _get_mode_param(self, input_file, kwargs):
         """Returns a decompilation mode to be used."""
@@ -76,17 +84,6 @@ class Decompiler(Service):
         input file's name.
         """
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
-
-    def _get_input_file(self, kwargs):
-        """Returns an input file to be decompiled."""
-        input_file = kwargs.get('input_file', None)
-        return File(input_file) if input_file is not None else None
-
-    def _add_pdb_file_when_given(self, files, kwargs):
-        """Adds a PDB file to `files` when it was given."""
-        pdb_file = kwargs.get('pdb_file', None)
-        if pdb_file is not None:
-            files['pdb'] = File(pdb_file)
 
     def _get_generate_archive_param(self, kwargs):
         """Returns whether an archive with all decompilation outputs should be
