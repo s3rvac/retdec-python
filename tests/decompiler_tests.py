@@ -8,6 +8,7 @@
 
 from retdec.decompiler import Decompiler
 from retdec.exceptions import InvalidValueError
+from retdec.exceptions import MissingParameterError
 from retdec.file import File
 from tests import mock
 from tests.conn_tests import AnyFilesWith
@@ -54,6 +55,10 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
         self.assert_post_request_was_sent_with(
             files=AnyFilesWith(input=AnyFileNamed(self.input_file.name))
         )
+
+    def test_raises_exception_when_input_file_is_not_given(self):
+        with self.assertRaises(MissingParameterError):
+            self.decompiler.start_decompilation()
 
     def test_sends_pdb_file_when_given(self):
         pdb_file = mock.Mock(spec_set=File)

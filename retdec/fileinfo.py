@@ -7,6 +7,7 @@
 """Access to the file-analyzing service (fileinfo)."""
 
 from retdec.analysis import Analysis
+from retdec.exceptions import MissingParameterError
 from retdec.file import File
 from retdec.service import Service
 
@@ -58,9 +59,11 @@ class Fileinfo(Service):
         )
 
     def _get_input_file(self, kwargs):
-        """Returns an input file to be analyzed."""
-        if 'input_file' in kwargs:
+        """Returns the input file to be analyzed."""
+        try:
             return File(kwargs['input_file'])
+        except KeyError:
+            raise MissingParameterError('input_file')
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(

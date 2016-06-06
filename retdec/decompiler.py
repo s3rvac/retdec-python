@@ -7,6 +7,7 @@
 """Access to the decompiler (decompilation of files)."""
 
 from retdec.decompilation import Decompilation
+from retdec.exceptions import MissingParameterError
 from retdec.file import File
 from retdec.service import Service
 
@@ -60,9 +61,11 @@ class Decompiler(Service):
         return response['id']
 
     def _get_input_file(self, kwargs):
-        """Returns an input file to be decompiled."""
-        input_file = kwargs.get('input_file', None)
-        return File(input_file) if input_file is not None else None
+        """Returns the input file to be decompiled."""
+        try:
+            return File(kwargs['input_file'])
+        except KeyError:
+            raise MissingParameterError('input_file')
 
     def _add_pdb_file_when_given(self, files, kwargs):
         """Adds a PDB file to `files` when it was given."""
