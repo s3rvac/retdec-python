@@ -13,6 +13,8 @@ dev
   supported parts of the `retdec.com API
   <https://retdec.com/api/docs/index.html>`_ into the `documentation
   <https://retdec-python.readthedocs.io/en/latest/>`_.
+* ``Decompiler.start_decompilation()`` and ``Fileinfo.start_analysis()`` raise
+  ``MissingParameterError`` when the input file is not given.
 * Re-formatted the progress-log output from the ``decompiler`` tool to ensure
   that the ``[OK]`` parts are aligned properly.
 

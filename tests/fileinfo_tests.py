@@ -6,6 +6,7 @@
 
 """Tests for the :mod:`retdec.fileinfo` module."""
 
+from retdec.exceptions import MissingParameterError
 from retdec.file import File
 from retdec.fileinfo import Fileinfo
 from tests import mock
@@ -53,6 +54,10 @@ class FileinfoStartAnalysisTests(BaseServiceTests):
         self.assert_post_request_was_sent_with(
             files=AnyFilesWith(input=AnyFileNamed(self.input_file.name))
         )
+
+    def test_raises_exception_when_input_file_is_not_given(self):
+        with self.assertRaises(MissingParameterError):
+            self.fileinfo.start_analysis()
 
     def test_verbose_is_set_to_flase_when_not_given(self):
         self.fileinfo.start_analysis(input_file=self.input_file)

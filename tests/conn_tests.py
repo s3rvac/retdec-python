@@ -22,10 +22,6 @@ from tests.matchers import AnyDictWith
 from tests.matchers import Anything
 
 
-class AnyURL(Anything):
-    """A matcher that matches any URL."""
-
-
 class AnyParams(Anything):
     """A matcher that matches any parameters."""
 

@@ -8,6 +8,7 @@
 
 from retdec.decompiler import Decompiler
 from retdec.exceptions import InvalidValueError
+from retdec.exceptions import MissingParameterError
 from retdec.file import File
 from tests import mock
 from tests.conn_tests import AnyFilesWith
@@ -55,6 +56,10 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             files=AnyFilesWith(input=AnyFileNamed(self.input_file.name))
         )
 
+    def test_raises_exception_when_input_file_is_not_given(self):
+        with self.assertRaises(MissingParameterError):
+            self.decompiler.start_decompilation()
+
     def test_sends_pdb_file_when_given(self):
         pdb_file = mock.Mock(spec_set=File)
 
@@ -83,6 +88,32 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
 
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(mode='bin')
+        )
+
+    def test_mode_is_used_when_given(self):
+        self.decompiler.start_decompilation(
+            input_file=self.input_file,
+            mode='bin'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(mode='bin')
+        )
+
+    def test_raises_exception_when_mode_is_invalid(self):
+        with self.assertRaises(InvalidValueError):
+            self.decompiler.start_decompilation(
+                input_file=self.input_file,
+                mode='xxx'
+            )
+
+    def test_file_name_extension_is_case_insensitive_during_mode_detection(self):
+        self.input_file.name = 'test.C'
+
+        self.decompiler.start_decompilation(input_file=self.input_file)
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(mode='c')
         )
 
     def test_generate_archive_is_set_to_false_when_not_given(self):
@@ -128,32 +159,6 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
                 input_file=self.input_file,
                 generate_archive='some data'
             )
-
-    def test_mode_is_used_when_given(self):
-        self.decompiler.start_decompilation(
-            input_file=self.input_file,
-            mode='bin'
-        )
-
-        self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(mode='bin')
-        )
-
-    def test_raises_exception_when_mode_is_invalid(self):
-        with self.assertRaises(InvalidValueError):
-            self.decompiler.start_decompilation(
-                input_file=self.input_file,
-                mode='xxx'
-            )
-
-    def test_file_name_extension_is_case_insensitive_during_mode_detection(self):
-        self.input_file.name = 'test.C'
-
-        self.decompiler.start_decompilation(input_file=self.input_file)
-
-        self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(mode='c')
-        )
 
     def test_uses_returned_id_to_initialize_decompilation(self):
         self.conn.send_post_request.return_value = {'id': 'ID'}

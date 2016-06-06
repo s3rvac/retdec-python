@@ -7,6 +7,7 @@
 """Access to the decompiler (decompilation of files)."""
 
 from retdec.decompilation import Decompilation
+from retdec.exceptions import MissingParameterError
 from retdec.file import File
 from retdec.service import Service
 
@@ -36,64 +37,64 @@ class Decompiler(Service):
         the mode is set to ``c``. Otherwise, the mode is set to ``bin``.
         """
         conn = self._create_new_api_connection('/decompiler/decompilations')
-        id = self._start_decompilation(conn, **kwargs)
+        id = self._start_decompilation(conn, kwargs)
         return Decompilation(id, conn)
 
-    def _start_decompilation(self, conn, **kwargs):
+    def _start_decompilation(self, conn, kwargs):
         """Starts a decompilation with the given parameters.
 
         :param retdec.conn.APIConnection conn: Connection to the API to be used
             for sending API requests.
+        :param dict kwargs: Parameters for the decompilation.
 
         :returns: Unique identifier of the decompilation.
         """
-        # The input file is always required.
-        input_file = self._get_input_file(kwargs)
-
-        params = {
-            'mode': self._get_mode_param(input_file, kwargs),
-            'generate_archive': self._get_generate_archive_param(kwargs)
-        }
         files = {
-            'input': input_file
+            'input': self._get_input_file(kwargs)
         }
         self._add_pdb_file_when_given(files, kwargs)
-        response = conn.send_post_request('', params=params, files=files)
+        params = {
+            'mode': self._get_mode_param(files['input'], kwargs),
+            'generate_archive': self._get_generate_archive_param(kwargs)
+        }
+        response = conn.send_post_request(files=files, params=params)
         return response['id']
 
-    def _get_mode_param(self, input_file, params):
-        """Returns a mode from `params`."""
+    def _get_input_file(self, kwargs):
+        """Returns the input file to be decompiled."""
+        try:
+            return File(kwargs['input_file'])
+        except KeyError:
+            raise MissingParameterError('input_file')
+
+    def _add_pdb_file_when_given(self, files, kwargs):
+        """Adds a PDB file to `files` when it was given."""
+        pdb_file = kwargs.get('pdb_file', None)
+        if pdb_file is not None:
+            files['pdb'] = File(pdb_file)
+
+    def _get_mode_param(self, input_file, kwargs):
+        """Returns a decompilation mode to be used."""
         return self._get_param(
             'mode',
-            params,
+            kwargs,
             choices={'c', 'bin'},
             default=self._get_default_mode(input_file)
         )
 
     def _get_default_mode(self, input_file):
-        """Returns a default mode to be used based on the given input file's
-        name.
+        """Returns a default decompilation mode to be used based on the given
+        input file's name.
         """
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
 
-    def _get_input_file(self, params):
-        """Returns an input file from `params`."""
-        input_file = params.get('input_file', None)
-        return File(input_file) if input_file is not None else None
-
-    def _add_pdb_file_when_given(self, files, params):
-        """Adds a PDB file to `files` when given in `params`."""
-        pdb_file = params.get('pdb_file', None)
-        if pdb_file is not None:
-            files['pdb'] = File(pdb_file)
-
-    def _get_generate_archive_param(self, params):
+    def _get_generate_archive_param(self, kwargs):
         """Returns whether an archive with all decompilation outputs should be
-        generated based on `params`.
+        generated.
         """
         return self._get_param(
             'generate_archive',
-            params,
+            kwargs,
             choices={True, False},
             default=False
         )
