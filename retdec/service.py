@@ -46,8 +46,6 @@ class Service:
     def _get_api_key_to_use(api_key):
         """Returns an API key to be used based on the given key and environment
         variables.
-
-        :raises MissingAPIKeyError: When no API key is available.
         """
         if api_key is not None:
             return api_key
