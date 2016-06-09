@@ -21,7 +21,7 @@ class Fileinfo(Service):
         :param input_file: File to be analyzed (**required**).
         :type input_file: str or file-like object
         :param verbose: Should the analysis produce a detailed output?
-            ``False`` by default.
+            Default: ``False``.
         :type verbose: bool
 
         :returns: Started analysis (:class:`~retdec.analysis.Analysis`).
