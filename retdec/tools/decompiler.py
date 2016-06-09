@@ -272,7 +272,7 @@ def parse_args(argv):
     parser.add_argument(
         '-m', '--mode',
         dest='mode',
-        choices={'c', 'bin'},
+        choices=['c', 'bin'],
         help='decompilation mode (default: automatic detection)'
     )
     parser.add_argument(
