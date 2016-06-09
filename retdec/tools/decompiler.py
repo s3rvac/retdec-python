@@ -270,6 +270,11 @@ def parse_args(argv):
         help='print fewer information during the decompilation'
     )
     parser.add_argument(
+        '-l', '--target-language',
+        dest='target_language',
+        help='target high-level language'
+    )
+    parser.add_argument(
         '-m', '--mode',
         dest='mode',
         choices=['c', 'bin'],
@@ -362,6 +367,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'input_file')
     add_decompilation_param_when_given(args, params, 'pdb_file')
     add_decompilation_param_when_given(args, params, 'mode')
+    add_decompilation_param_when_given(args, params, 'target_language')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 

@@ -256,6 +256,18 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--quiet', 'prog.exe'])
         self.assertTrue(args.quiet)
 
+    def test_is_set_to_false_when_with_archive_not_given(self):
+        args = parse_args(['decompiler.py', 'prog.exe'])
+        self.assertFalse(args.generate_archive)
+
+    def test_target_language_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-l', 'py', 'prog.exe'])
+        self.assertEqual(args.target_language, 'py')
+
+    def test_target_language_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--target-language', 'py', 'prog.exe'])
+        self.assertEqual(args.target_language, 'py')
+
     def test_generate_archive_is_set_to_false_when_with_archive_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
         self.assertFalse(args.generate_archive)
@@ -421,6 +433,15 @@ class MainTests(ToolTestsBase):
             self.assertIn(key, decompilation_args[1])
             msg = "key is '{}'".format(key)
             self.assertEqual(decompilation_args[1][key], value, msg)
+
+    def test_sets_target_language_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--target-language', 'py'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            target_language='py'
+        )
 
     def test_generates_and_saves_archive_when_requested(self):
         self.call_main_with_standard_arguments_and(

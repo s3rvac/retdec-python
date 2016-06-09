@@ -25,6 +25,8 @@ class Decompiler(Service):
         :type pdb_file: str or file-like object
         :param mode: Decompilation mode.
         :type mode: str
+        :param target_language: Type of the target high-level language.
+        :type target_language: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated? Default: ``False``.
         :type generate_archive: bool
@@ -61,6 +63,7 @@ class Decompiler(Service):
             'mode': self._get_mode_param(files['input'], kwargs),
             'generate_archive': self._get_generate_archive_param(kwargs)
         }
+        self._add_target_language_when_given(params, kwargs),
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
@@ -91,6 +94,13 @@ class Decompiler(Service):
         input file's name.
         """
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
+
+    def _add_target_language_when_given(self, params, kwargs):
+        """Adds the target high-level language to `params` when it was given.
+        """
+        target_language = kwargs.get('target_language', None)
+        if target_language is not None:
+            params['target_language'] = target_language
 
     def _get_generate_archive_param(self, kwargs):
         """Returns whether an archive with all decompilation outputs should be

@@ -124,6 +124,15 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(mode='c')
         )
 
+    def test_target_language_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            target_language='py'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(target_language='py')
+        )
+
     def test_generate_archive_is_set_to_false_when_not_given(self):
         self.start_decompilation_with_any_input_file()
 
