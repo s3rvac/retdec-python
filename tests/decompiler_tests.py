@@ -45,8 +45,15 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
         """Starts a decompilation with the given parameters."""
         return self.decompiler.start_decompilation(*args, **kwargs)
 
+    def start_decompilation_with_any_input_file(self, *args, **kwargs):
+        """Starts a decompilation with the default input file and,
+        additionally, the given parameters.
+        """
+        kwargs.setdefault('input_file', self.input_file)
+        return self.decompiler.start_decompilation(*args, **kwargs)
+
     def test_creates_api_connection_with_correct_url_and_api_key(self):
-        self.start_decompilation(input_file=self.input_file)
+        self.start_decompilation_with_any_input_file()
 
         self.APIConnectionMock.assert_called_once_with(
             'https://retdec.com/service/api/decompiler/decompilations',
@@ -67,8 +74,7 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
     def test_sends_pdb_file_when_given(self):
         pdb_file = mock.Mock(spec_set=File)
 
-        self.start_decompilation(
-            input_file=self.input_file,
+        self.start_decompilation_with_any_input_file(
             pdb_file=pdb_file
         )
 
@@ -95,8 +101,7 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
         )
 
     def test_mode_is_used_when_given(self):
-        self.start_decompilation(
-            input_file=self.input_file,
+        self.start_decompilation_with_any_input_file(
             mode='bin'
         )
 
@@ -106,8 +111,7 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
 
     def test_raises_exception_when_mode_is_invalid(self):
         with self.assertRaises(InvalidValueError):
-            self.start_decompilation(
-                input_file=self.input_file,
+            self.start_decompilation_with_any_input_file(
                 mode='xxx'
             )
 
@@ -121,21 +125,14 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
         )
 
     def test_generate_archive_is_set_to_false_when_not_given(self):
-        self.input_file.name = 'test.exe'
-
-        self.start_decompilation(
-            input_file=self.input_file
-        )
+        self.start_decompilation_with_any_input_file()
 
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(generate_archive=False)
         )
 
     def test_generate_archive_is_set_to_true_when_given_as_true(self):
-        self.input_file.name = 'test.exe'
-
-        self.start_decompilation(
-            input_file=self.input_file,
+        self.start_decompilation_with_any_input_file(
             generate_archive=True
         )
 
@@ -144,10 +141,7 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
         )
 
     def test_generate_archive_is_set_to_false_when_given_as_false(self):
-        self.input_file.name = 'test.exe'
-
-        self.start_decompilation(
-            input_file=self.input_file,
+        self.start_decompilation_with_any_input_file(
             generate_archive=False
         )
 
@@ -156,19 +150,14 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
         )
 
     def test_raises_exception_when_generate_archive_parameter_is_invalid(self):
-        self.input_file.name = 'test.exe'
-
         with self.assertRaises(InvalidValueError):
-            self.start_decompilation(
-                input_file=self.input_file,
+            self.start_decompilation_with_any_input_file(
                 generate_archive='some data'
             )
 
     def test_uses_returned_id_to_initialize_decompilation(self):
         self.conn.send_post_request.return_value = {'id': 'ID'}
 
-        decompilation = self.start_decompilation(
-            input_file=self.input_file
-        )
+        decompilation = self.start_decompilation_with_any_input_file()
 
         self.assertTrue(decompilation.id, 'ID')
