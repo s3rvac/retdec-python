@@ -149,7 +149,7 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(generate_archive=False)
         )
 
-    def test_raises_exception_when_generate_archive_parameter_is_invalid(self):
+    def test_raises_exception_when_generate_archive_is_invalid(self):
         with self.assertRaises(InvalidValueError):
             self.start_decompilation_with_any_input_file(
                 generate_archive='some data'
