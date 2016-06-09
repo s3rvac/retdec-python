@@ -4,7 +4,7 @@ Changelog
 dev
 ---
 
-* Add support for passing a PDB file to decompilations.
+* Added support for passing a PDB file to decompilations.
 * Added a new method to the ``Test`` service: ``echo()``. It echoes back the
   parameters passed via the `test/echo
   <https://retdec.com/api/docs/test.html#parameter-passing>`_ service.
