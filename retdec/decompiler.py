@@ -35,6 +35,10 @@ class Decompiler(Service):
         If `mode` is not given, it is automatically determined based on the
         name of ``input_file``. If the input file ends with ``.c`` or ``.C``,
         the mode is set to ``c``. Otherwise, the mode is set to ``bin``.
+
+        See the `official documentation
+        <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_
+        for more information about the parameters.
         """
         conn = self._create_new_api_connection('/decompiler/decompilations')
         id = self._start_decompilation(conn, kwargs)
