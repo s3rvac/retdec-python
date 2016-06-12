@@ -66,8 +66,8 @@ class Decompiler(Service):
             'mode': self._get_mode_param(files['input'], kwargs),
             'generate_archive': self._get_generate_archive_param(kwargs)
         }
-        self._add_target_language_when_given(params, kwargs),
-        self._add_architecture_when_given(params, kwargs),
+        self._add_param_when_given('target_language', params, kwargs)
+        self._add_param_when_given('architecture', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
@@ -99,18 +99,11 @@ class Decompiler(Service):
         """
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
 
-    def _add_target_language_when_given(self, params, kwargs):
-        """Adds the target high-level language to `params` when it was given.
-        """
-        target_language = kwargs.get('target_language', None)
-        if target_language is not None:
-            params['target_language'] = target_language
-
-    def _add_architecture_when_given(self, params, kwargs):
-        """Adds the architecture to `params` when it was given."""
-        architecture = kwargs.get('architecture', None)
-        if architecture is not None:
-            params['architecture'] = architecture
+    def _add_param_when_given(self, param, params, kwargs):
+        """Adds `param` to `params` when given in `kwargs`."""
+        value = kwargs.get(param, None)
+        if value is not None:
+            params[param] = value
 
     def _get_generate_archive_param(self, kwargs):
         """Returns whether an archive with all decompilation outputs should be
