@@ -4,6 +4,11 @@ Changelog
 dev
 ---
 
+* -
+
+0.2 (2016-06-12)
+----------------
+
 * Added support for passing a PDB file to decompilations.
 * Added support for selecting the target high-level language.
 * Added support for selecting the architecture.
