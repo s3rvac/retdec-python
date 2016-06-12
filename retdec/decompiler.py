@@ -25,8 +25,14 @@ class Decompiler(Service):
         :type pdb_file: str or file-like object
         :param mode: Decompilation mode.
         :type mode: str
-        :param target_language: Type of the target high-level language.
+        :param target_language: Target high-level language.
         :type target_language: str
+        :param architecture: Architecture. The precise meaning depends on the
+            used `mode`.
+        :type architecture: str
+        :param file_format: File format. The precise meaning depends on the
+            used `mode`.
+        :type file_format: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated? Default: ``False``.
         :type generate_archive: bool
@@ -63,7 +69,9 @@ class Decompiler(Service):
             'mode': self._get_mode_param(files['input'], kwargs),
             'generate_archive': self._get_generate_archive_param(kwargs)
         }
-        self._add_target_language_when_given(params, kwargs),
+        self._add_param_when_given('target_language', params, kwargs)
+        self._add_param_when_given('architecture', params, kwargs)
+        self._add_param_when_given('file_format', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
@@ -95,12 +103,11 @@ class Decompiler(Service):
         """
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
 
-    def _add_target_language_when_given(self, params, kwargs):
-        """Adds the target high-level language to `params` when it was given.
-        """
-        target_language = kwargs.get('target_language', None)
-        if target_language is not None:
-            params['target_language'] = target_language
+    def _add_param_when_given(self, param, params, kwargs):
+        """Adds `param` to `params` when given in `kwargs`."""
+        value = kwargs.get(param, None)
+        if value is not None:
+            params[param] = value
 
     def _get_generate_archive_param(self, kwargs):
         """Returns whether an archive with all decompilation outputs should be

@@ -6,6 +6,8 @@ dev
 
 * Added support for passing a PDB file to decompilations.
 * Added support for selecting the target high-level language.
+* Added support for selecting the architecture.
+* Added support for selecting the file format.
 * Added a new method to the ``Test`` service: ``echo()``. It echoes back the
   parameters passed via the `test/echo
   <https://retdec.com/api/docs/test.html#parameter-passing>`_ service.

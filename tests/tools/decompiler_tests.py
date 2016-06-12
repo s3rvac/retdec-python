@@ -268,6 +268,22 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--target-language', 'py', 'prog.exe'])
         self.assertEqual(args.target_language, 'py')
 
+    def test_architecture_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-a', 'arm', 'prog.exe'])
+        self.assertEqual(args.architecture, 'arm')
+
+    def test_architecture_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--architecture', 'arm', 'prog.exe'])
+        self.assertEqual(args.architecture, 'arm')
+
+    def test_file_format_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-f', 'elf', 'prog.exe'])
+        self.assertEqual(args.file_format, 'elf')
+
+    def test_file_format_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--file-format', 'elf', 'prog.exe'])
+        self.assertEqual(args.file_format, 'elf')
+
     def test_generate_archive_is_set_to_false_when_with_archive_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
         self.assertFalse(args.generate_archive)
@@ -441,6 +457,24 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             target_language='py'
+        )
+
+    def test_sets_architecture_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--architecture', 'arm'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            architecture='arm'
+        )
+
+    def test_sets_file_format_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--file-format', 'elf'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            file_format='elf'
         )
 
     def test_generates_and_saves_archive_when_requested(self):
