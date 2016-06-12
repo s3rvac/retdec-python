@@ -264,6 +264,12 @@ def parse_args(argv):
     )
     _add_arguments_shared_by_all_tools(parser)
     parser.add_argument(
+        '-a', '--architecture',
+        dest='architecture',
+        choices=['x86', 'arm', 'thumb', 'mips', 'pic32', 'powerpc'],
+        help='architecture to force when (de)compiling'
+    )
+    parser.add_argument(
         '-b', '--brief',
         dest='brief',
         action='store_true',
@@ -369,6 +375,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'pdb_file')
     add_decompilation_param_when_given(args, params, 'mode')
     add_decompilation_param_when_given(args, params, 'target_language')
+    add_decompilation_param_when_given(args, params, 'architecture')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 

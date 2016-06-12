@@ -38,7 +38,7 @@ The decompilation service.
 
     * `Parameters for the bin mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-bin-mode>`_ ✗
 
-        * ``architecture`` ✗
+        * ``architecture`` ✔
         * ``sel_decomp_funcs`` ✗
         * ``sel_decomp_ranges`` ✗
         * ``sel_decomp_decoding`` ✗
@@ -53,7 +53,7 @@ The decompilation service.
 
     * `Parameters for the c mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-c-mode>`_ ✗
 
-        * ``architecture`` ✗
+        * ``architecture`` ✔
         * ``file_format`` ✗
         * ``comp_compiler`` ✗
         * ``comp_optimizations`` ✗

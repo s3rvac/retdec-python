@@ -27,6 +27,9 @@ class Decompiler(Service):
         :type mode: str
         :param target_language: Target high-level language.
         :type target_language: str
+        :param architecture: Architecture. The precise meaning depends on the
+            used `mode`.
+        :type architecture: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated? Default: ``False``.
         :type generate_archive: bool
@@ -64,6 +67,7 @@ class Decompiler(Service):
             'generate_archive': self._get_generate_archive_param(kwargs)
         }
         self._add_target_language_when_given(params, kwargs),
+        self._add_architecture_when_given(params, kwargs),
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
@@ -101,6 +105,12 @@ class Decompiler(Service):
         target_language = kwargs.get('target_language', None)
         if target_language is not None:
             params['target_language'] = target_language
+
+    def _add_architecture_when_given(self, params, kwargs):
+        """Adds the architecture to `params` when it was given."""
+        architecture = kwargs.get('architecture', None)
+        if architecture is not None:
+            params['architecture'] = architecture
 
     def _get_generate_archive_param(self, kwargs):
         """Returns whether an archive with all decompilation outputs should be

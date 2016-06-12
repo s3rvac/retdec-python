@@ -133,6 +133,15 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(target_language='py')
         )
 
+    def test_architecture_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            architecture='arm'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(architecture='arm')
+        )
+
     def test_generate_archive_is_set_to_false_when_not_given(self):
         self.start_decompilation_with_any_input_file()
 
