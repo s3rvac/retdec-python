@@ -276,6 +276,12 @@ def parse_args(argv):
         help='print fewer information during the decompilation'
     )
     parser.add_argument(
+        '-f', '--file-format',
+        dest='file_format',
+        choices=['elf', 'pe'],
+        help='file format to force when compiling'
+    )
+    parser.add_argument(
         '-l', '--target-language',
         dest='target_language',
         choices=['c', 'py'],
@@ -376,6 +382,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'mode')
     add_decompilation_param_when_given(args, params, 'target_language')
     add_decompilation_param_when_given(args, params, 'architecture')
+    add_decompilation_param_when_given(args, params, 'file_format')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 

@@ -142,6 +142,15 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(architecture='arm')
         )
 
+    def test_file_format_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            file_format='elf'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(file_format='elf')
+        )
+
     def test_generate_archive_is_set_to_false_when_not_given(self):
         self.start_decompilation_with_any_input_file()
 

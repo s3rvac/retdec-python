@@ -30,6 +30,9 @@ class Decompiler(Service):
         :param architecture: Architecture. The precise meaning depends on the
             used `mode`.
         :type architecture: str
+        :param file_format: File format. The precise meaning depends on the
+            used `mode`.
+        :type file_format: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated? Default: ``False``.
         :type generate_archive: bool
@@ -68,6 +71,7 @@ class Decompiler(Service):
         }
         self._add_param_when_given('target_language', params, kwargs)
         self._add_param_when_given('architecture', params, kwargs)
+        self._add_param_when_given('file_format', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 

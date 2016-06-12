@@ -54,7 +54,7 @@ The decompilation service.
     * `Parameters for the c mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-c-mode>`_ ✗
 
         * ``architecture`` ✔
-        * ``file_format`` ✗
+        * ``file_format`` ✔
         * ``comp_compiler`` ✗
         * ``comp_optimizations`` ✗
         * ``comp_debug`` ✗
