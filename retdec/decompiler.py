@@ -25,7 +25,7 @@ class Decompiler(Service):
         :type pdb_file: str or file-like object
         :param mode: Decompilation mode.
         :type mode: str
-        :param target_language: Type of the target high-level language.
+        :param target_language: Target high-level language.
         :type target_language: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated? Default: ``False``.
