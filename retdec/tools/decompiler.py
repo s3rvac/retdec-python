@@ -272,6 +272,7 @@ def parse_args(argv):
     parser.add_argument(
         '-l', '--target-language',
         dest='target_language',
+        choices=['c', 'py'],
         help='target high-level language'
     )
     parser.add_argument(
