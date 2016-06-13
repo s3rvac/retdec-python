@@ -83,7 +83,8 @@ Installation
 ------------
 
 The recommended way of installing is from `Python Package Index
-<https://pypi.python.org>`_ (PyPI) with `pip <http://www.pip-installer.org/>`_:
+<https://pypi.python.org/pypi/retdec-python>`_ (PyPI) with `pip
+<http://www.pip-installer.org/>`_:
 
 .. code-block:: shell
 
