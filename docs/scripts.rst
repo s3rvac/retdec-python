@@ -46,6 +46,7 @@ Options
 * ``-a ARCH``, ``--architecture ARCH`` -- Architecture to force when (de)compiling. Supported architectures: ``x86``, ``arm``, ``thumb``, ``mips``, ``pic32``, ``powerpc``.
 * ``-b``, ``--brief`` -- Print fewer information during the decompilation.
 * ``-c COMPILER``, ``--compiler COMPILER`` -- Compiler to use when compiling input C source files. Supported compilers: ``gcc``, ``clang``.
+* ``-C LEVEL``, ``--compiler-optimizations LEVEL`` -- Optimization level to use when compiling input C source files. Supported levels: ``O0``, ``O1``, ``O2``, ``O3``.
 * ``-f FORMAT``, ``--file-format FORMAT`` -- File format to force when compiling input C source files. Supported formats: ``elf``, ``pe``.
 * ``-k KEY``, ``--api-key KEY`` -- Specifies the API key to be used.
 * ``-l LANGUAGE``, ``--target-language LANGUAGE`` -- Target high-level language. Supported languages: ``c``, ``py``.

@@ -288,6 +288,14 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--compiler', 'clang', 'file.c'])
         self.assertEqual(args.comp_compiler, 'clang')
 
+    def test_comp_optimizations_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-C', 'O1', 'file.c'])
+        self.assertEqual(args.comp_optimizations, 'O1')
+
+    def test_comp_optimizations_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--compiler-optimizations', 'O1', 'file.c'])
+        self.assertEqual(args.comp_optimizations, 'O1')
+
     def test_generate_archive_is_set_to_false_when_with_archive_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
         self.assertFalse(args.generate_archive)
@@ -488,6 +496,15 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             comp_compiler='clang'
+        )
+
+    def test_sets_comp_optimizations_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--compiler-optimizations', 'O1'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            comp_optimizations='O1'
         )
 
     def test_generates_and_saves_archive_when_requested(self):
