@@ -256,10 +256,6 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--quiet', 'prog.exe'])
         self.assertTrue(args.quiet)
 
-    def test_is_set_to_false_when_with_archive_not_given(self):
-        args = parse_args(['decompiler.py', 'prog.exe'])
-        self.assertFalse(args.generate_archive)
-
     def test_target_language_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-l', 'py', 'prog.exe'])
         self.assertEqual(args.target_language, 'py')
@@ -269,20 +265,36 @@ class ParseArgsTests(ToolTestsBase):
         self.assertEqual(args.target_language, 'py')
 
     def test_architecture_is_parsed_correctly_short_form(self):
-        args = parse_args(['decompiler.py', '-a', 'arm', 'prog.exe'])
+        args = parse_args(['decompiler.py', '-a', 'arm', 'file.c'])
         self.assertEqual(args.architecture, 'arm')
 
     def test_architecture_is_parsed_correctly_long_form(self):
-        args = parse_args(['decompiler.py', '--architecture', 'arm', 'prog.exe'])
+        args = parse_args(['decompiler.py', '--architecture', 'arm', 'file.c'])
         self.assertEqual(args.architecture, 'arm')
 
     def test_file_format_is_parsed_correctly_short_form(self):
-        args = parse_args(['decompiler.py', '-f', 'elf', 'prog.exe'])
+        args = parse_args(['decompiler.py', '-f', 'elf', 'file.c'])
         self.assertEqual(args.file_format, 'elf')
 
     def test_file_format_is_parsed_correctly_long_form(self):
-        args = parse_args(['decompiler.py', '--file-format', 'elf', 'prog.exe'])
+        args = parse_args(['decompiler.py', '--file-format', 'elf', 'file.c'])
         self.assertEqual(args.file_format, 'elf')
+
+    def test_comp_compiler_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-c', 'clang', 'file.c'])
+        self.assertEqual(args.comp_compiler, 'clang')
+
+    def test_comp_compiler_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--compiler', 'clang', 'file.c'])
+        self.assertEqual(args.comp_compiler, 'clang')
+
+    def test_comp_optimizations_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-C', 'O1', 'file.c'])
+        self.assertEqual(args.comp_optimizations, 'O1')
+
+    def test_comp_optimizations_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--compiler-optimizations', 'O1', 'file.c'])
+        self.assertEqual(args.comp_optimizations, 'O1')
 
     def test_generate_archive_is_set_to_false_when_with_archive_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
@@ -475,6 +487,24 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             file_format='elf'
+        )
+
+    def test_sets_comp_compiler_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--compiler', 'clang'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            comp_compiler='clang'
+        )
+
+    def test_sets_comp_optimizations_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--compiler-optimizations', 'O1'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            comp_optimizations='O1'
         )
 
     def test_generates_and_saves_archive_when_requested(self):

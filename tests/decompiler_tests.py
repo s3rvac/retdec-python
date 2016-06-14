@@ -151,6 +151,33 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(file_format='elf')
         )
 
+    def test_comp_compiler_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            comp_compiler='clang'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(comp_compiler='clang')
+        )
+
+    def test_comp_optimizations_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            comp_optimizations='-O1'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(comp_optimizations='-O1')
+        )
+
+    def test_adds_leading_dash_to_comp_optimizations_when_missing(self):
+        self.start_decompilation_with_any_input_file(
+            comp_optimizations='O1'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(comp_optimizations='-O1')
+        )
+
     def test_generate_archive_is_set_to_false_when_not_given(self):
         self.start_decompilation_with_any_input_file()
 

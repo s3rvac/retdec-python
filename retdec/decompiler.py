@@ -33,6 +33,12 @@ class Decompiler(Service):
         :param file_format: File format. The precise meaning depends on the
             used `mode`.
         :type file_format: str
+        :param comp_compiler: Compiler to be used when compiling input C source
+            files.
+        :type comp_compiler: str
+        :param comp_optimizations: Compiler optimizations to be used when
+            compiling input C source files.
+        :type comp_optimizations: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated? Default: ``False``.
         :type generate_archive: bool
@@ -72,6 +78,8 @@ class Decompiler(Service):
         self._add_param_when_given('target_language', params, kwargs)
         self._add_param_when_given('architecture', params, kwargs)
         self._add_param_when_given('file_format', params, kwargs)
+        self._add_param_when_given('comp_compiler', params, kwargs)
+        self._add_comp_optimizations_param_when_given(params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
@@ -108,6 +116,19 @@ class Decompiler(Service):
         value = kwargs.get(param, None)
         if value is not None:
             params[param] = value
+
+    def _add_comp_optimizations_param_when_given(self, params, kwargs):
+        """Adds the ``comp_optimizations`` parameter to `params` when given in
+        `kwargs`.
+        """
+        value = kwargs.get('comp_optimizations', None)
+        if value is not None:
+            # The retdec.com API expects the optimization level to start with a
+            # dash (e.g. "-O1" instead of just "O1"). To be user-friendly,
+            # allow passing just "O1" and add the dash automatically.
+            if not value.startswith('-'):
+                value = '-' + value
+            params['comp_optimizations'] = value
 
     def _get_generate_archive_param(self, kwargs):
         """Returns whether an archive with all decompilation outputs should be
