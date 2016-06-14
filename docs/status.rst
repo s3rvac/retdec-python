@@ -55,7 +55,7 @@ The decompilation service.
 
         * ``architecture`` ✔
         * ``file_format`` ✔
-        * ``comp_compiler`` ✗
+        * ``comp_compiler`` ✔
         * ``comp_optimizations`` ✗
         * ``comp_debug`` ✗
         * ``comp_strip`` ✗

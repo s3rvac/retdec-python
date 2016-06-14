@@ -33,6 +33,9 @@ class Decompiler(Service):
         :param file_format: File format. The precise meaning depends on the
             used `mode`.
         :type file_format: str
+        :param comp_compiler: Compiler to be used when compiling input C source
+            files.
+        :type comp_compiler: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated? Default: ``False``.
         :type generate_archive: bool
@@ -72,6 +75,7 @@ class Decompiler(Service):
         self._add_param_when_given('target_language', params, kwargs)
         self._add_param_when_given('architecture', params, kwargs)
         self._add_param_when_given('file_format', params, kwargs)
+        self._add_param_when_given('comp_compiler', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 

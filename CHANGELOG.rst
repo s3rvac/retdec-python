@@ -4,7 +4,8 @@ Changelog
 dev
 ---
 
-* -
+* Added support for selecting the compiler to be used when compiling C source
+  files.
 
 0.2 (2016-06-12)
 ----------------
