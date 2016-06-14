@@ -256,10 +256,6 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--quiet', 'prog.exe'])
         self.assertTrue(args.quiet)
 
-    def test_is_set_to_false_when_with_archive_not_given(self):
-        args = parse_args(['decompiler.py', 'prog.exe'])
-        self.assertFalse(args.generate_archive)
-
     def test_target_language_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-l', 'py', 'prog.exe'])
         self.assertEqual(args.target_language, 'py')
