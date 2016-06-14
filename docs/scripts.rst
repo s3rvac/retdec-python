@@ -43,12 +43,12 @@ Output files are stored into the same directory where the input file is located.
 Options
 ^^^^^^^
 
-* ``-a``, ``--architecture`` -- Architecture to force when (de)compiling. Supported architectures: ``x86``, ``arm``, ``thumb``, ``mips``, ``pic32``, ``powerpc``.
+* ``-a ARCH``, ``--architecture ARCH`` -- Architecture to force when (de)compiling. Supported architectures: ``x86``, ``arm``, ``thumb``, ``mips``, ``pic32``, ``powerpc``.
 * ``-b``, ``--brief`` -- Print fewer information during the decompilation.
-* ``-c``, ``--compiler`` -- Compiler to use when compiling input C source files. Supported compilers: ``gcc``, ``clang``.
-* ``-f``, ``--file-format`` -- File format to force when compiling input C source files. Supported formats: ``elf``, ``pe``.
+* ``-c COMPILER``, ``--compiler COMPILER`` -- Compiler to use when compiling input C source files. Supported compilers: ``gcc``, ``clang``.
+* ``-f FORMAT``, ``--file-format FORMAT`` -- File format to force when compiling input C source files. Supported formats: ``elf``, ``pe``.
 * ``-k KEY``, ``--api-key KEY`` -- Specifies the API key to be used.
-* ``-l``, ``--target-language`` -- Target high-level language. Supported languages: ``c``, ``py``.
+* ``-l LANGUAGE``, ``--target-language LANGUAGE`` -- Target high-level language. Supported languages: ``c``, ``py``.
 * ``-m MODE``, ``--mode MODE`` -- Decompilation mode. `Supported modes <https://retdec.com/api/docs/decompiler.html#decompilation-modes>`_: ``bin``, ``c``. By default, the script performs an automatic detection based on the extension of the input file.
 * ``-o DIR``, ``--output-dir DIR`` -- Save the outputs into this directory.
 * ``-p FILE``, ``--pdb-file`` -- PDB file associated with the input file.
