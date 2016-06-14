@@ -265,19 +265,19 @@ class ParseArgsTests(ToolTestsBase):
         self.assertEqual(args.target_language, 'py')
 
     def test_architecture_is_parsed_correctly_short_form(self):
-        args = parse_args(['decompiler.py', '-a', 'arm', 'prog.exe'])
+        args = parse_args(['decompiler.py', '-a', 'arm', 'file.c'])
         self.assertEqual(args.architecture, 'arm')
 
     def test_architecture_is_parsed_correctly_long_form(self):
-        args = parse_args(['decompiler.py', '--architecture', 'arm', 'prog.exe'])
+        args = parse_args(['decompiler.py', '--architecture', 'arm', 'file.c'])
         self.assertEqual(args.architecture, 'arm')
 
     def test_file_format_is_parsed_correctly_short_form(self):
-        args = parse_args(['decompiler.py', '-f', 'elf', 'prog.exe'])
+        args = parse_args(['decompiler.py', '-f', 'elf', 'file.c'])
         self.assertEqual(args.file_format, 'elf')
 
     def test_file_format_is_parsed_correctly_long_form(self):
-        args = parse_args(['decompiler.py', '--file-format', 'elf', 'prog.exe'])
+        args = parse_args(['decompiler.py', '--file-format', 'elf', 'file.c'])
         self.assertEqual(args.file_format, 'elf')
 
     def test_comp_compiler_is_parsed_correctly_short_form(self):
