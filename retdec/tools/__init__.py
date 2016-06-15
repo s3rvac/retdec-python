@@ -7,6 +7,7 @@
 """Tools that use the library to analyze and decompile files."""
 
 from retdec import DEFAULT_API_URL
+from retdec import __version__
 
 
 def _add_arguments_shared_by_all_tools(parser):
@@ -23,4 +24,9 @@ def _add_arguments_shared_by_all_tools(parser):
         metavar='URL',
         default=DEFAULT_API_URL,
         help='URL to the API (default: {})'.format(DEFAULT_API_URL)
+    )
+    parser.add_argument(
+        '-V', '--version',
+        action='version',
+        version='%(prog)s (via retdec-python) {}'.format(__version__)
     )

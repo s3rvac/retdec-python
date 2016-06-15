@@ -8,6 +8,8 @@ dev
   files.
 * Added support for selecting the optimizations to be used when compiling C
   source files.
+* Added support for printing script versions via the ``-V``/``--version``
+  parameter.
 
 0.2 (2016-06-12)
 ----------------

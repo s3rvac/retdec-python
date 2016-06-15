@@ -10,6 +10,7 @@ import os
 import unittest
 
 from retdec import DEFAULT_API_URL
+from retdec import __version__
 from retdec.decompilation import Decompilation
 from retdec.decompilation_phase import DecompilationPhase
 from retdec.decompiler import Decompiler
@@ -315,6 +316,12 @@ class ParseArgsTests(ToolTestsBase):
     def test_brief_is_set_to_true_when_given_in_long_form(self):
         args = parse_args(['decompiler.py', '--brief', 'prog.exe'])
         self.assertTrue(args.brief)
+
+    def test_prints_version_when_requested_and_exits(self):
+        with self.assertRaises(SystemExit) as cm:
+            parse_args(['decompiler.py', '--version'])
+        self.assertEqual(cm.exception.code, 0)
+        self.assertIn(__version__, self.stdout.getvalue())
 
 
 class FakeArguments:

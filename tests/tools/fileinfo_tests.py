@@ -7,6 +7,7 @@
 """Tests for the :mod:`retdec.tools.fileinfo` module."""
 
 from retdec import DEFAULT_API_URL
+from retdec import __version__
 from retdec.fileinfo import Fileinfo
 from retdec.tools.fileinfo import main
 from retdec.tools.fileinfo import parse_args
@@ -49,6 +50,12 @@ class ParseArgsTests(ToolTestsBase):
     def test_verbose_is_parsed_correctly_long_form(self):
         args = parse_args(['fileinfo.py', '--verbose', 'prog.exe'])
         self.assertTrue(args.verbose)
+
+    def test_prints_version_when_requested_and_exits(self):
+        with self.assertRaises(SystemExit) as cm:
+            parse_args(['fileinfo.py', '--version'])
+        self.assertEqual(cm.exception.code, 0)
+        self.assertIn(__version__, self.stdout.getvalue())
 
 
 class MainTests(ToolTestsBase):

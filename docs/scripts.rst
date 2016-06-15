@@ -54,6 +54,7 @@ Options
 * ``-o DIR``, ``--output-dir DIR`` -- Save the outputs into this directory.
 * ``-p FILE``, ``--pdb-file`` -- PDB file associated with the input file.
 * ``-q``, ``--quiet`` -- Print only errors, nothing else (not even progress).
+* ``-V``, ``--version`` -- Print the script and library version.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
 
 See the `official documentation <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ for more details.
@@ -100,6 +101,7 @@ Options
 
 * ``-k KEY``, ``--api-key KEY`` -- Specifies the API key to be used.
 * ``-v``, ``--verbose`` -- Print all available information about the file.
+* ``-V``, ``--version`` -- Print the script and library version.
 
 Example
 ^^^^^^^
