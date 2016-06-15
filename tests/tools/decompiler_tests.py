@@ -321,7 +321,9 @@ class ParseArgsTests(ToolTestsBase):
         with self.assertRaises(SystemExit) as cm:
             parse_args(['decompiler.py', '--version'])
         self.assertEqual(cm.exception.code, 0)
-        self.assertIn(__version__, self.stdout.getvalue())
+        # Python < 3.4 emits the version to stderr, Python >= 3.4 to stdout.
+        output = self.stdout.getvalue() + self.stderr.getvalue()
+        self.assertIn(__version__, output)
 
 
 class FakeArguments:
