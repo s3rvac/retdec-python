@@ -51,14 +51,14 @@ The decompilation service.
         * ``raw_entry_point`` ✗
         * ``raw_section_vma`` ✗
 
-    * `Parameters for the c mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-c-mode>`_ ✗
+    * `Parameters for the c mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-c-mode>`_ ✔
 
         * ``architecture`` ✔
         * ``file_format`` ✔
         * ``comp_compiler`` ✔
         * ``comp_optimizations`` ✔
-        * ``comp_debug`` ✗
-        * ``comp_strip`` ✗
+        * ``comp_debug`` ✔
+        * ``comp_strip`` ✔
 
 * `Checking status <https://retdec.com/api/docs/decompiler.html#checking-status>`_ ✔
 

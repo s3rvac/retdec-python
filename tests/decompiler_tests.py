@@ -169,6 +169,24 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(comp_optimizations='-O1')
         )
 
+    def test_comp_debug_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            comp_debug=True
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(comp_debug=True)
+        )
+
+    def test_comp_strip_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            comp_strip=True
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(comp_strip=True)
+        )
+
     def test_adds_leading_dash_to_comp_optimizations_when_missing(self):
         self.start_decompilation_with_any_input_file(
             comp_optimizations='O1'
@@ -176,13 +194,6 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
 
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(comp_optimizations='-O1')
-        )
-
-    def test_generate_archive_is_set_to_false_when_not_given(self):
-        self.start_decompilation_with_any_input_file()
-
-        self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(generate_archive=False)
         )
 
     def test_generate_archive_is_set_to_true_when_given_as_true(self):
@@ -202,12 +213,6 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(generate_archive=False)
         )
-
-    def test_raises_exception_when_generate_archive_is_invalid(self):
-        with self.assertRaises(InvalidValueError):
-            self.start_decompilation_with_any_input_file(
-                generate_archive='some data'
-            )
 
     def test_uses_returned_id_to_initialize_decompilation(self):
         self.conn.send_post_request.return_value = {'id': 'ID'}
