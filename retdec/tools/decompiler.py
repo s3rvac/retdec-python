@@ -334,6 +334,7 @@ def parse_args(argv):
         '--with-archive',
         dest='generate_archive',
         action='store_true',
+        default=None,
         help='generate an archive containing all decompilation outputs'
     )
     parser.add_argument(

@@ -43,7 +43,7 @@ class Decompiler(Service):
             debugging information?
         :type comp_debug: bool
         :param generate_archive: Should an archive containing all outputs from
-            the decompilation be generated? Default: ``False``.
+            the decompilation be generated?
         :type generate_archive: bool
 
         :returns: Started decompilation
@@ -75,8 +75,7 @@ class Decompiler(Service):
         }
         self._add_pdb_file_when_given(files, kwargs)
         params = {
-            'mode': self._get_mode_param(files['input'], kwargs),
-            'generate_archive': self._get_generate_archive_param(kwargs)
+            'mode': self._get_mode_param(files['input'], kwargs)
         }
         self._add_param_when_given('target_language', params, kwargs)
         self._add_param_when_given('architecture', params, kwargs)
@@ -84,6 +83,7 @@ class Decompiler(Service):
         self._add_param_when_given('comp_compiler', params, kwargs)
         self._add_param_when_given('comp_debug', params, kwargs)
         self._add_comp_optimizations_param_when_given(params, kwargs)
+        self._add_param_when_given('generate_archive', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
@@ -133,17 +133,6 @@ class Decompiler(Service):
             if not value.startswith('-'):
                 value = '-' + value
             params['comp_optimizations'] = value
-
-    def _get_generate_archive_param(self, kwargs):
-        """Returns whether an archive with all decompilation outputs should be
-        generated.
-        """
-        return self._get_param(
-            'generate_archive',
-            kwargs,
-            choices={True, False},
-            default=False
-        )
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(
