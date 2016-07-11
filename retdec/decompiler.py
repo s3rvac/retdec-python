@@ -39,6 +39,9 @@ class Decompiler(Service):
         :param comp_optimizations: Compiler optimizations to be used when
             compiling input C source files.
         :type comp_optimizations: str
+        :param comp_debug: Should the input C source file be compiled with
+            debugging information?
+        :type comp_debug: bool
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated? Default: ``False``.
         :type generate_archive: bool
@@ -79,6 +82,7 @@ class Decompiler(Service):
         self._add_param_when_given('architecture', params, kwargs)
         self._add_param_when_given('file_format', params, kwargs)
         self._add_param_when_given('comp_compiler', params, kwargs)
+        self._add_param_when_given('comp_debug', params, kwargs)
         self._add_comp_optimizations_param_when_given(params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']

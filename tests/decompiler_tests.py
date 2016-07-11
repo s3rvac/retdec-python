@@ -169,6 +169,15 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(comp_optimizations='-O1')
         )
 
+    def test_comp_debug_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            comp_debug=True
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(comp_debug=True)
+        )
+
     def test_adds_leading_dash_to_comp_optimizations_when_missing(self):
         self.start_decompilation_with_any_input_file(
             comp_optimizations='O1'

@@ -288,6 +288,13 @@ def parse_args(argv):
         help='compiler optimizations to be used when compiling'
     )
     parser.add_argument(
+        '-g', '--compiler-debug',
+        dest='comp_debug',
+        action='store_true',
+        default=None,
+        help='should the file be compiled with debugging information?'
+    )
+    parser.add_argument(
         '-f', '--file-format',
         dest='file_format',
         choices=['elf', 'pe'],
@@ -397,6 +404,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'file_format')
     add_decompilation_param_when_given(args, params, 'comp_compiler')
     add_decompilation_param_when_given(args, params, 'comp_optimizations')
+    add_decompilation_param_when_given(args, params, 'comp_debug')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 
