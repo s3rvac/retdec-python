@@ -58,7 +58,7 @@ The decompilation service.
         * ``comp_compiler`` ✔
         * ``comp_optimizations`` ✔
         * ``comp_debug`` ✔
-        * ``comp_strip`` ✗
+        * ``comp_strip`` ✔
 
 * `Checking status <https://retdec.com/api/docs/decompiler.html#checking-status>`_ ✔
 

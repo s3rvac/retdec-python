@@ -305,6 +305,14 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--compiler-debug', 'file.c'])
         self.assertTrue(args.comp_debug)
 
+    def test_comp_strip_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-s', 'file.c'])
+        self.assertTrue(args.comp_strip)
+
+    def test_comp_strip_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--compiler-strip', 'file.c'])
+        self.assertTrue(args.comp_strip)
+
     def test_generate_archive_is_set_to_false_when_with_archive_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
         self.assertFalse(args.generate_archive)
@@ -530,6 +538,15 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             comp_debug=True
+        )
+
+    def test_sets_comp_strip_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--compiler-strip'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            comp_strip=True
         )
 
     def test_generates_and_saves_archive_when_requested(self):

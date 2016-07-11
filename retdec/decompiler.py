@@ -42,6 +42,8 @@ class Decompiler(Service):
         :param comp_debug: Should the input C source file be compiled with
             debugging information?
         :type comp_debug: bool
+        :param comp_strip: Should the compiled input C source file be stripped?
+        :type comp_strip: bool
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated?
         :type generate_archive: bool
@@ -82,6 +84,7 @@ class Decompiler(Service):
         self._add_param_when_given('file_format', params, kwargs)
         self._add_param_when_given('comp_compiler', params, kwargs)
         self._add_param_when_given('comp_debug', params, kwargs)
+        self._add_param_when_given('comp_strip', params, kwargs)
         self._add_comp_optimizations_param_when_given(params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
