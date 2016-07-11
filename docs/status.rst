@@ -51,7 +51,7 @@ The decompilation service.
         * ``raw_entry_point`` ✗
         * ``raw_section_vma`` ✗
 
-    * `Parameters for the c mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-c-mode>`_ ✗
+    * `Parameters for the c mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-c-mode>`_ ✔
 
         * ``architecture`` ✔
         * ``file_format`` ✔
