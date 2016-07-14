@@ -15,15 +15,18 @@ class DecompilationPhase:
     :param str description: Description of the phase.
     :param int completion: What percentage of the decompilation has been
         completed?
+    :param list warnings: A list of warnings that were produced by the
+        decompiler in the phase. Each warning is a string.
 
     `part` may be ``None`` if the phase does not belong to any part.
     """
 
-    def __init__(self, name, part, description, completion):
+    def __init__(self, name, part, description, completion, warnings):
         self._name = name
         self._part = part
         self._description = description
         self._completion = completion
+        self._warnings = warnings
 
     @property
     def name(self):
@@ -48,6 +51,15 @@ class DecompilationPhase:
         """Completion (in percentages, ``0-100``)."""
         return self._completion
 
+    @property
+    def warnings(self):
+        """A list of warnings that were produced by the decompiler in the
+        phase.
+
+        Each warning is a string.
+        """
+        return self._warnings
+
     def __eq__(self, other):
         return (self.__class__ == other.__class__ and
                 self.__dict__ == other.__dict__)
@@ -56,10 +68,12 @@ class DecompilationPhase:
         return not self == other
 
     def __repr__(self):
-        return '{}(name={!r}, part={!r}, description={!r}, completion={})'.format(
+        return ('{}(name={!r}, part={!r}, description={!r},'
+                ' completion={}, warnings={!r})').format(
             __name__ + '.' + self.__class__.__name__,
             self.name,
             self.part,
             self.description,
-            self.completion
+            self.completion,
+            self.warnings
         )

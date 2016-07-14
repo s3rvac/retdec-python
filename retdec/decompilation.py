@@ -216,7 +216,8 @@ class Decompilation(Resource):
                 phase['name'],
                 phase['part'],
                 phase['description'],
-                phase['completion']
+                phase['completion'],
+                phase['warnings']
             ) for phase in status['phases']
         ]
 

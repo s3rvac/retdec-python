@@ -57,13 +57,15 @@ class DecompilationTests(DecompilationTestsBase):
                     'name': 'name1',
                     'part': 'part1',
                     'description': 'description1',
-                    'completion': 1
+                    'completion': 1,
+                    'warnings': []
                 },
                 {
                     'name': 'name2',
                     'part': 'part2',
                     'description': 'description2',
-                    'completion': 2
+                    'completion': 2,
+                    'warnings': []
                 }
             ]
         })
@@ -84,6 +86,7 @@ class DecompilationTests(DecompilationTestsBase):
                     'part': 'part',
                     'description': 'description',
                     'completion': 0,
+                    'warnings': [],
                     'unknown_attr': None  # This attribute is to be ignored.
                 }
             ]

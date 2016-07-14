@@ -19,26 +19,30 @@ class DecompilationPhaseTests(unittest.TestCase):
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
 
         self.assertEqual(phase.name, 'NAME')
         self.assertEqual(phase.part, 'PART')
         self.assertEqual(phase.description, 'DESCRIPTION')
         self.assertEqual(phase.completion, 75)
+        self.assertEqual(phase.warnings, ['some warning'])
 
     def test_two_phases_with_same_data_are_equal(self):
         phase1 = DecompilationPhase(
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
         phase2 = DecompilationPhase(
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
 
         self.assertEqual(phase1, phase2)
@@ -48,13 +52,15 @@ class DecompilationPhaseTests(unittest.TestCase):
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
         phase2 = DecompilationPhase(
             name='OTHER NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
 
         self.assertNotEqual(phase1, phase2)
@@ -64,13 +70,15 @@ class DecompilationPhaseTests(unittest.TestCase):
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
         phase2 = DecompilationPhase(
             name='NAME',
             part='OTHER PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
 
         self.assertNotEqual(phase1, phase2)
@@ -80,13 +88,15 @@ class DecompilationPhaseTests(unittest.TestCase):
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
         phase2 = DecompilationPhase(
             name='NAME',
             part='PART',
             description='OTHER DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
 
         self.assertNotEqual(phase1, phase2)
@@ -96,13 +106,33 @@ class DecompilationPhaseTests(unittest.TestCase):
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
         phase2 = DecompilationPhase(
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=100
+            completion=100,
+            warnings=['some warning']
+        )
+
+        self.assertNotEqual(phase1, phase2)
+
+    def test_two_phases_with_different_warnings_are_not_equal(self):
+        phase1 = DecompilationPhase(
+            name='NAME',
+            part='PART',
+            description='DESCRIPTION',
+            completion=75,
+            warnings=[]
+        )
+        phase2 = DecompilationPhase(
+            name='NAME',
+            part='PART',
+            description='DESCRIPTION',
+            completion=75,
+            warnings=['some warning']
         )
 
         self.assertNotEqual(phase1, phase2)
@@ -112,10 +142,12 @@ class DecompilationPhaseTests(unittest.TestCase):
             name='NAME',
             part='PART',
             description='DESCRIPTION',
-            completion=75
+            completion=75,
+            warnings=['some warning']
         )
         self.assertEqual(
             repr(phase),
             ("retdec.decompilation_phase.DecompilationPhase(name='NAME', "
-             "part='PART', description='DESCRIPTION', completion=75)")
+             "part='PART', description='DESCRIPTION', completion=75, "
+             "warnings=['some warning'])")
         )

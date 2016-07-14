@@ -88,19 +88,22 @@ class ProgressLogDisplayerTests(ToolTestsBase):
                 name='Waiting For Resources',
                 part=None,
                 description='Waiting for resources',
-                completion=0
+                completion=0,
+                warnings=[]
             ),
             DecompilationPhase(
                 name='File Information',
                 part='Pre-Processing',
                 description='Obtaining file information',
-                completion=5
+                completion=5,
+                warnings=[]
             ),
             DecompilationPhase(
                 name='Done',
                 part=None,
                 description='Done',
-                completion=100
+                completion=100,
+                warnings=[]
             )
         ]
 
@@ -127,7 +130,8 @@ Done (100%)...                                     \n""".lstrip())
                 name='Waiting For Resources',
                 part=None,
                 description='Waiting for resources',
-                completion=0
+                completion=0,
+                warnings=[]
             )
         ]
 
