@@ -70,7 +70,7 @@ The decompilation service.
         * ``name`` ✔
         * ``description`` ✔
         * ``completion`` ✔
-        * ``warnings`` ✗
+        * ``warnings`` ✔
 
     * ``cg`` ✗
     * ``cfgs`` ✗
