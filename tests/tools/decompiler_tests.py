@@ -145,6 +145,77 @@ ID
 Waiting for resources (0%)...                      [FAIL]
 """.lstrip())
 
+    def test_display_decompilation_progress_shows_warnings_in_intermediate_phase(self):
+        displayer = ProgressLogDisplayer()
+        d = mock.Mock(spec_set=Decompilation)
+        d.id = 'ID'
+        d.has_finished.return_value = True
+        d.has_failed.return_value = False
+        d.get_phases.return_value = [
+            DecompilationPhase(
+                name='File Information',
+                part='Pre-Processing',
+                description='Obtaining file information',
+                completion=5,
+                warnings=[
+                    'warning1',
+                    'warning2'
+                ]
+            ),
+            DecompilationPhase(
+                name='Done',
+                part=None,
+                description='Done',
+                completion=100,
+                warnings=[]
+            )
+        ]
+
+        displayer.display_decompilation_progress(d)
+
+        self.assertEqual(
+            self.stdout.getvalue(), """
+ID
+--
+
+Pre-Processing:
+  Obtaining file information (5%)...               [OK]
+Warning: warning1
+Warning: warning2
+Done (100%)...                                     \n""".lstrip())
+
+    def test_display_decompilation_progress_shows_warnings_in_last_phase(self):
+        displayer = ProgressLogDisplayer()
+        d = mock.Mock(spec_set=Decompilation)
+        d.id = 'ID'
+        d.has_finished.return_value = True
+        d.has_failed.return_value = True
+        d.get_phases.return_value = [
+            DecompilationPhase(
+                name='File Information',
+                part='Pre-Processing',
+                description='Obtaining file information',
+                completion=5,
+                warnings=[
+                    'warning1',
+                    'warning2'
+                ]
+            ),
+        ]
+
+        displayer.display_decompilation_progress(d)
+
+        self.assertEqual(
+            self.stdout.getvalue(), """
+ID
+--
+
+Pre-Processing:
+  Obtaining file information (5%)...               [FAIL]
+Warning: warning1
+Warning: warning2
+""".lstrip())
+
     def test_display_download_progress_displays_correct_value(self):
         displayer = ProgressLogDisplayer()
 

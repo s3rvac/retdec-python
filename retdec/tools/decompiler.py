@@ -144,6 +144,7 @@ class ProgressLogDisplayer(ProgressDisplayer):
 
         if d.has_finished():
             self._print_decompilation_end(d)
+            self._print_warnings_in_last_phase()
 
         # Make the output available as soon as possible.
         sys.stdout.flush()
@@ -169,9 +170,10 @@ class ProgressLogDisplayer(ProgressDisplayer):
     def _print_phases(self, phases):
         """Prints the given phases."""
         for phase in phases:
-            # Print status for the last phase (if any).
+            # Print status and warnings for the last phase (if any).
             if self._last_phase_index > 0:
                 self._print_end_of_successful_phase()
+                self._print_warnings_in_last_phase()
             self._print_phase(phase)
             self._last_part = phase.part
             self._last_phase_index += 1
@@ -213,6 +215,21 @@ class ProgressLogDisplayer(ProgressDisplayer):
     def _print_phase_end(self, status):
         """Prints the end of the current phase."""
         sys.stdout.write('[{}]\n'.format(status))
+
+    def _print_warnings_in_last_phase(self):
+        """Prints warnings from the last phase (if any)."""
+        if self._last_phase_index:
+            last_phase = self._phases[self._last_phase_index - 1]
+            self._print_warnings_in_phase(last_phase)
+
+    def _print_warnings_in_phase(self, phase):
+        """Prints warnings from the given phase (if any)."""
+        for warning in phase.warnings:
+            self._print_warning(warning)
+
+    def _print_warning(self, warning):
+        """Prints the given warning."""
+        sys.stdout.write('Warning: {}\n'.format(warning))
 
     def display_download_progress(self, file_name):
         # Example:
