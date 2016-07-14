@@ -101,6 +101,7 @@ class ProgressLogDisplayer(ProgressDisplayer):
     """Displays a progress log during decompilation."""
 
     def __init__(self):
+        self._phases = []
         self._last_part = None
         self._last_phase_index = 0
         self._prologue_printed = False
@@ -162,8 +163,8 @@ class ProgressLogDisplayer(ProgressDisplayer):
 
     def _get_new_phases(self, d):
         """Returns new phases from the given decompilation."""
-        phases = d.get_phases()
-        return phases[self._last_phase_index:]
+        self._phases = d.get_phases()
+        return self._phases[self._last_phase_index:]
 
     def _print_phases(self, phases):
         """Prints the given phases."""
