@@ -143,7 +143,7 @@ class Resource:
                 contents = contents.decode()
             return contents
 
-    def _get_file_and_save_it_to(self, file_path, directory=None):
+    def _get_file_and_save_it(self, file_path, directory=None):
         """Obtains a file from `file_path` and saves it to `directory`.
 
         :param str file_path: Path to the file to be downloaded.

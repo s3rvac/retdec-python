@@ -94,7 +94,7 @@ class Decompilation(Resource):
 
         If `directory` is ``None``, the current working directory is used.
         """
-        return self._get_file_and_save_it_to(
+        return self._get_file_and_save_it(
             self._path_to_output_file('hll'),
             directory
         )
@@ -119,7 +119,7 @@ class Decompilation(Resource):
 
         If `directory` is ``None``, the current working directory is used.
         """
-        return self._get_file_and_save_it_to(
+        return self._get_file_and_save_it(
             self._path_to_output_file('dsm'),
             directory
         )
@@ -196,7 +196,7 @@ class Decompilation(Resource):
 
         If `directory` is ``None``, the current working directory is used.
         """
-        return self._get_file_and_save_it_to(
+        return self._get_file_and_save_it(
             self._path_to_output_file('archive'),
             directory
         )
@@ -212,7 +212,7 @@ class Decompilation(Resource):
 
         If `directory` is ``None``, the current working directory is used.
         """
-        return self._get_file_and_save_it_to(
+        return self._get_file_and_save_it(
             self._path_to_output_file('binary'),
             directory
         )
