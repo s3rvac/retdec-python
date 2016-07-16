@@ -407,6 +407,17 @@ def add_decompilation_param_when_given(args, params, param_name):
         params[param_name] = param_value
 
 
+def should_download_output_binary_file(args):
+    """Should the compiled version of the input C file be downloaded?
+    """
+    # It should be downloaded only when we are decompiling a C file.
+    if args.mode == 'c':
+        return True
+    elif not args.mode and args.input_file.lower().endswith('c'):
+        return True
+    return False
+
+
 def main(argv=None):
     """Runs the tool.
 
@@ -448,6 +459,10 @@ def main(argv=None):
 
     file_path = decompilation.save_dsm_code(output_dir)
     display_download_progress(displayer, file_path)
+
+    if should_download_output_binary_file(args):
+        file_path = decompilation.save_binary(output_dir)
+        display_download_progress(displayer, file_path)
 
     if args.generate_archive:
         decompilation.wait_until_archive_is_generated()

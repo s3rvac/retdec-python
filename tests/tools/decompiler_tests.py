@@ -636,6 +636,58 @@ class MainTests(ToolTestsBase):
         decompilation.wait_until_archive_is_generated.assert_called_once_with()
         decompilation.save_archive.assert_called_once_with(os.getcwd())
 
+    def test_saves_output_compiled_binary_when_mode_is_c(self):
+        main([
+            'decompiler.py',
+            '--api-key', 'API-KEY',
+            '--mode', 'c',
+            'file'
+        ])
+
+        decompilation = self.get_started_decompilation()
+        decompilation.save_binary.assert_called_once_with(os.getcwd())
+
+    def test_saves_output_compiled_binary_when_input_is_c_file(self):
+        main([
+            'decompiler.py',
+            '--api-key', 'API-KEY',
+            'file.c'
+        ])
+
+        decompilation = self.get_started_decompilation()
+        decompilation.save_binary.assert_called_once_with(os.getcwd())
+
+    def test_saves_output_compiled_binary_when_input_is_c_file_uppercase_c(self):
+        main([
+            'decompiler.py',
+            '--api-key', 'API-KEY',
+            'file.C'
+        ])
+
+        decompilation = self.get_started_decompilation()
+        decompilation.save_binary.assert_called_once_with(os.getcwd())
+
+    def test_does_not_save_output_compiled_binary_when_mode_is_bin(self):
+        main([
+            'decompiler.py',
+            '--api-key', 'API-KEY',
+            '--mode', 'bin',
+            'file'
+        ])
+
+        decompilation = self.get_started_decompilation()
+        self.assertFalse(decompilation.save_binary.called)
+
+    def test_does_not_save_output_compiled_binary_when_input_is_binary_file(self):
+        main([
+            'decompiler.py',
+            '--api-key', 'API-KEY',
+            'file.exe'
+        ])
+
+        decompilation = self.get_started_decompilation()
+        self.assertFalse(decompilation.save_binary.called)
+
     def test_sends_pdb_file_when_given(self):
         self.call_main_with_standard_arguments_and(
             '--pdb-file', 'prog.pdb'
