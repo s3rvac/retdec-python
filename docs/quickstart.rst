@@ -20,7 +20,11 @@ The recommended way of installing is from `Python Package Index <https://pypi.py
 
     $ pip install retdec-python
 
-This will install the latest stable version, including all dependencies.
+This will install the latest stable version, including all dependencies. You can also install the latest development version directly from GitHub:
+
+.. code-block:: shell
+
+    $ pip install git+https://github.com/s3rvac/retdec-python
 
 Prerequisites
 -------------
