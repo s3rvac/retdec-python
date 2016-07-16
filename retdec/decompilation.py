@@ -201,6 +201,22 @@ class Decompilation(Resource):
             directory
         )
 
+    def save_binary(self, directory=None):
+        """Saves the compiled version of the input C file (provided that the
+        input was a C file) to the given directory.
+
+        :param str directory: Path to a directory in which the file will be
+            stored.
+
+        :returns: Path to the saved file (`str`).
+
+        If `directory` is ``None``, the current working directory is used.
+        """
+        return self._get_file_and_save_it_to(
+            self._path_to_output_file('binary'),
+            directory
+        )
+
     def _update_state(self):
         """Updates the state of the decompilation."""
         status = super()._update_state()
