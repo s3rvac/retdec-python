@@ -33,7 +33,7 @@ To be able to actually use the library and scripts, you need to `register <https
 
 .. attention::
 
-    Be careful not to disclose your API key to anyone! `You have to keep it a secret  <https://retdec.com/api/docs/essential_information.html#authentication>`_.
+    Be careful not to disclose your API key to anyone! `You have to keep it a secret <https://retdec.com/api/docs/essential_information.html#authentication>`_.
 
 Library vs Scripts
 ------------------
