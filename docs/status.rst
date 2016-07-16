@@ -83,7 +83,7 @@ The decompilation service.
     * ``cg`` ✗
     * ``cfgs`` ✗
     * ``archive`` ✔
-    * ``binary`` ✗
+    * ``binary`` ✔
 
 * `Error reporting <https://retdec.com/api/docs/decompiler.html#error-reporting>`_ ✔
 

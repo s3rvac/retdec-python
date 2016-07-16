@@ -6,6 +6,8 @@ dev
 
 * Added access to warnings in decompilation phases and their emission in the
   ``decompiler`` tool.
+* Added obtaining of the compiled version of the input C file (provided that
+  the input was a C file).
 * Added support for selecting the compiler to be used when compiling C source
   files.
 * Added support for selecting the optimizations to be used when compiling C
