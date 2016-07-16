@@ -565,3 +565,19 @@ class DecompilationGetOutputsTests(WithMockedIO, DecompilationTestsBase):
             '/ID/outputs/archive',
             directory='dir'
         )
+
+    def test_save_binary_stores_file_to_cwd_when_directory_is_not_given(self):
+        d = Decompilation('ID', self.conn)
+        self.assert_obtains_and_saves_file(
+            d.save_binary,
+            '/ID/outputs/binary',
+            directory=None
+        )
+
+    def test_save_binary_stores_file_to_directory_when_given(self):
+        d = Decompilation('ID', self.conn)
+        self.assert_obtains_and_saves_file(
+            d.save_binary,
+            '/ID/outputs/binary',
+            directory='dir'
+        )
