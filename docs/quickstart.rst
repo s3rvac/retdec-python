@@ -20,7 +20,7 @@ The recommended way of installing is from `Python Package Index <https://pypi.py
 
     $ pip install retdec-python
 
-This will install the latest stable version, including all dependencies. You can also use `virtualenv <https://docs.python.org/3/tutorial/venv.html>`_ if you want to install the package into an isolated environment.
+This will install the latest stable version, including all dependencies.
 
 Prerequisites
 -------------
