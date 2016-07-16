@@ -547,7 +547,7 @@ class MainTests(ToolTestsBase):
             '--api-key', 'API-KEY',
             'prog.exe'
         )
-        main(standard_args + additional_args)
+        return main(standard_args + additional_args)
 
     def assert_decompilation_was_started_also_with(self, *args, **kwargs):
         """Asserts that the decompilation was also started with the given
