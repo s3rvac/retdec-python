@@ -310,14 +310,14 @@ def parse_args(argv):
         dest='comp_debug',
         action='store_true',
         default=None,
-        help='should the file be compiled with debugging information?'
+        help='compile the input C file with debugging information'
     )
     parser.add_argument(
         '-s', '--compiler-strip',
         dest='comp_strip',
         action='store_true',
         default=None,
-        help='should the file be stripped after compilation?'
+        help='strip the compiled C file prior its decompilation'
     )
     parser.add_argument(
         '-f', '--file-format',
