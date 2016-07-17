@@ -4,6 +4,11 @@ Changelog
 dev
 ---
 
+* -
+
+0.3 (2016-07-17)
+----------------
+
 * Added access to warnings in decompilation phases and their emission in the
   ``decompiler`` tool.
 * Added obtaining of the compiled version of the input C file (provided that
