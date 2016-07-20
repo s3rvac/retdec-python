@@ -4,7 +4,7 @@ Changelog
 dev
 ---
 
-* -
+* Added support for selecting a different style for naming of variables.
 
 0.3 (2016-07-17)
 ----------------

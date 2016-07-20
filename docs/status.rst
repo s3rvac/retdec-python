@@ -28,7 +28,7 @@ The decompilation service.
 
         * ``target_language`` ✔
         * ``graph_format`` ✗
-        * ``decomp_var_names`` ✗
+        * ``decomp_var_names`` ✔
         * ``decomp_optimizations`` ✗
         * ``decomp_unreach_funcs`` ✗
         * ``decomp_emit_addresses`` ✗

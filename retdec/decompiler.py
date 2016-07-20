@@ -27,6 +27,8 @@ class Decompiler(Service):
         :type mode: str
         :param target_language: Target high-level language.
         :type target_language: str
+        :param decomp_var_names: Naming style for variables.
+        :type decomp_var_names: str
         :param architecture: Architecture. The precise meaning depends on the
             used `mode`.
         :type architecture: str
@@ -80,6 +82,7 @@ class Decompiler(Service):
             'mode': self._get_mode_param(files['input'], kwargs)
         }
         self._add_param_when_given('target_language', params, kwargs)
+        self._add_param_when_given('decomp_var_names', params, kwargs)
         self._add_param_when_given('architecture', params, kwargs)
         self._add_param_when_given('file_format', params, kwargs)
         self._add_param_when_given('comp_compiler', params, kwargs)
