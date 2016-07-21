@@ -392,6 +392,14 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--var-names', 'simple', 'prog.exe'])
         self.assertEqual(args.decomp_var_names, 'simple')
 
+    def test_decomp_optimizations_is_parsed_correctly_short_form(self):
+        args = parse_args(['decompiler.py', '-O', 'none', 'prog.exe'])
+        self.assertEqual(args.decomp_optimizations, 'none')
+
+    def test_decomp_optimizations_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--optimizations', 'none', 'prog.exe'])
+        self.assertEqual(args.decomp_optimizations, 'none')
+
     def test_generate_archive_is_set_to_false_when_with_archive_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
         self.assertFalse(args.generate_archive)
@@ -635,6 +643,15 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             decomp_var_names='simple'
+        )
+
+    def test_sets_decomp_optimizations_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--optimizations', 'none'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            decomp_optimizations='none'
         )
 
     def test_generates_and_saves_archive_when_requested(self):

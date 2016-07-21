@@ -362,6 +362,12 @@ def parse_args(argv):
         help='Naming style for variables (default: readable).'
     )
     parser.add_argument(
+        '-O', '--optimizations',
+        dest='decomp_optimizations',
+        choices=['none', 'limited', 'normal', 'aggressive'],
+        help='Type of optimizations performed by the decompiler (default: normal).'
+    )
+    parser.add_argument(
         '--with-archive',
         dest='generate_archive',
         action='store_true',
@@ -450,6 +456,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'comp_debug')
     add_decompilation_param_when_given(args, params, 'comp_strip')
     add_decompilation_param_when_given(args, params, 'decomp_var_names')
+    add_decompilation_param_when_given(args, params, 'decomp_optimizations')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 

@@ -5,6 +5,8 @@ dev
 ---
 
 * Added support for selecting a different style for naming of variables.
+* Added support for selecting the type of optimizations to be performed by the
+  decompiler.
 
 0.3 (2016-07-17)
 ----------------
