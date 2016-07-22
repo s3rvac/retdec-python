@@ -60,7 +60,7 @@ The decompilation service.
         * ``comp_debug`` ✔
         * ``comp_strip`` ✔
 
-* `Checking status <https://retdec.com/api/docs/decompiler.html#checking-status>`_ ✔
+* `Checking status <https://retdec.com/api/docs/decompiler.html#checking-status>`__ ✔
 
     * general (``running``, ``finished``, etc.) ✔
     * ``completion`` ✔
@@ -85,7 +85,7 @@ The decompilation service.
     * ``archive`` ✔
     * ``binary`` ✔
 
-* `Error reporting <https://retdec.com/api/docs/decompiler.html#error-reporting>`_ ✔
+* `Error reporting <https://retdec.com/api/docs/decompiler.html#error-reporting>`__ ✔
 
 Fileinfo
 --------
@@ -97,12 +97,12 @@ The file-analyzing service.
 
     * ``verbose`` ✔
 
-* `Checking status <https://retdec.com/api/docs/fileinfo.html#checking-status>`_ ✔
+* `Checking status <https://retdec.com/api/docs/fileinfo.html#checking-status>`__ ✔
 
     * general (``running``, ``finished``, etc.) ✔
 
 * `Obtaining output <https://retdec.com/api/docs/fileinfo.html#obtaining-output>`_ ✔
-* `Error reporting <https://retdec.com/api/docs/fileinfo.html#error-reporting>`_ ✔
+* `Error reporting <https://retdec.com/api/docs/fileinfo.html#error-reporting>`__ ✔
 
 Test
 ----
