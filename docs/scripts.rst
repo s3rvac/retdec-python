@@ -57,6 +57,10 @@ Options
 * ``-p FILE``, ``--pdb-file`` -- PDB file associated with the input file.
 * ``-q``, ``--quiet`` -- Print only errors, nothing else (not even progress).
 * ``-V``, ``--version`` -- Print the script and library version.
+* ``--var-names STYLE`` -- Naming style for variables. Supported styles: ``readable``, ``address``, ``hungarian``, ``simple``, and ``unified``.
+* ``-O TYPE``, ``--optimizations TYPE`` -- Type of optimizations performed by the decompiler. Supported types: ``none``, ``limited``, ``normal``, and ``aggressive``.
+* ``-K``, ``--keep-unreach-funcs`` -- Decompile all functions, even if they are not reachable.
+* ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
 
 See the `official documentation <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ for more details.
