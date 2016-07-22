@@ -285,87 +285,113 @@ def parse_args(argv):
         '-a', '--architecture',
         dest='architecture',
         choices=['x86', 'arm', 'thumb', 'mips', 'pic32', 'powerpc'],
-        help='architecture to force when (de)compiling'
+        help='Architecture to force when (de)compiling.'
     )
     parser.add_argument(
         '-b', '--brief',
         dest='brief',
         action='store_true',
-        help='print fewer information during the decompilation'
+        help='Print fewer information during the decompilation.'
     )
     parser.add_argument(
         '-c', '--compiler',
         dest='comp_compiler',
         choices=['gcc', 'clang'],
-        help='compiler to be used when compiling'
+        help='Compiler to be used when compiling. Default: gcc.'
     )
     parser.add_argument(
         '-C', '--compiler-optimizations',
         dest='comp_optimizations',
         choices=['O0', 'O1', 'O2', 'O3'],
-        help='compiler optimizations to be used when compiling'
+        help='Compiler optimizations to be used when compiling. Default: O2.'
     )
     parser.add_argument(
         '-g', '--compiler-debug',
         dest='comp_debug',
         action='store_true',
         default=None,
-        help='compile the input C file with debugging information'
+        help='Compile the input C file with debugging information.'
     )
     parser.add_argument(
         '-s', '--compiler-strip',
         dest='comp_strip',
         action='store_true',
         default=None,
-        help='strip the compiled C file prior its decompilation'
+        help='Strip the compiled C file prior its decompilation.'
     )
     parser.add_argument(
         '-f', '--file-format',
         dest='file_format',
         choices=['elf', 'pe'],
-        help='file format to force when compiling'
+        help='File format to force when compiling. Default: elf.'
     )
     parser.add_argument(
         '-l', '--target-language',
         dest='target_language',
         choices=['c', 'py'],
-        help='target high-level language'
+        help='Target high-level language. Default: c.'
     )
     parser.add_argument(
         '-m', '--mode',
         dest='mode',
         choices=['c', 'bin'],
-        help='decompilation mode (default: automatic detection)'
+        help='Decompilation mode. Default: automatic detection.'
     )
     parser.add_argument(
         '-o', '--output-dir',
         dest='output_dir',
         metavar='DIR',
-        help='save the outputs into this directory'
+        help='Save the outputs into this directory.'
     )
     parser.add_argument(
         '-p', '--pdb-file',
         dest='pdb_file',
         metavar='FILE',
-        help='PDB file associated with the input file'
+        help='PDB file associated with the input file.'
     )
     parser.add_argument(
         '-q', '--quiet',
         dest='quiet',
         action='store_true',
-        help='print only errors, nothing else (not even progress)'
+        help='Print only errors, nothing else (not even progress).'
+    )
+    parser.add_argument(
+        '--var-names',
+        dest='decomp_var_names',
+        choices=['readable', 'address', 'hungarian', 'simple', 'unified'],
+        help='Naming style for variables. Default: readable.'
+    )
+    parser.add_argument(
+        '-O', '--optimizations',
+        dest='decomp_optimizations',
+        choices=['none', 'limited', 'normal', 'aggressive'],
+        help='Level of optimizations performed by the decompiler. Default: normal.'
+    )
+    parser.add_argument(
+        '-K', '--keep-unreach-funcs',
+        dest='decomp_unreach_funcs',
+        action='store_true',
+        default=None,
+        help='Decompile all functions, even if they are not reachable.'
+    )
+    parser.add_argument(
+        '--no-addresses',
+        dest='decomp_emit_addresses',
+        action='store_false',
+        default=None,
+        help='Disable the emission of addresses in comments in the generated code.'
     )
     parser.add_argument(
         '--with-archive',
         dest='generate_archive',
         action='store_true',
         default=None,
-        help='generate an archive containing all decompilation outputs'
+        help='Generate an archive containing all decompilation outputs.'
     )
     parser.add_argument(
         'input_file',
         metavar='FILE',
-        help='file to decompile'
+        help='File to decompile.'
     )
     return parser.parse_args(argv[1:])
 
@@ -443,6 +469,10 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'comp_optimizations')
     add_decompilation_param_when_given(args, params, 'comp_debug')
     add_decompilation_param_when_given(args, params, 'comp_strip')
+    add_decompilation_param_when_given(args, params, 'decomp_var_names')
+    add_decompilation_param_when_given(args, params, 'decomp_optimizations')
+    add_decompilation_param_when_given(args, params, 'decomp_unreach_funcs')
+    add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 

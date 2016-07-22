@@ -16,14 +16,14 @@ def _add_arguments_shared_by_all_tools(parser):
         '-k', '--api-key',
         dest='api_key',
         metavar='KEY',
-        help='API key to be used'
+        help='API key to be used.'
     )
     parser.add_argument(
         '-u', '--api-url',
         dest='api_url',
         metavar='URL',
         default=DEFAULT_API_URL,
-        help='URL to the API (default: {})'.format(DEFAULT_API_URL)
+        help='URL to the API. Default: {}.'.format(DEFAULT_API_URL)
     )
     parser.add_argument(
         '-V', '--version',

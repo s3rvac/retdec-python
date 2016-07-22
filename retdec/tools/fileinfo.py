@@ -28,13 +28,13 @@ def parse_args(argv):
     parser.add_argument(
         'input_file',
         metavar='FILE',
-        help='file to analyze'
+        help='File to analyze.'
     )
     parser.add_argument(
         '-v', '--verbose',
         dest='verbose',
         action='store_true',
-        help='print all available information about the file'
+        help='Print all available information about the file.'
     )
     return parser.parse_args(argv[1:])
 

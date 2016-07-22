@@ -47,8 +47,8 @@ Options
 * ``-b``, ``--brief`` -- Print fewer information during the decompilation.
 * ``-c COMPILER``, ``--compiler COMPILER`` -- Compiler to use when compiling input C source files. Supported compilers: ``gcc``, ``clang``.
 * ``-C LEVEL``, ``--compiler-optimizations LEVEL`` -- Optimization level to use when compiling input C source files. Supported levels: ``O0``, ``O1``, ``O2``, ``O3``.
-* ``-g``, ``--compiler-debug`` -- Compile the input C file with debugging information (i.e. passes the ``-g`` flag to the used compiler).
 * ``-f FORMAT``, ``--file-format FORMAT`` -- File format to force when compiling input C source files. Supported formats: ``elf``, ``pe``.
+* ``-g``, ``--compiler-debug`` -- Compile the input C file with debugging information (i.e. passes the ``-g`` flag to the used compiler).
 * ``-s``, ``--compiler-strip`` -- Strip the compiled C file prior its decompilation.
 * ``-k KEY``, ``--api-key KEY`` -- Specifies the API key to be used.
 * ``-l LANGUAGE``, ``--target-language LANGUAGE`` -- Target high-level language. Supported languages: ``c``, ``py``.
@@ -57,6 +57,10 @@ Options
 * ``-p FILE``, ``--pdb-file`` -- PDB file associated with the input file.
 * ``-q``, ``--quiet`` -- Print only errors, nothing else (not even progress).
 * ``-V``, ``--version`` -- Print the script and library version.
+* ``--var-names STYLE`` -- Naming style for variables. Supported styles: ``readable``, ``address``, ``hungarian``, ``simple``, and ``unified``.
+* ``-O LEVEL``, ``--optimizations LEVEL`` -- Level of optimizations performed by the decompiler. Supported levels: ``none``, ``limited``, ``normal``, and ``aggressive``.
+* ``-K``, ``--keep-unreach-funcs`` -- Decompile all functions, even if they are not reachable.
+* ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
 
 See the `official documentation <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ for more details.
