@@ -32,6 +32,9 @@ class Decompiler(Service):
         :param decomp_optimizations: Type of optimizations performed by the
             decompiler.
         :type decomp_optimizations: str
+        :param decomp_unreach_funcs: Should all functions be decompiled, even
+            if they are not reachable from the main function?
+        :type decomp_unreach_funcs: bool
         :param architecture: Architecture. The precise meaning depends on the
             used `mode`.
         :type architecture: str
@@ -87,6 +90,7 @@ class Decompiler(Service):
         self._add_param_when_given('target_language', params, kwargs)
         self._add_param_when_given('decomp_var_names', params, kwargs)
         self._add_param_when_given('decomp_optimizations', params, kwargs)
+        self._add_param_when_given('decomp_unreach_funcs', params, kwargs)
         self._add_param_when_given('architecture', params, kwargs)
         self._add_param_when_given('file_format', params, kwargs)
         self._add_param_when_given('comp_compiler', params, kwargs)

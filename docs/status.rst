@@ -30,7 +30,7 @@ The decompilation service.
         * ``graph_format`` ✗
         * ``decomp_var_names`` ✔
         * ``decomp_optimizations`` ✔
-        * ``decomp_unreach_funcs`` ✗
+        * ``decomp_unreach_funcs`` ✔
         * ``decomp_emit_addresses`` ✗
         * ``generate_cg`` ✗
         * ``generate_cfgs`` ✗

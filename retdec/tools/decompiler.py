@@ -368,6 +368,13 @@ def parse_args(argv):
         help='Type of optimizations performed by the decompiler (default: normal).'
     )
     parser.add_argument(
+        '-K', '--keep-unreach-funcs',
+        dest='decomp_unreach_funcs',
+        action='store_true',
+        default=None,
+        help='Decompile all functions, even if they are not reachable.'
+    )
+    parser.add_argument(
         '--with-archive',
         dest='generate_archive',
         action='store_true',
@@ -457,6 +464,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'comp_strip')
     add_decompilation_param_when_given(args, params, 'decomp_var_names')
     add_decompilation_param_when_given(args, params, 'decomp_optimizations')
+    add_decompilation_param_when_given(args, params, 'decomp_unreach_funcs')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 
