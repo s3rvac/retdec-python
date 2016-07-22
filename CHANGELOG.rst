@@ -9,6 +9,9 @@ dev
   decompiler.
 * Added support for decompilation of unreachable functions.
 * Added support for disabling the emission of addresses in the generated code.
+* Added support for selecting functions to be decompiled.
+* Added support for selecting address ranges to be decompiled.
+* Added support for choosing what should be decoded in selective decompilation.
 
 0.3 (2016-07-17)
 ----------------

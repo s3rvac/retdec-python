@@ -55,6 +55,19 @@ class Decompiler(Service):
         :type comp_debug: bool
         :param comp_strip: Should the compiled input C source file be stripped?
         :type comp_strip: bool
+        :param sel_decomp_funcs: Decompile only the selected functions. It can
+            be either an iterable of function names (e.g. ``['func1', 'func2']``) or
+            a string with comma-separated function names (e.g. ``'func1,
+            func2'``).
+        :type sel_decomp_funcs: str/iterable
+        :param sel_decomp_ranges: Decompile only the selected address ranges.
+            It can be either an iterable of ranges (e.g. ``[(0x100, 0x200),
+            (0x400, 0x500)]``) or a string with comma-separated ranges (e.g.
+            ``'0x100-0x200,0x400-0x500'``).
+        :type sel_decomp_ranges: str/iterable
+        :param sel_decomp_decoding: What instructions should be decoded when
+            either `sel_decomp_funcs` or `sel_decomp_ranges` is given?
+        :type sel_decomp_decoding: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated?
         :type generate_archive: bool
@@ -101,6 +114,9 @@ class Decompiler(Service):
         self._add_param_when_given('comp_debug', params, kwargs)
         self._add_param_when_given('comp_strip', params, kwargs)
         self._add_comp_optimizations_param_when_given(params, kwargs)
+        self._add_sel_decomp_funcs_param_when_given(params, kwargs)
+        self._add_sel_decomp_ranges_param_when_given(params, kwargs)
+        self._add_param_when_given('sel_decomp_decoding', params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
@@ -151,6 +167,44 @@ class Decompiler(Service):
             if not value.startswith('-'):
                 value = '-' + value
             params['comp_optimizations'] = value
+
+    def _add_sel_decomp_funcs_param_when_given(self, params, kwargs):
+        """Adds the ``sel_decomp_funcs`` parameter to `params` when given in
+        `kwargs`.
+        """
+        value = kwargs.get('sel_decomp_funcs', None)
+        if value is not None:
+            if not isinstance(value, str):
+                value = ','.join(value)
+            params['sel_decomp_funcs'] = value
+
+    def _add_sel_decomp_ranges_param_when_given(self, params, kwargs):
+        """Adds the ``sel_decomp_ranges`` parameter to `params` when given in
+        `kwargs`.
+        """
+        def ranges2str(ranges):
+            return ','.join(
+                range2str(range) for range in ranges
+            )
+
+        def range2str(range):
+            if isinstance(range, tuple):
+                assert len(range) == 2, 'invalid range: {}'.format(range)
+                return '{}-{}'.format(
+                    address2str(range[0]), address2str(range[1])
+                )
+            return str(range)
+
+        def address2str(address):
+            if isinstance(address, int):
+                return hex(address)
+            return str(address)
+
+        value = kwargs.get('sel_decomp_ranges', None)
+        if value is not None:
+            if not isinstance(value, str):
+                value = ranges2str(value)
+            params['sel_decomp_ranges'] = value
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(
