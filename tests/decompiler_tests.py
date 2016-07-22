@@ -232,22 +232,13 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(comp_optimizations='-O1')
         )
 
-    def test_generate_archive_is_set_to_true_when_given_as_true(self):
+    def test_generate_archive_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             generate_archive=True
         )
 
         self.assert_post_request_was_sent_with(
             params=AnyParamsWith(generate_archive=True)
-        )
-
-    def test_generate_archive_is_set_to_false_when_given_as_false(self):
-        self.start_decompilation_with_any_input_file(
-            generate_archive=False
-        )
-
-        self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(generate_archive=False)
         )
 
     def test_uses_returned_id_to_initialize_decompilation(self):
