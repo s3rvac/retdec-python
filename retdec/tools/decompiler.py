@@ -382,6 +382,13 @@ def parse_args(argv):
              'list of function names, e.g. func1,func2).'
     )
     parser.add_argument(
+        '--only-ranges',
+        dest='sel_decomp_ranges',
+        metavar='RANGES',
+        help='Decompile only the given address ranges (a comma-separated '
+             'list of address ranges, e.g. 0x100-0x200,0x500-0x600).'
+    )
+    parser.add_argument(
         '--no-addresses',
         dest='decomp_emit_addresses',
         action='store_false',
@@ -480,6 +487,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'decomp_optimizations')
     add_decompilation_param_when_given(args, params, 'decomp_unreach_funcs')
     add_decompilation_param_when_given(args, params, 'sel_decomp_funcs')
+    add_decompilation_param_when_given(args, params, 'sel_decomp_ranges')
     add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)

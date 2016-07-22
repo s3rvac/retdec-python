@@ -40,7 +40,7 @@ The decompilation service.
 
         * ``architecture`` ✔
         * ``sel_decomp_funcs`` ✔
-        * ``sel_decomp_ranges`` ✗
+        * ``sel_decomp_ranges`` ✔
         * ``sel_decomp_decoding`` ✗
 
     * `Parameters for the raw mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-raw-mode>`_ ✗

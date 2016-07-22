@@ -412,6 +412,10 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--only-funcs', 'func1,func2', 'prog.exe'])
         self.assertEqual(args.sel_decomp_funcs, 'func1,func2')
 
+    def test_decomp_sel_ranges_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--only-ranges', '0x0-0x2,0x7-0x9', 'prog.exe'])
+        self.assertEqual(args.sel_decomp_ranges, '0x0-0x2,0x7-0x9')
+
     def test_decomp_emit_addresses_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--no-addresses', 'prog.exe'])
         self.assertFalse(args.decomp_emit_addresses)
@@ -686,6 +690,15 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             sel_decomp_funcs='func1,func2'
+        )
+
+    def test_sets_sel_decomp_ranges_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--only-ranges', '0x0-0x2,0x7-0x9'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            sel_decomp_ranges='0x0-0x2,0x7-0x9'
         )
 
     def test_sets_decomp_emit_addresses_when_given(self):

@@ -250,6 +250,42 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(sel_decomp_funcs='func1,func2')
         )
 
+    def test_sel_decomp_ranges_is_passed_directly_when_given_as_str(self):
+        self.start_decompilation_with_any_input_file(
+            sel_decomp_ranges='0x100-0x200,0x400-0x500'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(sel_decomp_ranges='0x100-0x200,0x400-0x500')
+        )
+
+    def test_sel_decomp_ranges_is_converted_to_str_when_given_as_list_with_str(self):
+        self.start_decompilation_with_any_input_file(
+            sel_decomp_ranges=['0x100-0x200', '0x400-0x500']
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(sel_decomp_ranges='0x100-0x200,0x400-0x500')
+        )
+
+    def test_sel_decomp_ranges_is_converted_to_str_when_given_as_list_with_int_tuples(self):
+        self.start_decompilation_with_any_input_file(
+            sel_decomp_ranges=[(0x100, 0x200), (0x400, 0x500)]
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(sel_decomp_ranges='0x100-0x200,0x400-0x500')
+        )
+
+    def test_sel_decomp_ranges_is_converted_to_str_when_given_as_list_with_str_tuples(self):
+        self.start_decompilation_with_any_input_file(
+            sel_decomp_ranges=[('0x100', '0x200'), ('0x400', '0x500')]
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(sel_decomp_ranges='0x100-0x200,0x400-0x500')
+        )
+
     def test_generate_archive_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             generate_archive=True
