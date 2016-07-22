@@ -160,6 +160,15 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(decomp_unreach_funcs=True)
         )
 
+    def test_decomp_emit_addresses_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            decomp_emit_addresses=False
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(decomp_emit_addresses=False)
+        )
+
     def test_architecture_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             architecture='arm'

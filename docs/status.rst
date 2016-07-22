@@ -31,7 +31,7 @@ The decompilation service.
         * ``decomp_var_names`` ✔
         * ``decomp_optimizations`` ✔
         * ``decomp_unreach_funcs`` ✔
-        * ``decomp_emit_addresses`` ✗
+        * ``decomp_emit_addresses`` ✔
         * ``generate_cg`` ✗
         * ``generate_cfgs`` ✗
         * ``generate_archive`` ✔

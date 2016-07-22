@@ -375,6 +375,13 @@ def parse_args(argv):
         help='Decompile all functions, even if they are not reachable.'
     )
     parser.add_argument(
+        '--no-addresses',
+        dest='decomp_emit_addresses',
+        action='store_false',
+        default=None,
+        help='Disable the emission of addresses in comments in the generated code.'
+    )
+    parser.add_argument(
         '--with-archive',
         dest='generate_archive',
         action='store_true',
@@ -465,6 +472,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'decomp_var_names')
     add_decompilation_param_when_given(args, params, 'decomp_optimizations')
     add_decompilation_param_when_given(args, params, 'decomp_unreach_funcs')
+    add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 

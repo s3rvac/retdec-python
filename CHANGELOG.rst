@@ -8,6 +8,7 @@ dev
 * Added support for selecting the type of optimizations to be performed by the
   decompiler.
 * Added support for decompilation of unreachable functions.
+* Added support for disabling the emission of addresses in the generated code.
 
 0.3 (2016-07-17)
 ----------------
