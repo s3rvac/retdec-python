@@ -36,7 +36,7 @@ The decompilation service.
         * ``generate_cfgs`` ✗
         * ``generate_archive`` ✔
 
-    * `Parameters for the bin mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-bin-mode>`_ ✗
+    * `Parameters for the bin mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-bin-mode>`_ ✔
 
         * ``architecture`` ✔
         * ``sel_decomp_funcs`` ✔
