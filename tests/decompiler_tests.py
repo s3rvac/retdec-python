@@ -286,6 +286,12 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(sel_decomp_ranges='0x100-0x200,0x400-0x500')
         )
 
+    def test_asserts_when_invalid_range_is_passed(self):
+        with self.assertRaisesRegex(AssertionError, r'invalid range'):
+            self.start_decompilation_with_any_input_file(
+                sel_decomp_ranges=[(0x100,)]
+            )
+
     def test_sel_decomp_decoding_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             sel_decomp_decoding='only'

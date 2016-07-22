@@ -189,6 +189,7 @@ class Decompiler(Service):
 
         def range2str(range):
             if isinstance(range, tuple):
+                assert len(range) == 2, 'invalid range: {}'.format(range)
                 return '{}-{}'.format(
                     address2str(range[0]), address2str(range[1])
                 )
