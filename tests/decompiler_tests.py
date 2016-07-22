@@ -286,6 +286,15 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(sel_decomp_ranges='0x100-0x200,0x400-0x500')
         )
 
+    def test_sel_decomp_decoding_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            sel_decomp_decoding='only'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(sel_decomp_decoding='only')
+        )
+
     def test_generate_archive_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             generate_archive=True

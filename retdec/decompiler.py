@@ -65,6 +65,9 @@ class Decompiler(Service):
             (0x400, 0x500)]``) or a string with comma-separated ranges (e.g.
             ``'0x100-0x200,0x400-0x500'``).
         :type sel_decomp_ranges: str/iterable
+        :param sel_decomp_decoding: What instructions should be decoded when
+            either `sel_decomp_funcs` or `sel_decomp_ranges` is given?
+        :type sel_decomp_decoding: str
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated?
         :type generate_archive: bool
@@ -113,6 +116,7 @@ class Decompiler(Service):
         self._add_comp_optimizations_param_when_given(params, kwargs)
         self._add_sel_decomp_funcs_param_when_given(params, kwargs)
         self._add_sel_decomp_ranges_param_when_given(params, kwargs)
+        self._add_param_when_given('sel_decomp_decoding', params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
