@@ -55,6 +55,11 @@ class Decompiler(Service):
         :type comp_debug: bool
         :param comp_strip: Should the compiled input C source file be stripped?
         :type comp_strip: bool
+        :param sel_decomp_funcs: Decompile only the selected functions. It can
+            be either an iterable of function names (e.g. ``['func1', 'func2']``) or
+            a string with comma-separated function names (e.g. ``'func1,
+            func2'``).
+        :type sel_decomp_funcs: str/iterable
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated?
         :type generate_archive: bool
@@ -101,6 +106,7 @@ class Decompiler(Service):
         self._add_param_when_given('comp_debug', params, kwargs)
         self._add_param_when_given('comp_strip', params, kwargs)
         self._add_comp_optimizations_param_when_given(params, kwargs)
+        self._add_sel_decomp_funcs_param_when_given(params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
@@ -151,6 +157,16 @@ class Decompiler(Service):
             if not value.startswith('-'):
                 value = '-' + value
             params['comp_optimizations'] = value
+
+    def _add_sel_decomp_funcs_param_when_given(self, params, kwargs):
+        """Adds the ``sel_decomp_funcs`` parameter to `params` when given in
+        `kwargs`.
+        """
+        value = kwargs.get('sel_decomp_funcs', None)
+        if value is not None:
+            if not isinstance(value, str):
+                value = ','.join(value)
+            params['sel_decomp_funcs'] = value
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(

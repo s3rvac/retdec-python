@@ -232,6 +232,24 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(comp_optimizations='-O1')
         )
 
+    def test_sel_decomp_funcs_is_passed_directly_when_given_as_str(self):
+        self.start_decompilation_with_any_input_file(
+            sel_decomp_funcs='func1,func2'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(sel_decomp_funcs='func1,func2')
+        )
+
+    def test_sel_decomp_funcs_is_converted_to_str_when_given_as_list(self):
+        self.start_decompilation_with_any_input_file(
+            sel_decomp_funcs=['func1', 'func2']
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(sel_decomp_funcs='func1,func2')
+        )
+
     def test_generate_archive_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             generate_archive=True

@@ -375,6 +375,13 @@ def parse_args(argv):
         help='Decompile all functions, even if they are not reachable.'
     )
     parser.add_argument(
+        '--only-funcs',
+        dest='sel_decomp_funcs',
+        metavar='FUNCS',
+        help='Decompile only the given functions (a comma-separated '
+             'list of function names, e.g. func1,func2).'
+    )
+    parser.add_argument(
         '--no-addresses',
         dest='decomp_emit_addresses',
         action='store_false',
@@ -472,6 +479,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'decomp_var_names')
     add_decompilation_param_when_given(args, params, 'decomp_optimizations')
     add_decompilation_param_when_given(args, params, 'decomp_unreach_funcs')
+    add_decompilation_param_when_given(args, params, 'sel_decomp_funcs')
     add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)

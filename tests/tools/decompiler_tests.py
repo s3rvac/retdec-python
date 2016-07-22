@@ -408,6 +408,10 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--keep-unreach-funcs', 'prog.exe'])
         self.assertTrue(args.decomp_unreach_funcs)
 
+    def test_decomp_sel_funcs_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--only-funcs', 'func1,func2', 'prog.exe'])
+        self.assertEqual(args.sel_decomp_funcs, 'func1,func2')
+
     def test_decomp_emit_addresses_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--no-addresses', 'prog.exe'])
         self.assertFalse(args.decomp_emit_addresses)
@@ -673,6 +677,15 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             decomp_unreach_funcs=True
+        )
+
+    def test_sets_sel_decomp_funcs_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--only-funcs', 'func1,func2'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            sel_decomp_funcs='func1,func2'
         )
 
     def test_sets_decomp_emit_addresses_when_given(self):
