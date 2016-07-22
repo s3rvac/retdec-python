@@ -297,13 +297,13 @@ def parse_args(argv):
         '-c', '--compiler',
         dest='comp_compiler',
         choices=['gcc', 'clang'],
-        help='compiler to be used when compiling'
+        help='compiler to be used when compiling (default: gcc)'
     )
     parser.add_argument(
         '-C', '--compiler-optimizations',
         dest='comp_optimizations',
         choices=['O0', 'O1', 'O2', 'O3'],
-        help='compiler optimizations to be used when compiling'
+        help='compiler optimizations to be used when compiling (default: O2)'
     )
     parser.add_argument(
         '-g', '--compiler-debug',
@@ -323,13 +323,13 @@ def parse_args(argv):
         '-f', '--file-format',
         dest='file_format',
         choices=['elf', 'pe'],
-        help='file format to force when compiling'
+        help='file format to force when compiling (default: elf)'
     )
     parser.add_argument(
         '-l', '--target-language',
         dest='target_language',
         choices=['c', 'py'],
-        help='target high-level language'
+        help='target high-level language (default: c)'
     )
     parser.add_argument(
         '-m', '--mode',
