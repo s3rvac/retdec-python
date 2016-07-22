@@ -29,7 +29,7 @@ class Decompiler(Service):
         :type target_language: str
         :param decomp_var_names: Naming style for variables.
         :type decomp_var_names: str
-        :param decomp_optimizations: Type of optimizations performed by the
+        :param decomp_optimizations: Level of optimizations performed by the
             decompiler.
         :type decomp_optimizations: str
         :param decomp_unreach_funcs: Should all functions be decompiled, even

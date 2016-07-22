@@ -365,7 +365,7 @@ def parse_args(argv):
         '-O', '--optimizations',
         dest='decomp_optimizations',
         choices=['none', 'limited', 'normal', 'aggressive'],
-        help='Type of optimizations performed by the decompiler (default: normal).'
+        help='Level of optimizations performed by the decompiler (default: normal).'
     )
     parser.add_argument(
         '-K', '--keep-unreach-funcs',
