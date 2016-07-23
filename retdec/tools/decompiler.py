@@ -284,6 +284,7 @@ def parse_args(argv):
     parser.add_argument(
         '-a', '--architecture',
         dest='architecture',
+        metavar='ARCH',
         choices=['x86', 'arm', 'thumb', 'mips', 'pic32', 'powerpc'],
         help='Architecture to force when (de)compiling.'
     )
@@ -296,12 +297,14 @@ def parse_args(argv):
     parser.add_argument(
         '-c', '--compiler',
         dest='comp_compiler',
+        metavar='COMPILER',
         choices=['gcc', 'clang'],
         help='Compiler to be used when compiling. Default: gcc.'
     )
     parser.add_argument(
         '-C', '--compiler-optimizations',
         dest='comp_optimizations',
+        metavar='LEVEL',
         choices=['O0', 'O1', 'O2', 'O3'],
         help='Compiler optimizations to be used when compiling. Default: O2.'
     )
@@ -322,18 +325,21 @@ def parse_args(argv):
     parser.add_argument(
         '-f', '--file-format',
         dest='file_format',
+        metavar='FORMAT',
         choices=['elf', 'pe'],
         help='File format to force when compiling. Default: elf.'
     )
     parser.add_argument(
         '-l', '--target-language',
         dest='target_language',
+        metavar='LANGUAGE',
         choices=['c', 'py'],
         help='Target high-level language. Default: c.'
     )
     parser.add_argument(
         '-m', '--mode',
         dest='mode',
+        metavar='MODE',
         choices=['c', 'bin'],
         help='Decompilation mode. Default: automatic detection.'
     )
@@ -358,12 +364,14 @@ def parse_args(argv):
     parser.add_argument(
         '--var-names',
         dest='decomp_var_names',
+        metavar='STYLE',
         choices=['readable', 'address', 'hungarian', 'simple', 'unified'],
         help='Naming style for variables. Default: readable.'
     )
     parser.add_argument(
         '-O', '--optimizations',
         dest='decomp_optimizations',
+        metavar='LEVEL',
         choices=['none', 'limited', 'normal', 'aggressive'],
         help='Level of optimizations performed by the decompiler. Default: normal.'
     )
