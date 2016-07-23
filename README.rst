@@ -2,7 +2,7 @@ retdec-python
 =============
 
 .. image:: https://readthedocs.org/projects/retdec-python/badge/?version=latest
-    :target: https://readthedocs.org/projects/retdec-python/?badge=latest
+    :target: https://retdec-python.readthedocs.io/en/latest/
     :alt: Documentation Status
 
 .. image:: https://travis-ci.org/s3rvac/retdec-python.svg
