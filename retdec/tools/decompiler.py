@@ -286,7 +286,7 @@ def parse_args(argv):
         dest='architecture',
         metavar='ARCH',
         choices=['x86', 'arm', 'thumb', 'mips', 'pic32', 'powerpc'],
-        help='Architecture to force when (de)compiling.'
+        help='Architecture to force when (de)compiling. Choices: %(choices)s.'
     )
     parser.add_argument(
         '-b', '--brief',
@@ -299,14 +299,16 @@ def parse_args(argv):
         dest='comp_compiler',
         metavar='COMPILER',
         choices=['gcc', 'clang'],
-        help='Compiler to be used when compiling. Default: gcc.'
+        help='Compiler to be used when compiling. '
+             'Choices: %(choices)s. Default: gcc.'
     )
     parser.add_argument(
         '-C', '--compiler-optimizations',
         dest='comp_optimizations',
         metavar='LEVEL',
         choices=['O0', 'O1', 'O2', 'O3'],
-        help='Compiler optimizations to be used when compiling. Default: O2.'
+        help='Compiler optimizations to be used when compiling. '
+             'Choices: %(choices)s. Default: O2.'
     )
     parser.add_argument(
         '-g', '--compiler-debug',
@@ -327,21 +329,24 @@ def parse_args(argv):
         dest='file_format',
         metavar='FORMAT',
         choices=['elf', 'pe'],
-        help='File format to force when compiling. Default: elf.'
+        help='File format to force when compiling. '
+             'Choices: %(choices)s. Default: elf.'
     )
     parser.add_argument(
         '-l', '--target-language',
         dest='target_language',
         metavar='LANGUAGE',
         choices=['c', 'py'],
-        help='Target high-level language. Default: c.'
+        help='Target high-level language. '
+             'Choices: %(choices)s. Default: c.'
     )
     parser.add_argument(
         '-m', '--mode',
         dest='mode',
         metavar='MODE',
         choices=['c', 'bin'],
-        help='Decompilation mode. Default: automatic detection.'
+        help='Decompilation mode. '
+             'Choices: %(choices)s. Default: automatic detection.'
     )
     parser.add_argument(
         '-o', '--output-dir',
@@ -366,14 +371,16 @@ def parse_args(argv):
         dest='decomp_var_names',
         metavar='STYLE',
         choices=['readable', 'address', 'hungarian', 'simple', 'unified'],
-        help='Naming style for variables. Default: readable.'
+        help='Naming style for variables. '
+             'Choices: %(choices)s. Default: readable.'
     )
     parser.add_argument(
         '-O', '--optimizations',
         dest='decomp_optimizations',
         metavar='LEVEL',
         choices=['none', 'limited', 'normal', 'aggressive'],
-        help='Level of optimizations performed by the decompiler. Default: normal.'
+        help='Level of optimizations performed by the decompiler. '
+             'Choices: %(choices)s. Default: normal.'
     )
     parser.add_argument(
         '-K', '--keep-unreach-funcs',
@@ -401,7 +408,8 @@ def parse_args(argv):
         dest='sel_decomp_decoding',
         metavar='TYPE',
         choices=['everything', 'only'],
-        help='What should be decoded in a seletive decompilation? Default: everything'
+        help='What should be decoded in a seletive decompilation? '
+             'Choices: %(choices)s. Default: everything.'
     )
     parser.add_argument(
         '--no-addresses',
