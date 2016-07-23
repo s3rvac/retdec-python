@@ -23,7 +23,7 @@ def _add_arguments_shared_by_all_tools(parser):
         dest='api_url',
         metavar='URL',
         default=DEFAULT_API_URL,
-        help='URL to the API. Default: {}.'.format(DEFAULT_API_URL)
+        help='URL to the API. Default: %(default)s.'
     )
     parser.add_argument(
         '-V', '--version',
