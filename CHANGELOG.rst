@@ -4,6 +4,7 @@ Changelog
 dev
 ---
 
+* Added support for generating and downloading a call graph.
 * Added support for selecting the format of the generated call and control-flow
   graphs.
 * Added support for selecting a different style for naming of variables.
