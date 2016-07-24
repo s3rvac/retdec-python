@@ -427,6 +427,13 @@ def parse_args(argv):
         help='Disable the emission of addresses in comments in the generated code.'
     )
     parser.add_argument(
+        '--with-cg',
+        dest='generate_cg',
+        action='store_true',
+        default=None,
+        help='Generate a call graph.'
+    )
+    parser.add_argument(
         '--with-archive',
         dest='generate_archive',
         action='store_true',
@@ -522,6 +529,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'sel_decomp_ranges')
     add_decompilation_param_when_given(args, params, 'sel_decomp_decoding')
     add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
+    add_decompilation_param_when_given(args, params, 'generate_cg')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 

@@ -71,6 +71,8 @@ class Decompiler(Service):
         :param sel_decomp_decoding: What instructions should be decoded when
             either `sel_decomp_funcs` or `sel_decomp_ranges` is given?
         :type sel_decomp_decoding: str
+        :param generate_cg: Should a call graph be generated?
+        :type generate_cg: bool
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated?
         :type generate_archive: bool
@@ -122,6 +124,7 @@ class Decompiler(Service):
         self._add_sel_decomp_ranges_param_when_given(params, kwargs)
         self._add_param_when_given('sel_decomp_decoding', params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
+        self._add_param_when_given('generate_cg', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
