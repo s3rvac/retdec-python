@@ -424,10 +424,6 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--no-addresses', 'prog.exe'])
         self.assertFalse(args.decomp_emit_addresses)
 
-    def test_generate_archive_is_set_to_false_when_with_archive_not_given(self):
-        args = parse_args(['decompiler.py', 'prog.exe'])
-        self.assertFalse(args.generate_archive)
-
     def test_generate_archive_is_set_to_true_when_with_archive_given(self):
         args = parse_args(['decompiler.py', '--with-archive', 'prog.exe'])
         self.assertTrue(args.generate_archive)
