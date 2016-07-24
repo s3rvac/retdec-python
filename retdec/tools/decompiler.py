@@ -559,6 +559,11 @@ def main(argv=None):
         file_path = decompilation.save_binary(output_dir)
         display_download_progress(displayer, file_path)
 
+    if args.generate_cg:
+        decompilation.wait_until_cg_is_generated()
+        file_path = decompilation.save_cg(output_dir)
+        display_download_progress(displayer, file_path)
+
     if args.generate_archive:
         decompilation.wait_until_archive_is_generated()
         file_path = decompilation.save_archive(output_dir)

@@ -749,14 +749,17 @@ class MainTests(ToolTestsBase):
             generate_cg=True
         )
 
-    def test_sets_generate_cfgs_when_given(self):
+    def test_generates_and_saves_cg_when_requested(self):
         self.call_main_with_standard_arguments_and(
-            '--with-cfgs'
+            '--with-cg'
         )
 
         self.assert_decompilation_was_started_also_with(
-            generate_cfgs=True
+            generate_cg=True
         )
+        decompilation = self.get_started_decompilation()
+        decompilation.wait_until_cg_is_generated.assert_called_once_with()
+        decompilation.save_cg.assert_called_once_with(os.getcwd())
 
     def test_generates_and_saves_archive_when_requested(self):
         self.call_main_with_standard_arguments_and(
