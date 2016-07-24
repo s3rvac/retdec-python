@@ -92,6 +92,17 @@ class OutputNotRequestedError(RetdecError):
         )
 
 
+class CGGenerationFailedError(RetdecError):
+    """Exception raised when the generation of a call graph fails."""
+
+    def __init__(self, reason=None):
+        message = _message_with_reason(
+            'The call graph generation has failed.',
+            reason
+        )
+        super().__init__(message)
+
+
 class ArchiveGenerationFailedError(RetdecError):
     """Exception raised when the generation of an archive fails."""
 

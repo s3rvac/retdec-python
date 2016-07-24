@@ -8,6 +8,7 @@
 
 from retdec.decompilation_phase import DecompilationPhase
 from retdec.exceptions import ArchiveGenerationFailedError
+from retdec.exceptions import CGGenerationFailedError
 from retdec.exceptions import DecompilationFailedError
 from retdec.exceptions import OutputNotRequestedError
 from retdec.resource import Resource
@@ -124,6 +125,81 @@ class Decompilation(Resource):
             directory
         )
 
+    def cg_generation_has_finished(self):
+        """Checks if the call-graph generation has finished.
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+        """
+        self._update_state_if_needed()
+        return self._cg_status.finished
+
+    def cg_generation_has_succeeded(self):
+        """Checks if the call-graph generation has succeeded.
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+        """
+        self._update_state_if_needed()
+        return self._cg_status.generated
+
+    def cg_generation_has_failed(self):
+        """Checks if the call graph has failed to generate.
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+        """
+        self._update_state_if_needed()
+        return self._cg_status.failed
+
+    def get_cg_generation_error(self):
+        """Returns the reason why the call graph failed to generate.
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+
+        If the call-graph generation has not failed, it returns ``None``.
+        """
+        self._update_state_if_needed()
+        return self._cg_status.error
+
+    def wait_until_cg_is_generated(
+            self, on_failure=CGGenerationFailedError):
+        """Waits until the call graph is generated.
+
+        :param callable on_failure: What should be done when the generation
+            fails?
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+
+        If `on_failure` is ``None``, nothing is done when the generation fails.
+        Otherwise, it is called with the error message. If the returned value
+        is an exception, it is raised.
+        """
+        # Currently, the retdec.com API does not support push notifications, so
+        # we have to do polling.
+        while not self.cg_generation_has_finished():
+            self._wait_until_state_can_be_updated()
+
+        if self._cg_status.failed:
+            self._handle_failure(on_failure, self._cg_status.error)
+
+    def save_cg(self, directory=None):
+        """Saves the call graph to the given directory.
+
+        :param str directory: Path to a directory in which the file will be
+            stored.
+
+        :returns: Path to the saved file (`str`).
+
+        If `directory` is ``None``, the current working directory is used.
+        """
+        return self._get_file_and_save_it(
+            self._path_to_output_file('cg'),
+            directory
+        )
+
     def archive_generation_has_finished(self):
         """Checks if the archive generation has finished.
 
@@ -222,6 +298,7 @@ class Decompilation(Resource):
         status = super()._update_state()
         self._completion = status['completion']
         self._phases = self._phases_from_status(status)
+        self._cg_status = self._cg_status_from_status(status)
         self._archive_status = self._archive_status_from_status(status)
         return status
 
@@ -236,6 +313,12 @@ class Decompilation(Resource):
                 phase['warnings']
             ) for phase in status['phases']
         ]
+
+    def _cg_status_from_status(self, status):
+        """Returns the call-graph generation status from the given status."""
+        if 'cg' not in status:
+            return _NotRequestedOutputStatus()
+        return _OutputGenerationStatus(**status['cg'])
 
     def _archive_status_from_status(self, status):
         """Returns the archive generation status from the given status."""

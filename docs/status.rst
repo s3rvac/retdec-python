@@ -72,7 +72,7 @@ The decompilation service.
         * ``completion`` ✔
         * ``warnings`` ✔
 
-    * ``cg`` ✗
+    * ``cg`` ✔
     * ``cfgs`` ✗
     * ``archive`` ✔
 
@@ -80,7 +80,7 @@ The decompilation service.
 
     * ``hll`` ✔
     * ``dsm`` ✔
-    * ``cg`` ✗
+    * ``cg`` ✔
     * ``cfgs`` ✗
     * ``archive`` ✔
     * ``binary`` ✔

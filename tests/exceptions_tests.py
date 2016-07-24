@@ -11,6 +11,7 @@ import unittest
 from retdec.exceptions import AnalysisFailedError
 from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import AuthenticationError
+from retdec.exceptions import CGGenerationFailedError
 from retdec.exceptions import ConnectionError
 from retdec.exceptions import DecompilationFailedError
 from retdec.exceptions import InvalidValueError
@@ -97,6 +98,18 @@ class OutputNotRequestedErrorTests(unittest.TestCase):
     def test_has_correct_description(self):
         ex = OutputNotRequestedError()
         self.assertIn('not requested', str(ex))
+
+
+class CGGenerationFailedErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.CGGenerationFailedError`."""
+
+    def test_does_not_include_reason_when_not_given(self):
+        ex = CGGenerationFailedError()
+        self.assertNotIn('reason', str(ex))
+
+    def test_includes_reason_when_given(self):
+        ex = CGGenerationFailedError('REASON')
+        self.assertIn('REASON', str(ex))
 
 
 class ArchiveGenerationFailedErrorTests(unittest.TestCase):
