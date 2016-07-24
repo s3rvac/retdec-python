@@ -27,6 +27,9 @@ class Decompiler(Service):
         :type mode: str
         :param target_language: Target high-level language.
         :type target_language: str
+        :param graph_format: Format of the generated call and control-flow
+            graphs.
+        :type graph_format: str
         :param decomp_var_names: Naming style for variables.
         :type decomp_var_names: str
         :param decomp_optimizations: Level of optimizations performed by the
@@ -104,6 +107,7 @@ class Decompiler(Service):
             'mode': self._get_mode_param(files['input'], kwargs)
         }
         self._add_param_when_given('target_language', params, kwargs)
+        self._add_param_when_given('graph_format', params, kwargs)
         self._add_param_when_given('decomp_var_names', params, kwargs)
         self._add_param_when_given('decomp_optimizations', params, kwargs)
         self._add_param_when_given('decomp_unreach_funcs', params, kwargs)

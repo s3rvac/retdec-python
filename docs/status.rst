@@ -27,7 +27,7 @@ The decompilation service.
     * `Mode-independent parameters <https://retdec.com/api/docs/decompiler.html#mode-independent-parameters>`_ ✗
 
         * ``target_language`` ✔
-        * ``graph_format`` ✗
+        * ``graph_format`` ✔
         * ``decomp_var_names`` ✔
         * ``decomp_optimizations`` ✔
         * ``decomp_unreach_funcs`` ✔

@@ -341,6 +341,14 @@ def parse_args(argv):
              'Choices: %(choices)s. Default: c.'
     )
     parser.add_argument(
+        '--graph-format',
+        dest='graph_format',
+        metavar='FORMAT',
+        choices=['png', 'svg', 'pdf'],
+        help='Format of the generated call and control-flow graphs.'
+             'Choices: %(choices)s. Default: png.'
+    )
+    parser.add_argument(
         '-m', '--mode',
         dest='mode',
         metavar='MODE',
@@ -500,6 +508,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'pdb_file')
     add_decompilation_param_when_given(args, params, 'mode')
     add_decompilation_param_when_given(args, params, 'target_language')
+    add_decompilation_param_when_given(args, params, 'graph_format')
     add_decompilation_param_when_given(args, params, 'architecture')
     add_decompilation_param_when_given(args, params, 'file_format')
     add_decompilation_param_when_given(args, params, 'comp_compiler')

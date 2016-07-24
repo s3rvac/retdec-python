@@ -340,6 +340,10 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--target-language', 'py', 'prog.exe'])
         self.assertEqual(args.target_language, 'py')
 
+    def test_graph_format_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--graph-forma', 'svg', 'prog.exe'])
+        self.assertEqual(args.graph_format, 'svg')
+
     def test_architecture_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-a', 'arm', 'file.c'])
         self.assertEqual(args.architecture, 'arm')
@@ -600,6 +604,15 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             target_language='py'
+        )
+
+    def test_sets_graph_format_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--graph-format', 'svg'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            graph_format='svg'
         )
 
     def test_sets_architecture_when_given(self):
