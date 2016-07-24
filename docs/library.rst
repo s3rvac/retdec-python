@@ -109,7 +109,7 @@ Alternatively, you can call :func:`~retdec.decompilation.Decompilation.save_hll_
 
     decompilation.save_hll_code('/home/user/downloads')
 
-Apart from obtaining the HLL code, you can also get the disassembled code, call graph, archive with all the outputs or, in the ``c`` mode, the compiled version of the input C file. See the description of :class:`~retdec.decompilation.Decompilation` for more details.
+Apart from obtaining the HLL code, you can also get the disassembled code, control-flow graphs, call graph, archive with all the outputs or, in the ``c`` mode, the compiled version of the input C file. See the description of :class:`~retdec.decompilation.Decompilation` for more details.
 
 For a complete example, take a look the `retdec/tools/decompiler.py <https://github.com/s3rvac/retdec-python/blob/master/retdec/tools/decompiler.py>`_ file. It is an implementation of the :ref:`decompiler` script.
 

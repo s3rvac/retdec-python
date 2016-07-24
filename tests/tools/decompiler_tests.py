@@ -436,6 +436,10 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--with-cg', 'prog.exe'])
         self.assertTrue(args.generate_cg)
 
+    def test_generate_cfgs_is_set_to_true_when_with_cfgs_given(self):
+        args = parse_args(['decompiler.py', '--with-cfgs', 'prog.exe'])
+        self.assertTrue(args.generate_cfgs)
+
     def test_brief_is_set_to_false_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
         self.assertFalse(args.brief)
@@ -743,6 +747,15 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             generate_cg=True
+        )
+
+    def test_sets_generate_cfgs_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--with-cfgs'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            generate_cfgs=True
         )
 
     def test_generates_and_saves_archive_when_requested(self):

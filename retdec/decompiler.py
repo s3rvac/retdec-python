@@ -73,6 +73,9 @@ class Decompiler(Service):
         :type sel_decomp_decoding: str
         :param generate_cg: Should a call graph be generated?
         :type generate_cg: bool
+        :param generate_cfgs: Should control-flow graphs for all functions be
+            generated?
+        :type generate_cfgs: bool
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated?
         :type generate_archive: bool
@@ -125,6 +128,7 @@ class Decompiler(Service):
         self._add_param_when_given('sel_decomp_decoding', params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
         self._add_param_when_given('generate_cg', params, kwargs)
+        self._add_param_when_given('generate_cfgs', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 

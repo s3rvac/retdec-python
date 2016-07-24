@@ -434,6 +434,13 @@ def parse_args(argv):
         help='Generate a call graph.'
     )
     parser.add_argument(
+        '--with-cfgs',
+        dest='generate_cfgs',
+        action='store_true',
+        default=None,
+        help='Generate call graphs for all functions.'
+    )
+    parser.add_argument(
         '--with-archive',
         dest='generate_archive',
         action='store_true',
@@ -530,6 +537,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'sel_decomp_decoding')
     add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
     add_decompilation_param_when_given(args, params, 'generate_cg')
+    add_decompilation_param_when_given(args, params, 'generate_cfgs')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 

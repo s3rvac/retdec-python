@@ -319,6 +319,15 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(generate_cg=True)
         )
 
+    def test_generate_cfgs_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            generate_cfgs=True
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(generate_cfgs=True)
+        )
+
     def test_generate_archive_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             generate_archive=True

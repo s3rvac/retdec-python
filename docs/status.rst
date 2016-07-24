@@ -33,7 +33,7 @@ The decompilation service.
         * ``decomp_unreach_funcs`` ✔
         * ``decomp_emit_addresses`` ✔
         * ``generate_cg`` ✔
-        * ``generate_cfgs`` ✗
+        * ``generate_cfgs`` ✔
         * ``generate_archive`` ✔
 
     * `Parameters for the bin mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-bin-mode>`_ ✔

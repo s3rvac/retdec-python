@@ -63,6 +63,7 @@ Options
 * ``-K``, ``--keep-unreach-funcs`` -- Decompile all functions, even if they are not reachable.
 * ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
 * ``--with-cg`` -- Generate a call graph when the decompilation ends.
+* ``--with-cfgs`` -- Generate call graphs for all functions when the decompilation ends.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
 
 See the `official documentation <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ for more details.
