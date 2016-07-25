@@ -13,6 +13,7 @@ from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import CFGGenerationFailedError
 from retdec.exceptions import CGGenerationFailedError
 from retdec.exceptions import DecompilationFailedError
+from retdec.exceptions import NoSuchCFGError
 from retdec.exceptions import OutputNotRequestedError
 from retdec.resource import Resource
 
@@ -211,6 +212,8 @@ class Decompilation(Resource):
 
         :raises OutputNotRequestedError: When control-flow graphs were not
             requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
         """
         self._update_state_if_needed()
         return self._cfg_statuses[func].finished
@@ -223,6 +226,8 @@ class Decompilation(Resource):
 
         :raises OutputNotRequestedError: When control-flow graphs were not
             requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
         """
         self._update_state_if_needed()
         return self._cfg_statuses[func].generated
@@ -235,6 +240,8 @@ class Decompilation(Resource):
 
         :raises OutputNotRequestedError: When control-flow graphs were not
             requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
         """
         self._update_state_if_needed()
         return self._cfg_statuses[func].failed
@@ -247,6 +254,8 @@ class Decompilation(Resource):
 
         :raises OutputNotRequestedError: When control-flow graphs were not
             requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
 
         If the control-flow-graph generation has not failed, it returns
         ``None``.
@@ -265,6 +274,8 @@ class Decompilation(Resource):
 
         :raises OutputNotRequestedError: When control-flow graphs were not
             requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
 
         If `on_failure` is ``None``, nothing is done when the generation fails.
         Otherwise, it is called with the error message. If the returned value
@@ -422,10 +433,11 @@ class Decompilation(Resource):
         """
         if 'cfgs' not in status:
             return collections.defaultdict(_NotRequestedOutputStatus)
-        return {
+
+        return _DictRaisingErrorWhenNoSuchCFG({
             func: _OutputGenerationStatus(**status)
             for func, status in status['cfgs'].items()
-        }
+        })
 
     def _archive_status_from_status(self, status):
         """Returns the archive generation status from the given status."""
@@ -498,3 +510,12 @@ class _NotRequestedOutputStatus:
     @property
     def finished(self):
         raise OutputNotRequestedError
+
+
+class _DictRaisingErrorWhenNoSuchCFG(dict):
+    """A dictionary that raises :class:`~retdec.exceptions.NoSuchCFGError` when
+    a key (i.e. a function) is missing.
+    """
+
+    def __missing__(self, func):
+        raise NoSuchCFGError(func)

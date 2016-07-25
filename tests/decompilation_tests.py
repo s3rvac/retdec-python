@@ -13,6 +13,7 @@ from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import CFGGenerationFailedError
 from retdec.exceptions import CGGenerationFailedError
 from retdec.exceptions import DecompilationFailedError
+from retdec.exceptions import NoSuchCFGError
 from retdec.exceptions import OutputNotRequestedError
 from tests import mock
 from tests.resource_tests import ResourceTestsBase
@@ -32,6 +33,13 @@ class DecompilationTestsBase(ResourceTestsBase):
         if 'phases' not in status:
             status['phases'] = []
         return status
+
+    def get_decompilation_without_any_cfg(self):
+        """Returns a decompilation without any control-flow graphs."""
+        self.conn.send_get_request.return_value = self.status_with({
+            'cfgs': {}
+        })
+        return Decompilation('ID', self.conn)
 
 
 class DecompilationTests(DecompilationTestsBase):
@@ -389,6 +397,12 @@ class DecompilationTests(DecompilationTestsBase):
         with self.assertRaises(OutputNotRequestedError):
             d.cfg_generation_has_finished('my_func')
 
+    def test_cfg_generation_has_finished_raises_exception_when_no_such_cfg(self):
+        d = self.get_decompilation_without_any_cfg()
+
+        with self.assertRaises(NoSuchCFGError):
+            d.cfg_generation_has_finished('my_func')
+
     def test_cfg_generation_has_succeeded_checks_status_on_first_call(self):
         self.conn.send_get_request.return_value = self.status_with({
             'cfgs': {
@@ -451,6 +465,12 @@ class DecompilationTests(DecompilationTestsBase):
         d = self.get_decompilation_that_did_not_request_cfgs_to_be_generated()
 
         with self.assertRaises(OutputNotRequestedError):
+            d.cfg_generation_has_succeeded('my_func')
+
+    def test_cfg_generation_has_succeeed_raises_exception_when_no_such_cfg(self):
+        d = self.get_decompilation_without_any_cfg()
+
+        with self.assertRaises(NoSuchCFGError):
             d.cfg_generation_has_succeeded('my_func')
 
     def test_cfg_generation_has_failed_checks_status_on_first_call(self):
@@ -517,6 +537,12 @@ class DecompilationTests(DecompilationTestsBase):
         with self.assertRaises(OutputNotRequestedError):
             d.cfg_generation_has_failed('my_func')
 
+    def test_cfg_generation_has_failed_raises_exception_when_no_such_cfg(self):
+        d = self.get_decompilation_without_any_cfg()
+
+        with self.assertRaises(NoSuchCFGError):
+            d.cfg_generation_has_failed('my_func')
+
     def test_get_cfg_generation_error_checks_status_on_first_call(self):
         self.conn.send_get_request.return_value = self.status_with({
             'cfgs': {
@@ -566,6 +592,12 @@ class DecompilationTests(DecompilationTestsBase):
 
         with self.assertRaises(OutputNotRequestedError):
             d.get_cfg_generation_error('my_func')
+
+    def test_get_cfg_generation_error_raises_exception_when_no_such_cfg(self):
+        d = self.get_decompilation_without_any_cfg()
+
+        with self.assertRaises(NoSuchCFGError):
+            d.cfg_generation_has_failed('my_func')
 
     def test_archive_generation_has_finished_checks_status_on_first_call(self):
         self.conn.send_get_request.return_value = self.status_with({
@@ -1060,6 +1092,12 @@ class DecompilationWaitUntilCFGIsGeneratedTests(WithDisabledWaitingInterval,
         d = Decompilation('ID', self.conn)
 
         d.wait_until_cfg_is_generated('my_func', on_failure=None)
+
+    def test_raises_exception_when_no_such_cfg(self):
+        d = self.get_decompilation_without_any_cfg()
+
+        with self.assertRaises(NoSuchCFGError):
+            d.wait_until_cfg_is_generated('my_func')
 
 
 # WithDisabledWaitingInterval has to be put as the first base class, see its
