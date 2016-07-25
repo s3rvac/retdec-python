@@ -517,7 +517,7 @@ class DecompilationTests(DecompilationTestsBase):
         with self.assertRaises(OutputNotRequestedError):
             d.cfg_generation_has_failed('my_func')
 
-    def test_get_cfg_error_checks_status_on_first_call(self):
+    def test_get_cfg_generation_error_checks_status_on_first_call(self):
         self.conn.send_get_request.return_value = self.status_with({
             'cfgs': {
                 'my_func': {
