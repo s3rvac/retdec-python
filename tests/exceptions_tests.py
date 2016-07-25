@@ -18,6 +18,7 @@ from retdec.exceptions import DecompilationFailedError
 from retdec.exceptions import InvalidValueError
 from retdec.exceptions import MissingAPIKeyError
 from retdec.exceptions import MissingParameterError
+from retdec.exceptions import NoSuchCFGError
 from retdec.exceptions import OutputNotRequestedError
 from retdec.exceptions import UnknownAPIError
 
@@ -127,6 +128,14 @@ class CFGGenerationFailedErrorTests(unittest.TestCase):
     def test_includes_reason_when_given(self):
         ex = CFGGenerationFailedError('my_func', 'REASON')
         self.assertIn('REASON', str(ex))
+
+
+class NoSuchCFGErrorTests(unittest.TestCase):
+    """Tests for :class:`retdec.exceptions.NoSuchCFGError`."""
+
+    def test_includes_func_name(self):
+        ex = NoSuchCFGError('my_func')
+        self.assertIn('my_func', str(ex))
 
 
 class ArchiveGenerationFailedErrorTests(unittest.TestCase):

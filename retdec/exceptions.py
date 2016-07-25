@@ -140,6 +140,20 @@ class CFGGenerationFailedError(RetdecError):
         super().__init__(message)
 
 
+class NoSuchCFGError(RetdecError):
+    """Exception raised when a control-flow graph for a non-existing function
+    is requested.
+
+    :param str func: Name of the function whose control-flow graph was
+        requested.
+    """
+
+    def __init__(self, func):
+        super().__init__(
+            "There is no control-flow graph for '{}'.".format(func)
+        )
+
+
 class ArchiveGenerationFailedError(RetdecError):
     """Exception raised when the generation of an archive fails.
 
