@@ -103,6 +103,23 @@ class CGGenerationFailedError(RetdecError):
         super().__init__(message)
 
 
+class CFGGenerationFailedError(RetdecError):
+    """Exception raised when the generation of a control-flow graph fails.
+
+    :param str func: Name of the function whose control-flow graph failed to be
+        generated.
+    """
+
+    def __init__(self, func, reason=None):
+        message = _message_with_reason(
+            "The control-flow graph for '{}' has failed to be generated.".format(
+                func
+            ),
+            reason
+        )
+        super().__init__(message)
+
+
 class ArchiveGenerationFailedError(RetdecError):
     """Exception raised when the generation of an archive fails."""
 
