@@ -73,7 +73,7 @@ The decompilation service.
         * ``warnings`` ✔
 
     * ``cg`` ✔
-    * ``cfgs`` ✗
+    * ``cfgs`` ✔
     * ``archive`` ✔
 
 * `Obtaining outputs <https://retdec.com/api/docs/decompiler.html#obtaining-outputs>`_ ✔
@@ -81,7 +81,7 @@ The decompilation service.
     * ``hll`` ✔
     * ``dsm`` ✔
     * ``cg`` ✔
-    * ``cfgs`` ✗
+    * ``cfgs`` ✔
     * ``archive`` ✔
     * ``binary`` ✔
 
