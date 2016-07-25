@@ -333,6 +333,47 @@ class DecompilationTests(DecompilationTestsBase):
         with self.assertRaises(OutputNotRequestedError):
             d.get_cg_generation_error()
 
+    def test_funcs_with_cfg_checks_status_on_first_call(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'cfgs': {
+                'my_func': {
+                    'generated': True,
+                    'failed': False,
+                    'error': None
+                }
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        d.funcs_with_cfg
+
+        self.assert_get_request_was_sent_with('/ID/status')
+
+    def test_funcs_with_cfg_returns_correct_value_when_cfgs_generation_requested(self):
+        self.conn.send_get_request.return_value = self.status_with({
+            'cfgs': {
+                'my_func1': {
+                    'generated': True,
+                    'failed': False,
+                    'error': None
+                },
+                'my_func2': {
+                    'generated': False,
+                    'failed': False,
+                    'error': None
+                }
+            }
+        })
+        d = Decompilation('ID', self.conn)
+
+        self.assertEqual(d.funcs_with_cfg, ['my_func1', 'my_func2'])
+
+    def test_funcs_with_cfg_raises_exception_when_cfg_not_requested(self):
+        d = self.get_decompilation_that_did_not_request_cfgs_to_be_generated()
+
+        with self.assertRaises(OutputNotRequestedError):
+            d.funcs_with_cfg
+
     def test_cfg_generation_has_finished_checks_status_on_first_call(self):
         self.conn.send_get_request.return_value = self.status_with({
             'cfgs': {

@@ -202,6 +202,22 @@ class Decompilation(Resource):
             directory
         )
 
+    @property
+    def funcs_with_cfg(self):
+        """A list of names of functions having a control-flow graph.
+
+        The returned list does not depend on the control-flow-graph-generation
+        status. It always returns the same function names, disregarding whether
+        their control-flow graph has or has not been generated.
+
+        The returned list is ordered by function names.
+
+        :raises OutputNotRequestedError: When control-flow graphs were not
+            requested to be generated.
+        """
+        self._update_state_if_needed()
+        return sorted(self._cfg_statuses.keys())
+
     def cfg_generation_has_finished(self, func):
         """Checks if the generation of a control-flow graph for the given
         function has finished.
@@ -514,6 +530,9 @@ class _DictRaisingOutputNotRequestedError(dict):
     """A dictionary that raises
     :class:`~retdec.exceptions.OutputNotRequestedError` upon access.
     """
+
+    def keys(self):
+        raise OutputNotRequestedError
 
     def __getitem__(self, key):
         raise OutputNotRequestedError
