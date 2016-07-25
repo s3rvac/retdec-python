@@ -6,8 +6,6 @@
 
 """A representation of decompilations."""
 
-import collections
-
 from retdec.decompilation_phase import DecompilationPhase
 from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import CFGGenerationFailedError
@@ -432,7 +430,7 @@ class Decompilation(Resource):
         status.
         """
         if 'cfgs' not in status:
-            return collections.defaultdict(_NotRequestedOutputStatus)
+            return _DictRaisingOutputNotRequestedError()
 
         return _DictRaisingErrorWhenNoSuchCFG({
             func: _OutputGenerationStatus(**status)
@@ -509,6 +507,15 @@ class _NotRequestedOutputStatus:
 
     @property
     def finished(self):
+        raise OutputNotRequestedError
+
+
+class _DictRaisingOutputNotRequestedError(dict):
+    """A dictionary that raises
+    :class:`~retdec.exceptions.OutputNotRequestedError` upon access.
+    """
+
+    def __getitem__(self, key):
         raise OutputNotRequestedError
 
 
