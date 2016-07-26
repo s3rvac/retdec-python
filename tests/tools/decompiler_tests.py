@@ -740,15 +740,6 @@ class MainTests(ToolTestsBase):
             decomp_emit_addresses=False
         )
 
-    def test_sets_generate_cg_when_given(self):
-        self.call_main_with_standard_arguments_and(
-            '--with-cg'
-        )
-
-        self.assert_decompilation_was_started_also_with(
-            generate_cg=True
-        )
-
     def test_generates_and_saves_cg_when_requested(self):
         self.call_main_with_standard_arguments_and(
             '--with-cg'
