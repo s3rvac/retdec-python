@@ -8,7 +8,10 @@
 
 from retdec.decompilation_phase import DecompilationPhase
 from retdec.exceptions import ArchiveGenerationFailedError
+from retdec.exceptions import CFGGenerationFailedError
+from retdec.exceptions import CGGenerationFailedError
 from retdec.exceptions import DecompilationFailedError
+from retdec.exceptions import NoSuchCFGError
 from retdec.exceptions import OutputNotRequestedError
 from retdec.resource import Resource
 
@@ -124,6 +127,199 @@ class Decompilation(Resource):
             directory
         )
 
+    def cg_generation_has_finished(self):
+        """Checks if the call-graph generation has finished.
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+        """
+        self._update_state_if_needed()
+        return self._cg_status.finished
+
+    def cg_generation_has_succeeded(self):
+        """Checks if the call-graph generation has succeeded.
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+        """
+        self._update_state_if_needed()
+        return self._cg_status.generated
+
+    def cg_generation_has_failed(self):
+        """Checks if the call graph has failed to generate.
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+        """
+        self._update_state_if_needed()
+        return self._cg_status.failed
+
+    def get_cg_generation_error(self):
+        """Returns the reason why the call graph failed to generate.
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+
+        If the call-graph generation has not failed, it returns ``None``.
+        """
+        self._update_state_if_needed()
+        return self._cg_status.error
+
+    def wait_until_cg_is_generated(
+            self, on_failure=CGGenerationFailedError):
+        """Waits until the call graph is generated.
+
+        :param callable on_failure: What should be done when the generation
+            fails?
+
+        :raises OutputNotRequestedError: When the call graph was not requested
+            to be generated.
+
+        If `on_failure` is ``None``, nothing is done when the generation fails.
+        Otherwise, it is called with the error message. If the returned value
+        is an exception, it is raised.
+        """
+        # Currently, the retdec.com API does not support push notifications, so
+        # we have to do polling.
+        while not self.cg_generation_has_finished():
+            self._wait_until_state_can_be_updated()
+
+        if self._cg_status.failed:
+            self._handle_failure(on_failure, self._cg_status.error)
+
+    def save_cg(self, directory=None):
+        """Saves the call graph to the given directory.
+
+        :param str directory: Path to a directory in which the file will be
+            stored.
+
+        :returns: Path to the saved file (`str`).
+
+        If `directory` is ``None``, the current working directory is used.
+        """
+        return self._get_file_and_save_it(
+            self._path_to_output_file('cg'),
+            directory
+        )
+
+    @property
+    def funcs_with_cfg(self):
+        """A list of names of functions having a control-flow graph.
+
+        The returned list does not depend on the control-flow-graph-generation
+        status. It always returns the same function names, disregarding whether
+        their control-flow graph has or has not been generated.
+
+        The returned list is ordered by function names.
+
+        :raises OutputNotRequestedError: When control-flow graphs were not
+            requested to be generated.
+        """
+        self._update_state_if_needed()
+        return sorted(self._cfg_statuses.keys())
+
+    def cfg_generation_has_finished(self, func):
+        """Checks if the generation of a control-flow graph for the given
+        function has finished.
+
+        :param str func: Name of the function.
+
+        :raises OutputNotRequestedError: When control-flow graphs were not
+            requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
+        """
+        self._update_state_if_needed()
+        return self._cfg_statuses[func].finished
+
+    def cfg_generation_has_succeeded(self, func):
+        """Checks if the generation of a control-flow graph for the given
+        function has succeeded.
+
+        :param str func: Name of the function.
+
+        :raises OutputNotRequestedError: When control-flow graphs were not
+            requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
+        """
+        self._update_state_if_needed()
+        return self._cfg_statuses[func].generated
+
+    def cfg_generation_has_failed(self, func):
+        """Checks if the generation of a control-flow graph for the given
+        function has failed.
+
+        :param str func: Name of the function.
+
+        :raises OutputNotRequestedError: When control-flow graphs were not
+            requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
+        """
+        self._update_state_if_needed()
+        return self._cfg_statuses[func].failed
+
+    def get_cfg_generation_error(self, func):
+        """Returns the reason why the control-flow graph for the given function
+        failed to generate.
+
+        :param str func: Name of the function.
+
+        :raises OutputNotRequestedError: When control-flow graphs were not
+            requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
+
+        If the control-flow-graph generation has not failed, it returns
+        ``None``.
+        """
+        self._update_state_if_needed()
+        return self._cfg_statuses[func].error
+
+    def wait_until_cfg_is_generated(
+            self, func, on_failure=CFGGenerationFailedError):
+        """Waits until the control-flow graph for the given function is
+        generated.
+
+        :param str func: Name of the function.
+        :param callable on_failure: What should be done when the generation
+            fails?
+
+        :raises OutputNotRequestedError: When control-flow graphs were not
+            requested to be generated.
+        :raises NoSuchCFGError: When there is no control-flow graph for the
+            given function.
+
+        If `on_failure` is ``None``, nothing is done when the generation fails.
+        Otherwise, it is called with the error message. If the returned value
+        is an exception, it is raised.
+        """
+        # Currently, the retdec.com API does not support push notifications, so
+        # we have to do polling.
+        while not self.cfg_generation_has_finished(func):
+            self._wait_until_state_can_be_updated()
+
+        if self._cfg_statuses[func].failed:
+            self._handle_failure(on_failure, self._cfg_statuses[func].error)
+
+    def save_cfg(self, func, directory=None):
+        """Saves the control-flow graph for the given function to the given
+        directory.
+
+        :param str func: Name of the function.
+        :param str directory: Path to a directory in which the file will be
+            stored.
+
+        :returns: Path to the saved file (`str`).
+
+        If `directory` is ``None``, the current working directory is used.
+        """
+        return self._get_file_and_save_it(
+            self._path_to_output_file('cfgs/{}'.format(func)),
+            directory
+        )
+
     def archive_generation_has_finished(self):
         """Checks if the archive generation has finished.
 
@@ -222,6 +418,8 @@ class Decompilation(Resource):
         status = super()._update_state()
         self._completion = status['completion']
         self._phases = self._phases_from_status(status)
+        self._cg_status = self._cg_status_from_status(status)
+        self._cfg_statuses = self._cfg_statuses_from_status(status)
         self._archive_status = self._archive_status_from_status(status)
         return status
 
@@ -236,6 +434,24 @@ class Decompilation(Resource):
                 phase['warnings']
             ) for phase in status['phases']
         ]
+
+    def _cg_status_from_status(self, status):
+        """Returns the call-graph generation status from the given status."""
+        if 'cg' not in status:
+            return _NotRequestedOutputStatus()
+        return _OutputGenerationStatus(**status['cg'])
+
+    def _cfg_statuses_from_status(self, status):
+        """Returns the control-flow-graph generation statuses from the given
+        status.
+        """
+        if 'cfgs' not in status:
+            return _DictRaisingOutputNotRequestedError()
+
+        return _DictRaisingErrorWhenNoSuchCFG({
+            func: _OutputGenerationStatus(**status)
+            for func, status in status['cfgs'].items()
+        })
 
     def _archive_status_from_status(self, status):
         """Returns the archive generation status from the given status."""
@@ -308,3 +524,24 @@ class _NotRequestedOutputStatus:
     @property
     def finished(self):
         raise OutputNotRequestedError
+
+
+class _DictRaisingOutputNotRequestedError(dict):
+    """A dictionary that raises
+    :class:`~retdec.exceptions.OutputNotRequestedError` upon access.
+    """
+
+    def keys(self):
+        raise OutputNotRequestedError
+
+    def __getitem__(self, key):
+        raise OutputNotRequestedError
+
+
+class _DictRaisingErrorWhenNoSuchCFG(dict):
+    """A dictionary that raises :class:`~retdec.exceptions.NoSuchCFGError` when
+    a key (i.e. a function) is missing.
+    """
+
+    def __missing__(self, func):
+        raise NoSuchCFGError(func)

@@ -22,7 +22,10 @@ class MissingAPIKeyError(RetdecError):
 
 
 class MissingParameterError(RetdecError):
-    """Exception raised when a required parameter is not set."""
+    """Exception raised when a required parameter is not set.
+
+    :param str name: Name of the missing parameter.
+    """
 
     def __init__(self, name):
         super().__init__(
@@ -31,7 +34,11 @@ class MissingParameterError(RetdecError):
 
 
 class InvalidValueError(RetdecError):
-    """Exception raised when a parameter has an invalid value."""
+    """Exception raised when a parameter has an invalid value.
+
+    :param str name: Name of the parameter whose value is invalid.
+    :param value: The invalid value.
+    """
 
     def __init__(self, name, value):
         super().__init__(
@@ -49,7 +56,10 @@ class AuthenticationError(RetdecError):
 
 
 class ConnectionError(RetdecError):
-    """Exception raised when there is a connection error."""
+    """Exception raised when there is a connection error.
+
+    :param str reason: Reason why there was a connection error.
+    """
 
     def __init__(self, reason=None):
         message = _message_with_reason(
@@ -60,7 +70,10 @@ class ConnectionError(RetdecError):
 
 
 class AnalysisFailedError(RetdecError):
-    """Exception raised when a fileinfo analysis has failed."""
+    """Exception raised when a fileinfo analysis has failed.
+
+    :param str reason: Reason why the analysis failed.
+    """
 
     def __init__(self, reason=None):
         message = _message_with_reason(
@@ -71,7 +84,10 @@ class AnalysisFailedError(RetdecError):
 
 
 class DecompilationFailedError(RetdecError):
-    """Exception raised when a decompilation has failed."""
+    """Exception raised when a decompilation has failed.
+
+    :param str reason: Reason why the decompilation failed.
+    """
 
     def __init__(self, reason=None):
         message = _message_with_reason(
@@ -92,8 +108,57 @@ class OutputNotRequestedError(RetdecError):
         )
 
 
+class CGGenerationFailedError(RetdecError):
+    """Exception raised when the generation of a call graph fails.
+
+    :param str reason: Reason why the call-graph generation failed.
+    """
+
+    def __init__(self, reason=None):
+        message = _message_with_reason(
+            'The call graph generation has failed.',
+            reason
+        )
+        super().__init__(message)
+
+
+class CFGGenerationFailedError(RetdecError):
+    """Exception raised when the generation of a control-flow graph fails.
+
+    :param str func: Name of the function whose control-flow graph failed to be
+        generated.
+    :param str reason: Reason why the control-flow-graph generation failed.
+    """
+
+    def __init__(self, func, reason=None):
+        message = _message_with_reason(
+            "The control-flow graph for '{}' has failed to be generated.".format(
+                func
+            ),
+            reason
+        )
+        super().__init__(message)
+
+
+class NoSuchCFGError(RetdecError):
+    """Exception raised when a control-flow graph for a non-existing function
+    is requested.
+
+    :param str func: Name of the function whose control-flow graph was
+        requested.
+    """
+
+    def __init__(self, func):
+        super().__init__(
+            "There is no control-flow graph for '{}'.".format(func)
+        )
+
+
 class ArchiveGenerationFailedError(RetdecError):
-    """Exception raised when the generation of an archive fails."""
+    """Exception raised when the generation of an archive fails.
+
+    :param str reason: Reason why the archive generation failed.
+    """
 
     def __init__(self, reason=None):
         message = _message_with_reason(

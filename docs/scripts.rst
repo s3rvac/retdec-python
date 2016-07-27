@@ -52,6 +52,7 @@ Options
 * ``-s``, ``--compiler-strip`` -- Strip the compiled C file prior its decompilation.
 * ``-k KEY``, ``--api-key KEY`` -- Specifies the API key to be used.
 * ``-l LANGUAGE``, ``--target-language LANGUAGE`` -- Target high-level language. Supported languages: ``c``, ``py``.
+* ``--graph-format FORMAT`` -- Format of the generated call and control-flow graphs. Supported formats: ``png``, ``svg``, ``pdf``.
 * ``-m MODE``, ``--mode MODE`` -- Decompilation mode. `Supported modes <https://retdec.com/api/docs/decompiler.html#decompilation-modes>`_: ``bin``, ``c``. By default, the script performs an automatic detection based on the extension of the input file.
 * ``-o DIR``, ``--output-dir DIR`` -- Save the outputs into this directory.
 * ``-p FILE``, ``--pdb-file`` -- PDB file associated with the input file.
@@ -61,6 +62,8 @@ Options
 * ``-O LEVEL``, ``--optimizations LEVEL`` -- Level of optimizations performed by the decompiler. Supported levels: ``none``, ``limited``, ``normal``, and ``aggressive``.
 * ``-K``, ``--keep-unreach-funcs`` -- Decompile all functions, even if they are not reachable.
 * ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
+* ``--with-cg`` -- Generate a call graph when the decompilation ends.
+* ``--with-cfgs`` -- Generate call graphs for all functions when the decompilation ends.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
 
 See the `official documentation <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ for more details.

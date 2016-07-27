@@ -340,6 +340,10 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--target-language', 'py', 'prog.exe'])
         self.assertEqual(args.target_language, 'py')
 
+    def test_graph_format_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--graph-forma', 'svg', 'prog.exe'])
+        self.assertEqual(args.graph_format, 'svg')
+
     def test_architecture_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-a', 'arm', 'file.c'])
         self.assertEqual(args.architecture, 'arm')
@@ -427,6 +431,14 @@ class ParseArgsTests(ToolTestsBase):
     def test_generate_archive_is_set_to_true_when_with_archive_given(self):
         args = parse_args(['decompiler.py', '--with-archive', 'prog.exe'])
         self.assertTrue(args.generate_archive)
+
+    def test_generate_cg_is_set_to_true_when_with_cg_given(self):
+        args = parse_args(['decompiler.py', '--with-cg', 'prog.exe'])
+        self.assertTrue(args.generate_cg)
+
+    def test_generate_cfgs_is_set_to_true_when_with_cfgs_given(self):
+        args = parse_args(['decompiler.py', '--with-cfgs', 'prog.exe'])
+        self.assertTrue(args.generate_cfgs)
 
     def test_brief_is_set_to_false_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
@@ -602,6 +614,15 @@ class MainTests(ToolTestsBase):
             target_language='py'
         )
 
+    def test_sets_graph_format_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--graph-format', 'svg'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            graph_format='svg'
+        )
+
     def test_sets_architecture_when_given(self):
         self.call_main_with_standard_arguments_and(
             '--architecture', 'arm'
@@ -718,6 +739,33 @@ class MainTests(ToolTestsBase):
         self.assert_decompilation_was_started_also_with(
             decomp_emit_addresses=False
         )
+
+    def test_generates_and_saves_cg_when_requested(self):
+        self.call_main_with_standard_arguments_and(
+            '--with-cg'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            generate_cg=True
+        )
+        decompilation = self.get_started_decompilation()
+        decompilation.wait_until_cg_is_generated.assert_called_once_with()
+        decompilation.save_cg.assert_called_once_with(os.getcwd())
+
+    def test_generates_and_saves_cfgs_when_requested(self):
+        self.decompiler.start_decompilation().funcs_with_cfg = ['f1', 'f2']
+        self.call_main_with_standard_arguments_and(
+            '--with-cfgs'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            generate_cfgs=True
+        )
+        decompilation = self.get_started_decompilation()
+        decompilation.wait_until_cfg_is_generated.assert_any_call('f1')
+        decompilation.save_cfg.assert_any_call('f1', os.getcwd())
+        decompilation.wait_until_cfg_is_generated.assert_any_call('f2')
+        decompilation.save_cfg.assert_any_call('f2', os.getcwd())
 
     def test_generates_and_saves_archive_when_requested(self):
         self.call_main_with_standard_arguments_and(

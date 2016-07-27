@@ -24,16 +24,16 @@ The decompilation service.
 
 * `Decompilation parameters <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ ✔
 
-    * `Mode-independent parameters <https://retdec.com/api/docs/decompiler.html#mode-independent-parameters>`_ ✗
+    * `Mode-independent parameters <https://retdec.com/api/docs/decompiler.html#mode-independent-parameters>`_ ✔
 
         * ``target_language`` ✔
-        * ``graph_format`` ✗
+        * ``graph_format`` ✔
         * ``decomp_var_names`` ✔
         * ``decomp_optimizations`` ✔
         * ``decomp_unreach_funcs`` ✔
         * ``decomp_emit_addresses`` ✔
-        * ``generate_cg`` ✗
-        * ``generate_cfgs`` ✗
+        * ``generate_cg`` ✔
+        * ``generate_cfgs`` ✔
         * ``generate_archive`` ✔
 
     * `Parameters for the bin mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-bin-mode>`_ ✔
@@ -72,16 +72,16 @@ The decompilation service.
         * ``completion`` ✔
         * ``warnings`` ✔
 
-    * ``cg`` ✗
-    * ``cfgs`` ✗
+    * ``cg`` ✔
+    * ``cfgs`` ✔
     * ``archive`` ✔
 
 * `Obtaining outputs <https://retdec.com/api/docs/decompiler.html#obtaining-outputs>`_ ✔
 
     * ``hll`` ✔
     * ``dsm`` ✔
-    * ``cg`` ✗
-    * ``cfgs`` ✗
+    * ``cg`` ✔
+    * ``cfgs`` ✔
     * ``archive`` ✔
     * ``binary`` ✔
 

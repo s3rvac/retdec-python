@@ -341,6 +341,14 @@ def parse_args(argv):
              'Choices: %(choices)s. Default: c.'
     )
     parser.add_argument(
+        '--graph-format',
+        dest='graph_format',
+        metavar='FORMAT',
+        choices=['png', 'svg', 'pdf'],
+        help='Format of the generated call and control-flow graphs.'
+             'Choices: %(choices)s. Default: png.'
+    )
+    parser.add_argument(
         '-m', '--mode',
         dest='mode',
         metavar='MODE',
@@ -417,6 +425,20 @@ def parse_args(argv):
         action='store_false',
         default=None,
         help='Disable the emission of addresses in comments in the generated code.'
+    )
+    parser.add_argument(
+        '--with-cg',
+        dest='generate_cg',
+        action='store_true',
+        default=None,
+        help='Generate a call graph.'
+    )
+    parser.add_argument(
+        '--with-cfgs',
+        dest='generate_cfgs',
+        action='store_true',
+        default=None,
+        help='Generate call graphs for all functions.'
     )
     parser.add_argument(
         '--with-archive',
@@ -500,6 +522,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'pdb_file')
     add_decompilation_param_when_given(args, params, 'mode')
     add_decompilation_param_when_given(args, params, 'target_language')
+    add_decompilation_param_when_given(args, params, 'graph_format')
     add_decompilation_param_when_given(args, params, 'architecture')
     add_decompilation_param_when_given(args, params, 'file_format')
     add_decompilation_param_when_given(args, params, 'comp_compiler')
@@ -513,6 +536,8 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'sel_decomp_ranges')
     add_decompilation_param_when_given(args, params, 'sel_decomp_decoding')
     add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
+    add_decompilation_param_when_given(args, params, 'generate_cg')
+    add_decompilation_param_when_given(args, params, 'generate_cfgs')
     add_decompilation_param_when_given(args, params, 'generate_archive')
     decompilation = decompiler.start_decompilation(**params)
 
@@ -533,6 +558,17 @@ def main(argv=None):
     if should_download_output_binary_file(args):
         file_path = decompilation.save_binary(output_dir)
         display_download_progress(displayer, file_path)
+
+    if args.generate_cg:
+        decompilation.wait_until_cg_is_generated()
+        file_path = decompilation.save_cg(output_dir)
+        display_download_progress(displayer, file_path)
+
+    if args.generate_cfgs:
+        for func in decompilation.funcs_with_cfg:
+            decompilation.wait_until_cfg_is_generated(func)
+            file_path = decompilation.save_cfg(func, output_dir)
+            display_download_progress(displayer, file_path)
 
     if args.generate_archive:
         decompilation.wait_until_archive_is_generated()
