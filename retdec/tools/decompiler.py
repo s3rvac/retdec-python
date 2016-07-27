@@ -564,6 +564,12 @@ def main(argv=None):
         file_path = decompilation.save_cg(output_dir)
         display_download_progress(displayer, file_path)
 
+    if args.generate_cfgs:
+        for func in decompilation.funcs_with_cfg:
+            decompilation.wait_until_cfg_is_generated(func)
+            file_path = decompilation.save_cfg(func, output_dir)
+            display_download_progress(displayer, file_path)
+
     if args.generate_archive:
         decompilation.wait_until_archive_is_generated()
         file_path = decompilation.save_archive(output_dir)

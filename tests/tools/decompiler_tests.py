@@ -752,6 +752,21 @@ class MainTests(ToolTestsBase):
         decompilation.wait_until_cg_is_generated.assert_called_once_with()
         decompilation.save_cg.assert_called_once_with(os.getcwd())
 
+    def test_generates_and_saves_cfgs_when_requested(self):
+        self.decompiler.start_decompilation().funcs_with_cfg = ['f1', 'f2']
+        self.call_main_with_standard_arguments_and(
+            '--with-cfgs'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            generate_cfgs=True
+        )
+        decompilation = self.get_started_decompilation()
+        decompilation.wait_until_cfg_is_generated.assert_any_call('f1')
+        decompilation.save_cfg.assert_any_call('f1', os.getcwd())
+        decompilation.wait_until_cfg_is_generated.assert_any_call('f2')
+        decompilation.save_cfg.assert_any_call('f2', os.getcwd())
+
     def test_generates_and_saves_archive_when_requested(self):
         self.call_main_with_standard_arguments_and(
             '--with-archive'
