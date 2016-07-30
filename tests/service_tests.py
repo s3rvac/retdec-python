@@ -62,6 +62,7 @@ class ServiceTests(unittest.TestCase):
 
     def test_api_key_returns_given_key_if_explicitly_given(self):
         service = Service(api_key='API-KEY')
+
         self.assertEqual(service.api_key, 'API-KEY')
 
     def test_api_key_returns_key_from_environment_if_available(self):
@@ -77,10 +78,12 @@ class ServiceTests(unittest.TestCase):
 
     def test_api_url_returns_default_url_when_no_url_was_given(self):
         service = Service(api_key='API-KEY')
+
         self.assertEqual(service.api_url, 'https://retdec.com/service/api')
 
     def test_api_url_returns_given_url_if_explicitly_given(self):
         service = Service(api_key='API-KEY', api_url='API-URL')
+
         self.assertEqual(service.api_url, 'API-URL')
 
     def test_api_url_returns_url_from_environment_if_available(self):
@@ -99,4 +102,5 @@ class ServiceTests(unittest.TestCase):
             api_key='API-KEY',
             api_url='https://retdec.com/service/api/'
         )
+
         self.assertEqual(service.api_url, 'https://retdec.com/service/api')

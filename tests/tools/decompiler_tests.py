@@ -68,6 +68,7 @@ class ProgressBarDisplayerTests(ToolTestsBase):
 
     def test_repr_returns_correct_value(self):
         displayer = ProgressBarDisplayer()
+
         self.assertEqual(
             repr(displayer),
             '<retdec.tools.decompiler.ProgressBarDisplayer>'
@@ -229,6 +230,7 @@ Warning: warning2
 
     def test_repr_returns_correct_value(self):
         displayer = ProgressLogDisplayer()
+
         self.assertEqual(
             repr(displayer),
             '<retdec.tools.decompiler.ProgressLogDisplayer>'
@@ -254,6 +256,7 @@ class NoProgressDisplayerTests(ToolTestsBase):
 
     def test_repr_returns_correct_value(self):
         displayer = NoProgressDisplayer()
+
         self.assertEqual(
             repr(displayer),
             '<retdec.tools.decompiler.NoProgressDisplayer>'
@@ -270,186 +273,232 @@ class ParseArgsTests(ToolTestsBase):
 
     def test_file_is_parsed_correctly(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
+
         self.assertEqual(args.input_file, 'prog.exe')
 
     def test_api_key_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-k', 'KEY', 'prog.exe'])
+
         self.assertEqual(args.api_key, 'KEY')
 
     def test_api_key_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--api-key', 'KEY', 'prog.exe'])
+
         self.assertEqual(args.api_key, 'KEY')
 
     def test_api_url_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-u', 'URL', 'prog.exe'])
+
         self.assertEqual(args.api_url, 'URL')
 
     def test_api_url_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--api-url', 'URL', 'prog.exe'])
+
         self.assertEqual(args.api_url, 'URL')
 
     def test_mode_is_set_to_none_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
+
         self.assertIsNone(args.mode)
 
     def test_mode_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-m', 'bin', 'prog.exe'])
+
         self.assertEqual(args.mode, 'bin')
 
     def test_mode_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--mode', 'bin', 'prog.exe'])
+
         self.assertEqual(args.mode, 'bin')
 
     def test_output_dir_is_set_to_none_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
+
         self.assertIsNone(args.output_dir)
 
     def test_output_dir_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-o', 'dir', 'prog.exe'])
+
         self.assertEqual(args.output_dir, 'dir')
 
     def test_output_dir_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--output-dir', 'dir', 'prog.exe'])
+
         self.assertEqual(args.output_dir, 'dir')
 
     def test_pdb_file_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-p', 'prog.pdb', 'prog.exe'])
+
         self.assertEqual(args.pdb_file, 'prog.pdb')
 
     def test_pdb_file_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--pdb-file', 'prog.pdb', 'prog.exe'])
+
         self.assertEqual(args.pdb_file, 'prog.pdb')
 
     def test_quiet_is_set_to_false_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
+
         self.assertFalse(args.quiet)
 
     def test_quiet_is_set_to_true_when_given_in_short_form(self):
         args = parse_args(['decompiler.py', '-q', 'prog.exe'])
+
         self.assertTrue(args.quiet)
 
     def test_quiet_is_set_to_true_when_given_in_long_form(self):
         args = parse_args(['decompiler.py', '--quiet', 'prog.exe'])
+
         self.assertTrue(args.quiet)
 
     def test_target_language_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-l', 'py', 'prog.exe'])
+
         self.assertEqual(args.target_language, 'py')
 
     def test_target_language_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--target-language', 'py', 'prog.exe'])
+
         self.assertEqual(args.target_language, 'py')
 
     def test_graph_format_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--graph-forma', 'svg', 'prog.exe'])
+
         self.assertEqual(args.graph_format, 'svg')
 
     def test_architecture_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-a', 'arm', 'file.c'])
+
         self.assertEqual(args.architecture, 'arm')
 
     def test_architecture_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--architecture', 'arm', 'file.c'])
+
         self.assertEqual(args.architecture, 'arm')
 
     def test_file_format_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-f', 'elf', 'file.c'])
+
         self.assertEqual(args.file_format, 'elf')
 
     def test_file_format_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--file-format', 'elf', 'file.c'])
+
         self.assertEqual(args.file_format, 'elf')
 
     def test_comp_compiler_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-c', 'clang', 'file.c'])
+
         self.assertEqual(args.comp_compiler, 'clang')
 
     def test_comp_compiler_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--compiler', 'clang', 'file.c'])
+
         self.assertEqual(args.comp_compiler, 'clang')
 
     def test_comp_optimizations_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-C', 'O1', 'file.c'])
+
         self.assertEqual(args.comp_optimizations, 'O1')
 
     def test_comp_optimizations_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--compiler-optimizations', 'O1', 'file.c'])
+
         self.assertEqual(args.comp_optimizations, 'O1')
 
     def test_comp_debug_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-g', 'file.c'])
+
         self.assertTrue(args.comp_debug)
 
     def test_comp_debug_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--compiler-debug', 'file.c'])
+
         self.assertTrue(args.comp_debug)
 
     def test_comp_strip_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-s', 'file.c'])
+
         self.assertTrue(args.comp_strip)
 
     def test_comp_strip_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--compiler-strip', 'file.c'])
+
         self.assertTrue(args.comp_strip)
 
     def test_decomp_var_names_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--var-names', 'simple', 'prog.exe'])
+
         self.assertEqual(args.decomp_var_names, 'simple')
 
     def test_decomp_optimizations_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-O', 'none', 'prog.exe'])
+
         self.assertEqual(args.decomp_optimizations, 'none')
 
     def test_decomp_optimizations_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--optimizations', 'none', 'prog.exe'])
+
         self.assertEqual(args.decomp_optimizations, 'none')
 
     def test_decomp_unreach_funcs_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-K', 'prog.exe'])
+
         self.assertTrue(args.decomp_unreach_funcs)
 
     def test_decomp_unreach_funcs_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--keep-unreach-funcs', 'prog.exe'])
+
         self.assertTrue(args.decomp_unreach_funcs)
 
     def test_decomp_sel_funcs_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--only-funcs', 'func1,func2', 'prog.exe'])
+
         self.assertEqual(args.sel_decomp_funcs, 'func1,func2')
 
     def test_decomp_sel_ranges_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--only-ranges', '0x0-0x2,0x7-0x9', 'prog.exe'])
+
         self.assertEqual(args.sel_decomp_ranges, '0x0-0x2,0x7-0x9')
 
     def test_decomp_sel_decoding_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--decoding', 'only', 'prog.exe'])
+
         self.assertEqual(args.sel_decomp_decoding, 'only')
 
     def test_decomp_emit_addresses_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--no-addresses', 'prog.exe'])
+
         self.assertFalse(args.decomp_emit_addresses)
 
     def test_generate_archive_is_set_to_true_when_with_archive_given(self):
         args = parse_args(['decompiler.py', '--with-archive', 'prog.exe'])
+
         self.assertTrue(args.generate_archive)
 
     def test_generate_cg_is_set_to_true_when_with_cg_given(self):
         args = parse_args(['decompiler.py', '--with-cg', 'prog.exe'])
+
         self.assertTrue(args.generate_cg)
 
     def test_generate_cfgs_is_set_to_true_when_with_cfgs_given(self):
         args = parse_args(['decompiler.py', '--with-cfgs', 'prog.exe'])
+
         self.assertTrue(args.generate_cfgs)
 
     def test_brief_is_set_to_false_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
+
         self.assertFalse(args.brief)
 
     def test_brief_is_set_to_true_when_given_in_short_form(self):
         args = parse_args(['decompiler.py', '-b', 'prog.exe'])
+
         self.assertTrue(args.brief)
 
     def test_brief_is_set_to_true_when_given_in_long_form(self):
         args = parse_args(['decompiler.py', '--brief', 'prog.exe'])
+
         self.assertTrue(args.brief)
 
     def test_prints_version_when_requested_and_exits(self):

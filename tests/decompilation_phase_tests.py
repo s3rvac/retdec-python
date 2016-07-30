@@ -145,6 +145,7 @@ class DecompilationPhaseTests(unittest.TestCase):
             completion=75,
             warnings=['some warning']
         )
+
         self.assertEqual(
             repr(phase),
             ("retdec.decompilation_phase.DecompilationPhase(name='NAME', "

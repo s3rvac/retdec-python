@@ -316,6 +316,7 @@ class APIConnectionTests(unittest.TestCase):
 
     def test_repr_returns_correct_value(self):
         conn = APIConnection('https://retdec.com/service/api', 'KEY')
+
         self.assertEqual(
             repr(conn),
             "<retdec.conn.APIConnection base_url='https://retdec.com/service/api'>"

@@ -24,6 +24,7 @@ class FileinfoTests(BaseServiceTests):
             api_key='API-KEY',
             api_url='https://retdec.com/service/api/'
         )
+
         self.assertEqual(
             repr(fileinfo),
             "<retdec.fileinfo.Fileinfo api_url='https://retdec.com/service/api'>"

@@ -25,6 +25,7 @@ class DecompilerTests(BaseServiceTests):
             api_key='API-KEY',
             api_url='https://retdec.com/service/api/'
         )
+
         self.assertEqual(
             repr(decompiler),
             "<retdec.decompiler.Decompiler api_url='https://retdec.com/service/api'>"

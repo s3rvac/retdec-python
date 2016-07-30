@@ -28,6 +28,7 @@ class TestTests(BaseServiceTests):
     def test_auth_raises_exception_when_authentication_fails(self):
         self.conn.send_get_request.side_effect = AuthenticationError
         test = Test(api_key='INVALID-API-KEY')
+
         with self.assertRaises(AuthenticationError):
             test.auth()
 
@@ -46,5 +47,6 @@ class TestTests(BaseServiceTests):
     def test_echo_raises_exception_when_authentication_fails(self):
         self.conn.send_get_request.side_effect = AuthenticationError
         test = Test(api_key='INVALID-API-KEY')
+
         with self.assertRaises(AuthenticationError):
             test.echo()
