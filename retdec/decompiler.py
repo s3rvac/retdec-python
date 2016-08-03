@@ -80,13 +80,13 @@ class Decompiler(Service):
             the decompilation be generated?
         :type generate_archive: bool
         :param raw_entry_point: Specify the virtual memory address where execution
-            flow should start in the raw machine code ('raw' mode only).
+            flow should start in the raw machine code (``raw`` mode only).
         :type raw_entry_point: str
         :param raw_section_vma: Specify an address where the section should be created
-            from the raw machine code ('raw' mode only).
+            from the raw machine code (``raw`` mode only).
         :type raw_section_vma: str
-        :param raw_endian: Indicate the endianness (little or big) of the machine
-            code ('raw' mode only).
+        :param raw_endian: Indicate the endianness (``'little'`` or ``'big'``)
+            of the machine code (``raw`` mode only).
         :type raw_endian: str
 
         :returns: Started decompilation
