@@ -476,6 +476,11 @@ class ParseArgsTests(ToolTestsBase):
 
         self.assertEqual(args.raw_entry_point, '0x8000')
 
+    def test_decomp_raw_section_vma_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--raw-section-vma', '0x8000', 'prog.exe'])
+
+        self.assertEqual(args.raw_section_vma, '0x8000')
+
     def test_decomp_raw_endian_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--raw-endian', 'big', 'prog.exe'])
 
@@ -815,6 +820,15 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             raw_entry_point='0x8000'
+        )
+
+    def test_sets_raw_section_vma_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--raw-section-vma', '0x8000'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            raw_section_vma='0x8000'
         )
 
     def test_generates_and_saves_cg_when_requested(self):

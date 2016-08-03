@@ -63,6 +63,7 @@ Options
 * ``-K``, ``--keep-unreach-funcs`` -- Decompile all functions, even if they are not reachable.
 * ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
 * ``--raw-entry-point`` -- Virtual memory address where execution flow should start in the machine code (``raw`` mode only).
+* ``--raw-section-vma`` -- Address where the section created from the machine code will be placed in virtual memory (``raw`` mode only).
 * ``--raw-endian`` -- Endianness of the machine code (``raw`` mode only). Supported endians: ``little``, ``big``.
 * ``--with-cg`` -- Generate a call graph when the decompilation ends.
 * ``--with-cfgs`` -- Generate call graphs for all functions when the decompilation ends.

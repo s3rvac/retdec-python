@@ -434,6 +434,13 @@ def parse_args(argv):
              'in the machine code (raw mode only).'
     )
     parser.add_argument(
+        '--raw-section-vma',
+        dest='raw_section_vma',
+        metavar='ADDRESS',
+        help='Address where the section created from the machine '
+             'code will be placed in virtual memory (raw mode only).'
+    )
+    parser.add_argument(
         '--raw-endian',
         dest='raw_endian',
         metavar='ENDIAN',
@@ -552,6 +559,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'sel_decomp_ranges')
     add_decompilation_param_when_given(args, params, 'sel_decomp_decoding')
     add_decompilation_param_when_given(args, params, 'raw_entry_point')
+    add_decompilation_param_when_given(args, params, 'raw_section_vma')
     add_decompilation_param_when_given(args, params, 'raw_endian')
     add_decompilation_param_when_given(args, params, 'generate_cg')
     add_decompilation_param_when_given(args, params, 'generate_cfgs')
