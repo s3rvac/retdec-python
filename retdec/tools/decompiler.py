@@ -329,8 +329,8 @@ def parse_args(argv):
         dest='file_format',
         metavar='FORMAT',
         choices=['elf', 'pe'],
-        help='File format to force when compiling. '
-             'Choices: %(choices)s. Default: elf.'
+        help='File format to force when compiling C source code or when '
+             'decompiling raw machine code. Choices: %(choices)s. Default: elf.'
     )
     parser.add_argument(
         '-l', '--target-language',
