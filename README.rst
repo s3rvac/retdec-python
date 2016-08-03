@@ -65,7 +65,7 @@ Either way, ``file.c`` then contains the decompiled C code:
 Status
 ------
 
-The library currently provides basic support of the `decompilation
+The library provides support for the `decompilation
 <https://retdec.com/api/docs/decompiler.html>`_, `fileinfo
 <https://retdec.com/api/docs/fileinfo.html>`_, and `test
 <https://retdec.com/api/docs/test.html>`_ services. For a more detailed list,
