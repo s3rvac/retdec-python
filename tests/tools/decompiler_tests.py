@@ -471,6 +471,11 @@ class ParseArgsTests(ToolTestsBase):
 
         self.assertEqual(args.sel_decomp_decoding, 'only')
 
+    def test_decomp_raw_endian_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--raw-endian', 'big', 'prog.exe'])
+
+        self.assertEqual(args.raw_endian, 'big')
+
     def test_decomp_raw_entry_point_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--raw-entry-point', '0x8000', 'prog.exe'])
 
@@ -480,11 +485,6 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--raw-section-vma', '0x8000', 'prog.exe'])
 
         self.assertEqual(args.raw_section_vma, '0x8000')
-
-    def test_decomp_raw_endian_is_parsed_correctly_long_form(self):
-        args = parse_args(['decompiler.py', '--raw-endian', 'big', 'prog.exe'])
-
-        self.assertEqual(args.raw_endian, 'big')
 
     def test_generate_archive_is_set_to_true_when_with_archive_given(self):
         args = parse_args(['decompiler.py', '--with-archive', 'prog.exe'])

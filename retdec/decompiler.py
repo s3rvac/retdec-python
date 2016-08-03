@@ -71,6 +71,9 @@ class Decompiler(Service):
         :param sel_decomp_decoding: What instructions should be decoded when
             either `sel_decomp_funcs` or `sel_decomp_ranges` is given?
         :type sel_decomp_decoding: str
+        :param raw_endian: Endianness of the raw machine code (``'little'`` or
+            ``'big'``). Only for the ``raw`` mode.
+        :type raw_endian: str
         :param raw_entry_point: Virtual memory address where execution
             flow should start in the raw machine code. Only for the ``raw``
             mode.
@@ -79,9 +82,6 @@ class Decompiler(Service):
             machine code will be placed in virtual memory. Only for the
             ``raw`` mode.
         :type raw_section_vma: str
-        :param raw_endian: Endianness of the raw machine code (``'little'`` or
-            ``'big'``). Only for the ``raw`` mode.
-        :type raw_endian: str
         :param generate_cg: Should a call graph be generated?
         :type generate_cg: bool
         :param generate_cfgs: Should control-flow graphs for all functions be
@@ -137,9 +137,9 @@ class Decompiler(Service):
         self._add_sel_decomp_funcs_param_when_given(params, kwargs)
         self._add_sel_decomp_ranges_param_when_given(params, kwargs)
         self._add_param_when_given('sel_decomp_decoding', params, kwargs)
+        self._add_param_when_given('raw_endian', params, kwargs)
         self._add_param_when_given('raw_entry_point', params, kwargs)
         self._add_param_when_given('raw_section_vma', params, kwargs)
-        self._add_param_when_given('raw_endian', params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
         self._add_param_when_given('generate_cg', params, kwargs)
         self._add_param_when_given('generate_cfgs', params, kwargs)
