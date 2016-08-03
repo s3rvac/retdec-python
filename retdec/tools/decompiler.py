@@ -352,7 +352,7 @@ def parse_args(argv):
         '-m', '--mode',
         dest='mode',
         metavar='MODE',
-        choices=['c', 'bin'],
+        choices=['c', 'bin', 'raw'],
         help='Decompilation mode. '
              'Choices: %(choices)s. Default: automatic detection.'
     )
