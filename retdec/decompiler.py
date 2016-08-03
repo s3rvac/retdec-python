@@ -72,15 +72,15 @@ class Decompiler(Service):
             either `sel_decomp_funcs` or `sel_decomp_ranges` is given?
         :type sel_decomp_decoding: str
         :param raw_endian: Endianness of the raw machine code (``'little'`` or
-            ``'big'``). Only for the ``raw`` mode.
+            ``'big'``). Only for the ``raw`` `mode`.
         :type raw_endian: str
         :param raw_entry_point: Virtual memory address where execution
             flow should start in the raw machine code. Only for the ``raw``
-            mode.
+            `mode`.
         :type raw_entry_point: str
         :param raw_section_vma: Address where the section created from the raw
             machine code will be placed in virtual memory. Only for the
-            ``raw`` mode.
+            ``raw`` `mode`.
         :type raw_section_vma: str
         :param generate_cg: Should a call graph be generated?
         :type generate_cg: bool
@@ -96,7 +96,7 @@ class Decompiler(Service):
 
         If `mode` is not given, it is automatically determined based on the
         name of ``input_file``. If the input file ends with ``.c`` or ``.C``,
-        the mode is set to ``c``. Otherwise, the mode is set to ``bin``.
+        the `mode` is set to ``c``. Otherwise, the `mode` is set to ``bin``.
 
         See the `official documentation
         <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_
