@@ -313,29 +313,29 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
 
     def test_raw_entry_point_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
-            raw_entry_point="0x400000"
+            raw_entry_point='0x400000'
         )
 
         self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(raw_entry_point="0x400000")
+            params=AnyParamsWith(raw_entry_point='0x400000')
         )
 
     def test_raw_section_vma_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
-            raw_section_vma="0x400000"
+            raw_section_vma='0x400000'
         )
 
         self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(raw_section_vma="0x400000")
+            params=AnyParamsWith(raw_section_vma='0x400000')
         )
 
     def test_raw_endian_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
-            raw_endian="little"
+            raw_endian='little'
         )
 
         self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(raw_endian="little")
+            params=AnyParamsWith(raw_endian='little')
         )
 
     def test_generate_cg_is_set_to_correct_value_when_given(self):
