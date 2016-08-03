@@ -61,6 +61,9 @@ Options
 * ``--var-names STYLE`` -- Naming style for variables. Supported styles: ``readable``, ``address``, ``hungarian``, ``simple``, and ``unified``.
 * ``-O LEVEL``, ``--optimizations LEVEL`` -- Level of optimizations performed by the decompiler. Supported levels: ``none``, ``limited``, ``normal``, and ``aggressive``.
 * ``-K``, ``--keep-unreach-funcs`` -- Decompile all functions, even if they are not reachable.
+* ``--only-funcs`` -- Decompile only the given functions (a comma-separated list of function names, e.g. ``func1,func2``).
+* ``--only-ranges'`` -- Decompile only the given address ranges (a comma-separated list of address ranges, e.g. ``0x100-0x200,0x500-0x600``).
+* ``--decoding`` -- What should be decoded in a seletive decompilation? Supported types: ``everything``, ``only``.
 * ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
 * ``--raw-endian`` -- Endianness of the machine code (``raw`` mode only). Supported endians: ``little``, ``big``.
 * ``--raw-entry-point`` -- Virtual memory address where execution flow should start in the machine code (``raw`` mode only).
