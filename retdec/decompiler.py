@@ -79,6 +79,15 @@ class Decompiler(Service):
         :param generate_archive: Should an archive containing all outputs from
             the decompilation be generated?
         :type generate_archive: bool
+        :param raw_entry_point: Specify the virtual memory address where execution
+        flow should start in the raw machine code ('raw' mode only).
+        :type raw_entry_point: str
+        :param raw_section_vma: Specify an address where the section should be created
+        from the raw machine code ('raw' mode only).
+        :type raw_section_vma: str
+        :param raw_endian: Indicate the endianness (little or big) of the machine
+        code ('raw' mode only).
+        :type raw_endian: str
 
         :returns: Started decompilation
             (:class:`~retdec.decompilation.Decompilation`).
@@ -129,6 +138,9 @@ class Decompiler(Service):
         self._add_param_when_given('generate_archive', params, kwargs)
         self._add_param_when_given('generate_cg', params, kwargs)
         self._add_param_when_given('generate_cfgs', params, kwargs)
+        self._add_param_when_given('raw_entry_point', params, kwargs)
+        self._add_param_when_given('raw_section_vma', params, kwargs)
+        self._add_param_when_given('raw_endian', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
@@ -150,7 +162,7 @@ class Decompiler(Service):
         return self._get_param(
             'mode',
             kwargs,
-            choices={'c', 'bin'},
+            choices={'c', 'bin', 'raw'},
             default=self._get_default_mode(input_file)
         )
 
