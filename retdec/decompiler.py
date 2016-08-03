@@ -71,14 +71,16 @@ class Decompiler(Service):
         :param sel_decomp_decoding: What instructions should be decoded when
             either `sel_decomp_funcs` or `sel_decomp_ranges` is given?
         :type sel_decomp_decoding: str
-        :param raw_entry_point: Specify the virtual memory address where execution
-            flow should start in the raw machine code (``raw`` mode only).
+        :param raw_entry_point: Virtual memory address where execution
+            flow should start in the raw machine code. Only for the ``raw``
+            mode.
         :type raw_entry_point: str
-        :param raw_section_vma: Specify an address where the section should be created
-            from the raw machine code (``raw`` mode only).
+        :param raw_section_vma: Address where the section created from the raw
+            machine code will be placed in virtual memory. Only for the
+            ``raw`` mode.
         :type raw_section_vma: str
-        :param raw_endian: Indicate the endianness (``'little'`` or ``'big'``)
-            of the machine code (``raw`` mode only).
+        :param raw_endian: Endianness of the raw machine code (``'little'`` or
+            ``'big'``). Only for the ``raw`` mode.
         :type raw_endian: str
         :param generate_cg: Should a call graph be generated?
         :type generate_cg: bool
