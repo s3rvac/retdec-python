@@ -338,7 +338,6 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(raw_endian="little")
         )
 
-
     def test_generate_cg_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             generate_cg=True
