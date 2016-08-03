@@ -398,6 +398,13 @@ def parse_args(argv):
         help='Decompile all functions, even if they are not reachable.'
     )
     parser.add_argument(
+        '--no-addresses',
+        dest='decomp_emit_addresses',
+        action='store_false',
+        default=None,
+        help='Disable the emission of addresses in comments in the generated code.'
+    )
+    parser.add_argument(
         '--only-funcs',
         dest='sel_decomp_funcs',
         metavar='FUNCS',
@@ -420,11 +427,6 @@ def parse_args(argv):
              'Choices: %(choices)s. Default: everything.'
     )
     parser.add_argument(
-        '--no-addresses',
-        dest='decomp_emit_addresses',
-        action='store_false',
-        default=None,
-        help='Disable the emission of addresses in comments in the generated code.'
     )
     parser.add_argument(
         '--with-cg',
@@ -532,10 +534,10 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'decomp_var_names')
     add_decompilation_param_when_given(args, params, 'decomp_optimizations')
     add_decompilation_param_when_given(args, params, 'decomp_unreach_funcs')
+    add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
     add_decompilation_param_when_given(args, params, 'sel_decomp_funcs')
     add_decompilation_param_when_given(args, params, 'sel_decomp_ranges')
     add_decompilation_param_when_given(args, params, 'sel_decomp_decoding')
-    add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
     add_decompilation_param_when_given(args, params, 'generate_cg')
     add_decompilation_param_when_given(args, params, 'generate_cfgs')
     add_decompilation_param_when_given(args, params, 'generate_archive')
