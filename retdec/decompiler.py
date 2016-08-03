@@ -71,14 +71,6 @@ class Decompiler(Service):
         :param sel_decomp_decoding: What instructions should be decoded when
             either `sel_decomp_funcs` or `sel_decomp_ranges` is given?
         :type sel_decomp_decoding: str
-        :param generate_cg: Should a call graph be generated?
-        :type generate_cg: bool
-        :param generate_cfgs: Should control-flow graphs for all functions be
-            generated?
-        :type generate_cfgs: bool
-        :param generate_archive: Should an archive containing all outputs from
-            the decompilation be generated?
-        :type generate_archive: bool
         :param raw_entry_point: Specify the virtual memory address where execution
             flow should start in the raw machine code (``raw`` mode only).
         :type raw_entry_point: str
@@ -88,6 +80,14 @@ class Decompiler(Service):
         :param raw_endian: Indicate the endianness (``'little'`` or ``'big'``)
             of the machine code (``raw`` mode only).
         :type raw_endian: str
+        :param generate_cg: Should a call graph be generated?
+        :type generate_cg: bool
+        :param generate_cfgs: Should control-flow graphs for all functions be
+            generated?
+        :type generate_cfgs: bool
+        :param generate_archive: Should an archive containing all outputs from
+            the decompilation be generated?
+        :type generate_archive: bool
 
         :returns: Started decompilation
             (:class:`~retdec.decompilation.Decompilation`).
@@ -135,12 +135,12 @@ class Decompiler(Service):
         self._add_sel_decomp_funcs_param_when_given(params, kwargs)
         self._add_sel_decomp_ranges_param_when_given(params, kwargs)
         self._add_param_when_given('sel_decomp_decoding', params, kwargs)
-        self._add_param_when_given('generate_archive', params, kwargs)
-        self._add_param_when_given('generate_cg', params, kwargs)
-        self._add_param_when_given('generate_cfgs', params, kwargs)
         self._add_param_when_given('raw_entry_point', params, kwargs)
         self._add_param_when_given('raw_section_vma', params, kwargs)
         self._add_param_when_given('raw_endian', params, kwargs)
+        self._add_param_when_given('generate_archive', params, kwargs)
+        self._add_param_when_given('generate_cg', params, kwargs)
+        self._add_param_when_given('generate_cfgs', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 
