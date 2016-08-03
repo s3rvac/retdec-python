@@ -62,6 +62,7 @@ Options
 * ``-O LEVEL``, ``--optimizations LEVEL`` -- Level of optimizations performed by the decompiler. Supported levels: ``none``, ``limited``, ``normal``, and ``aggressive``.
 * ``-K``, ``--keep-unreach-funcs`` -- Decompile all functions, even if they are not reachable.
 * ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
+* ``--raw-endian`` -- Endianness of the machine code (``raw`` mode only). Supported endians: ``little``, ``big``.
 * ``--with-cg`` -- Generate a call graph when the decompilation ends.
 * ``--with-cfgs`` -- Generate call graphs for all functions when the decompilation ends.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
