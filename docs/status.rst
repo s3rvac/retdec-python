@@ -14,8 +14,8 @@ The decompilation service.
 * `Decompilation modes <https://retdec.com/api/docs/decompiler.html#decompilation-modes>`_ ✔
 
     * ``bin`` ✔
-    * ``raw`` ✗
     * ``c`` ✔
+    * ``raw`` ✔
 
 * `Input files <https://retdec.com/api/docs/decompiler.html#input-files>`_ ✔
 
@@ -43,13 +43,13 @@ The decompilation service.
         * ``sel_decomp_ranges`` ✔
         * ``sel_decomp_decoding`` ✔
 
-    * `Parameters for the raw mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-raw-mode>`_ ✗
+    * `Parameters for the raw mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-raw-mode>`_ ✔
 
-        * ``architecture`` ✗
-        * ``file_format`` ✗
-        * ``raw_endian`` ✗
-        * ``raw_entry_point`` ✗
-        * ``raw_section_vma`` ✗
+        * ``architecture`` ✔
+        * ``file_format`` ✔
+        * ``raw_endian`` ✔
+        * ``raw_entry_point`` ✔
+        * ``raw_section_vma`` ✔
 
     * `Parameters for the c mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-c-mode>`_ ✔
 

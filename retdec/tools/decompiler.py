@@ -329,8 +329,8 @@ def parse_args(argv):
         dest='file_format',
         metavar='FORMAT',
         choices=['elf', 'pe'],
-        help='File format to force when compiling. '
-             'Choices: %(choices)s. Default: elf.'
+        help='File format to force when compiling C source code or when '
+             'decompiling raw machine code. Choices: %(choices)s. Default: elf.'
     )
     parser.add_argument(
         '-l', '--target-language',
@@ -352,7 +352,7 @@ def parse_args(argv):
         '-m', '--mode',
         dest='mode',
         metavar='MODE',
-        choices=['c', 'bin'],
+        choices=['c', 'bin', 'raw'],
         help='Decompilation mode. '
              'Choices: %(choices)s. Default: automatic detection.'
     )
@@ -398,6 +398,13 @@ def parse_args(argv):
         help='Decompile all functions, even if they are not reachable.'
     )
     parser.add_argument(
+        '--no-addresses',
+        dest='decomp_emit_addresses',
+        action='store_false',
+        default=None,
+        help='Disable the emission of addresses in comments in the generated code.'
+    )
+    parser.add_argument(
         '--only-funcs',
         dest='sel_decomp_funcs',
         metavar='FUNCS',
@@ -420,11 +427,26 @@ def parse_args(argv):
              'Choices: %(choices)s. Default: everything.'
     )
     parser.add_argument(
-        '--no-addresses',
-        dest='decomp_emit_addresses',
-        action='store_false',
-        default=None,
-        help='Disable the emission of addresses in comments in the generated code.'
+        '--raw-endian',
+        dest='raw_endian',
+        metavar='ENDIAN',
+        choices=['little', 'big'],
+        help='Endianness of the machine code (raw mode only). '
+             'Choices: %(choices)s. Default: little.'
+    )
+    parser.add_argument(
+        '--raw-entry-point',
+        dest='raw_entry_point',
+        metavar='ADDRESS',
+        help='Virtual memory address where execution flow should start '
+             'in the machine code (raw mode only).'
+    )
+    parser.add_argument(
+        '--raw-section-vma',
+        dest='raw_section_vma',
+        metavar='ADDRESS',
+        help='Address where the section created from the machine '
+             'code will be placed in virtual memory (raw mode only).'
     )
     parser.add_argument(
         '--with-cg',
@@ -532,10 +554,13 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'decomp_var_names')
     add_decompilation_param_when_given(args, params, 'decomp_optimizations')
     add_decompilation_param_when_given(args, params, 'decomp_unreach_funcs')
+    add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
     add_decompilation_param_when_given(args, params, 'sel_decomp_funcs')
     add_decompilation_param_when_given(args, params, 'sel_decomp_ranges')
     add_decompilation_param_when_given(args, params, 'sel_decomp_decoding')
-    add_decompilation_param_when_given(args, params, 'decomp_emit_addresses')
+    add_decompilation_param_when_given(args, params, 'raw_endian')
+    add_decompilation_param_when_given(args, params, 'raw_entry_point')
+    add_decompilation_param_when_given(args, params, 'raw_section_vma')
     add_decompilation_param_when_given(args, params, 'generate_cg')
     add_decompilation_param_when_given(args, params, 'generate_cfgs')
     add_decompilation_param_when_given(args, params, 'generate_archive')

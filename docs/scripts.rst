@@ -47,13 +47,13 @@ Options
 * ``-b``, ``--brief`` -- Print fewer information during the decompilation.
 * ``-c COMPILER``, ``--compiler COMPILER`` -- Compiler to use when compiling input C source files. Supported compilers: ``gcc``, ``clang``.
 * ``-C LEVEL``, ``--compiler-optimizations LEVEL`` -- Optimization level to use when compiling input C source files. Supported levels: ``O0``, ``O1``, ``O2``, ``O3``.
-* ``-f FORMAT``, ``--file-format FORMAT`` -- File format to force when compiling input C source files. Supported formats: ``elf``, ``pe``.
+* ``-f FORMAT``, ``--file-format FORMAT`` -- File format to force when compiling input C source files or when decompiling raw machine code. Supported formats: ``elf``, ``pe``.
 * ``-g``, ``--compiler-debug`` -- Compile the input C file with debugging information (i.e. passes the ``-g`` flag to the used compiler).
 * ``-s``, ``--compiler-strip`` -- Strip the compiled C file prior its decompilation.
 * ``-k KEY``, ``--api-key KEY`` -- Specifies the API key to be used.
 * ``-l LANGUAGE``, ``--target-language LANGUAGE`` -- Target high-level language. Supported languages: ``c``, ``py``.
 * ``--graph-format FORMAT`` -- Format of the generated call and control-flow graphs. Supported formats: ``png``, ``svg``, ``pdf``.
-* ``-m MODE``, ``--mode MODE`` -- Decompilation mode. `Supported modes <https://retdec.com/api/docs/decompiler.html#decompilation-modes>`_: ``bin``, ``c``. By default, the script performs an automatic detection based on the extension of the input file.
+* ``-m MODE``, ``--mode MODE`` -- Decompilation mode. `Supported modes <https://retdec.com/api/docs/decompiler.html#decompilation-modes>`_: ``bin``, ``c``, and ``raw``. By default, the script performs an automatic detection based on the extension of the input file.
 * ``-o DIR``, ``--output-dir DIR`` -- Save the outputs into this directory.
 * ``-p FILE``, ``--pdb-file`` -- PDB file associated with the input file.
 * ``-q``, ``--quiet`` -- Print only errors, nothing else (not even progress).
@@ -62,6 +62,9 @@ Options
 * ``-O LEVEL``, ``--optimizations LEVEL`` -- Level of optimizations performed by the decompiler. Supported levels: ``none``, ``limited``, ``normal``, and ``aggressive``.
 * ``-K``, ``--keep-unreach-funcs`` -- Decompile all functions, even if they are not reachable.
 * ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
+* ``--raw-endian`` -- Endianness of the machine code (``raw`` mode only). Supported endians: ``little``, ``big``.
+* ``--raw-entry-point`` -- Virtual memory address where execution flow should start in the machine code (``raw`` mode only).
+* ``--raw-section-vma`` -- Address where the section created from the machine code will be placed in virtual memory (``raw`` mode only).
 * ``--with-cg`` -- Generate a call graph when the decompilation ends.
 * ``--with-cfgs`` -- Generate call graphs for all functions when the decompilation ends.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
