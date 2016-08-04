@@ -130,13 +130,13 @@ The analyzer is represented by the :class:`retdec.fileinfo.Fileinfo` class:
 Starting an Analysis
 ^^^^^^^^^^^^^^^^^^^^
 
-To start an analysis of a file, call :func:`~retdec.fileinfo.Fileinfo.start_analysis()` with a file to be analyzed:
+To start an analysis of a file, call :func:`~retdec.fileinfo.Fileinfo.start_analysis()` on the created analyzer with a file to be analyzed:
 
 .. code-block:: python
 
     analysis = fileinfo.start_analysis(input_file=FILE)
 
-``FILE`` is either a path to the file or a file-like object. Optionally, you can pass the ``verbose=True`` argument, which makes the analysis to obtain all available information about the file.
+``FILE`` is either a path to the file or a file-like object. Optionally, you can pass the ``verbose=True`` argument, which makes the analysis obtain all available information about the file.
 
 The returned object is an instance of :class:`retdec.analysis.Analysis`.
 
