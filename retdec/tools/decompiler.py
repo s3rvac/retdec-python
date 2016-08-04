@@ -423,7 +423,7 @@ def parse_args(argv):
         dest='sel_decomp_decoding',
         metavar='TYPE',
         choices=['everything', 'only'],
-        help='What should be decoded in a seletive decompilation? '
+        help='What should be decoded in a selective decompilation? '
              'Choices: %(choices)s. Default: everything.'
     )
     parser.add_argument(
