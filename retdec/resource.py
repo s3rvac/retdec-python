@@ -115,19 +115,18 @@ class Resource:
         """Obtains and returns the current status of the resource."""
         return self._conn.send_get_request('/{}/status'.format(self.id))
 
-    def _handle_failure(self, on_failure, error):
+    def _handle_failure(self, on_failure, *args):
         """Handles the situation where a resource failed to succeed.
 
         :param callable on_failure: What should be done when the resource
             failed?
-        :param str error: Error message.
 
         If `on_failure` is ``None``, nothing is done when the resource failed.
-        Otherwise, it is called with `error`. If the returned value is an
+        Otherwise, it is called with `*args`. If the returned value is an
         exception, it is raised.
         """
         if on_failure is not None:
-            obj = on_failure(error)
+            obj = on_failure(*args)
             if isinstance(obj, Exception):
                 raise obj
 
