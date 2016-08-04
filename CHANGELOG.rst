@@ -17,6 +17,7 @@ dev
 * Added support for selecting functions to be decompiled.
 * Added support for selecting address ranges to be decompiled.
 * Added support for choosing what should be decoded in selective decompilation.
+* Improved error messages in exceptions.
 
 0.3 (2016-07-17)
 ----------------

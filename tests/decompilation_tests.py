@@ -1246,7 +1246,6 @@ class DecompilationWaitUntilCFGIsGeneratedTests(WithDisabledWaitingInterval,
 
         with self.assertRaises(CFGGenerationFailedError) as cm:
             d.wait_until_cfg_is_generated('my_func')
-        self.assertIn('my_func', str(cm.exception))
         self.assertIn('error message', str(cm.exception))
 
     def test_calls_on_failure_when_it_is_callable(self):
@@ -1264,7 +1263,7 @@ class DecompilationWaitUntilCFGIsGeneratedTests(WithDisabledWaitingInterval,
 
         d.wait_until_cfg_is_generated('my_func', on_failure=on_failure)
 
-        on_failure.assert_called_once_with('my_func', 'error message')
+        on_failure.assert_called_once_with('error message')
 
     def test_does_not_raise_exception_when_on_failure_is_none(self):
         self.conn.send_get_request.return_value = self.status_with({

@@ -363,8 +363,8 @@ class Decompilation(Resource):
             given function.
 
         If `on_failure` is ``None``, nothing is done when the generation fails.
-        Otherwise, it is called with the function's name and the error message.
-        If the returned value is an exception, it is raised.
+        Otherwise, it is called with the error message. If the returned value
+        is an exception, it is raised.
         """
         # Currently, the retdec.com API does not support push notifications, so
         # we have to do polling.
@@ -372,7 +372,7 @@ class Decompilation(Resource):
             self._wait_until_state_can_be_updated()
 
         if self._cfg_statuses[func].failed:
-            self._handle_failure(on_failure, func, self._cfg_statuses[func].error)
+            self._handle_failure(on_failure, self._cfg_statuses[func].error)
 
     def save_cfg(self, func, directory=None):
         """Saves the control-flow graph for the given function to the given

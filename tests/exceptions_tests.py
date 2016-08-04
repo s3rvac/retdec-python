@@ -8,13 +8,7 @@
 
 import unittest
 
-from retdec.exceptions import AnalysisFailedError
-from retdec.exceptions import ArchiveGenerationFailedError
 from retdec.exceptions import AuthenticationError
-from retdec.exceptions import CFGGenerationFailedError
-from retdec.exceptions import CGGenerationFailedError
-from retdec.exceptions import ConnectionError
-from retdec.exceptions import DecompilationFailedError
 from retdec.exceptions import InvalidValueError
 from retdec.exceptions import MissingAPIKeyError
 from retdec.exceptions import MissingParameterError
@@ -62,48 +56,6 @@ class AuthenticationErrorTests(unittest.TestCase):
         self.assertIn('failed', str(ex))
 
 
-class ConnectionErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.ConnectionError`."""
-
-    def test_does_not_include_reason_when_not_given(self):
-        ex = ConnectionError()
-
-        self.assertNotIn('reason', str(ex))
-
-    def test_includes_reason_when_given(self):
-        ex = ConnectionError('REASON')
-
-        self.assertIn('REASON', str(ex))
-
-
-class AnalysisFailedErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.AnalysisFailedError`."""
-
-    def test_does_not_include_reason_when_not_given(self):
-        ex = AnalysisFailedError()
-
-        self.assertNotIn('reason', str(ex))
-
-    def test_includes_reason_when_given(self):
-        ex = AnalysisFailedError('REASON')
-
-        self.assertIn('REASON', str(ex))
-
-
-class DecompilationFailedErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.DecompilationFailedError`."""
-
-    def test_does_not_include_reason_when_not_given(self):
-        ex = DecompilationFailedError()
-
-        self.assertNotIn('reason', str(ex))
-
-    def test_includes_reason_when_given(self):
-        ex = DecompilationFailedError('REASON')
-
-        self.assertIn('REASON', str(ex))
-
-
 class OutputNotRequestedErrorTests(unittest.TestCase):
     """Tests for :class:`retdec.exceptions.OutputNotRequestedError`."""
 
@@ -113,39 +65,6 @@ class OutputNotRequestedErrorTests(unittest.TestCase):
         self.assertIn('not requested', str(ex))
 
 
-class CGGenerationFailedErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.CGGenerationFailedError`."""
-
-    def test_does_not_include_reason_when_not_given(self):
-        ex = CGGenerationFailedError()
-
-        self.assertNotIn('reason', str(ex))
-
-    def test_includes_reason_when_given(self):
-        ex = CGGenerationFailedError('REASON')
-
-        self.assertIn('REASON', str(ex))
-
-
-class CFGGenerationFailedErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.CFGGenerationFailedError`."""
-
-    def test_includes_func_name(self):
-        ex = CFGGenerationFailedError('my_func')
-
-        self.assertIn('my_func', str(ex))
-
-    def test_does_not_include_reason_when_not_given(self):
-        ex = CFGGenerationFailedError('my_func')
-
-        self.assertNotIn('reason', str(ex))
-
-    def test_includes_reason_when_given(self):
-        ex = CFGGenerationFailedError('my_func', 'REASON')
-
-        self.assertIn('REASON', str(ex))
-
-
 class NoSuchCFGErrorTests(unittest.TestCase):
     """Tests for :class:`retdec.exceptions.NoSuchCFGError`."""
 
@@ -153,20 +72,6 @@ class NoSuchCFGErrorTests(unittest.TestCase):
         ex = NoSuchCFGError('my_func')
 
         self.assertIn('my_func', str(ex))
-
-
-class ArchiveGenerationFailedErrorTests(unittest.TestCase):
-    """Tests for :class:`retdec.exceptions.ArchiveGenerationFailedError`."""
-
-    def test_does_not_include_reason_when_not_given(self):
-        ex = ArchiveGenerationFailedError()
-
-        self.assertNotIn('reason', str(ex))
-
-    def test_includes_reason_when_given(self):
-        ex = ArchiveGenerationFailedError('REASON')
-
-        self.assertIn('REASON', str(ex))
 
 
 class UnknownAPIErrorTests(unittest.TestCase):

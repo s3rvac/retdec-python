@@ -56,45 +56,15 @@ class AuthenticationError(RetdecError):
 
 
 class ConnectionError(RetdecError):
-    """Exception raised when there is a connection error.
-
-    :param str reason: Reason why there was a connection error.
-    """
-
-    def __init__(self, reason=None):
-        message = _message_with_reason(
-            'Connection to the API failed.',
-            reason
-        )
-        super().__init__(message)
+    """Exception raised when there is a connection error."""
 
 
 class AnalysisFailedError(RetdecError):
-    """Exception raised when a fileinfo analysis has failed.
-
-    :param str reason: Reason why the analysis failed.
-    """
-
-    def __init__(self, reason=None):
-        message = _message_with_reason(
-            'The analysis has failed.',
-            reason
-        )
-        super().__init__(message)
+    """Exception raised when a fileinfo analysis has failed."""
 
 
 class DecompilationFailedError(RetdecError):
-    """Exception raised when a decompilation has failed.
-
-    :param str reason: Reason why the decompilation failed.
-    """
-
-    def __init__(self, reason=None):
-        message = _message_with_reason(
-            'The decompilation has failed.',
-            reason
-        )
-        super().__init__(message)
+    """Exception raised when a decompilation has failed."""
 
 
 class OutputNotRequestedError(RetdecError):
@@ -110,34 +80,11 @@ class OutputNotRequestedError(RetdecError):
 
 class CGGenerationFailedError(RetdecError):
     """Exception raised when the generation of a call graph fails.
-
-    :param str reason: Reason why the call-graph generation failed.
     """
-
-    def __init__(self, reason=None):
-        message = _message_with_reason(
-            'The call graph generation has failed.',
-            reason
-        )
-        super().__init__(message)
 
 
 class CFGGenerationFailedError(RetdecError):
-    """Exception raised when the generation of a control-flow graph fails.
-
-    :param str func: Name of the function whose control-flow graph failed to be
-        generated.
-    :param str reason: Reason why the control-flow-graph generation failed.
-    """
-
-    def __init__(self, func, reason=None):
-        message = _message_with_reason(
-            "The control-flow graph for '{}' has failed to be generated.".format(
-                func
-            ),
-            reason
-        )
-        super().__init__(message)
+    """Exception raised when the generation of a control-flow graph fails."""
 
 
 class NoSuchCFGError(RetdecError):
@@ -155,17 +102,7 @@ class NoSuchCFGError(RetdecError):
 
 
 class ArchiveGenerationFailedError(RetdecError):
-    """Exception raised when the generation of an archive fails.
-
-    :param str reason: Reason why the archive generation failed.
-    """
-
-    def __init__(self, reason=None):
-        message = _message_with_reason(
-            'The archive generation has failed.',
-            reason
-        )
-        super().__init__(message)
+    """Exception raised when the generation of an archive fails."""
 
 
 class UnknownAPIError(RetdecError):
@@ -197,13 +134,3 @@ class UnknownAPIError(RetdecError):
     def description(self):
         """Longer description of what went wrong (`str`)."""
         return self._description
-
-
-def _message_with_reason(message, reason):
-    """Returns `message` with `reason`.
-
-    If `reason` is ``None``, it returns just `message`.
-    """
-    if reason is not None:
-        message += ' Reason: {}'.format(reason)
-    return message
