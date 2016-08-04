@@ -83,6 +83,6 @@ Either way, ``file.c`` then contains the decompiled C code:
     #include <stdio.h>
     [..]
 
-The library currently provides basic support of the `decompilation <https://retdec.com/api/docs/decompiler.html>`_, `fileinfo <https://retdec.com/api/docs/fileinfo.html>`_, and `test <https://retdec.com/api/docs/test.html>`_ services.
+The library provides support for the `decompilation <https://retdec.com/api/docs/decompiler.html>`_, `fileinfo <https://retdec.com/api/docs/fileinfo.html>`_, and `test <https://retdec.com/api/docs/test.html>`_ services. For a more detailed list, see the `status <https://retdec-python.readthedocs.io/en/latest/status.html>`_ page.
 
 Next, we describe the library in a greater detail. If you wish to learn more about the provided scripts instead, continue :doc:`here <scripts>`.
