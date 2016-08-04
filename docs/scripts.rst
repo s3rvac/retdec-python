@@ -43,6 +43,8 @@ Output files are stored into the same directory where the input file is located.
 Options
 ^^^^^^^
 
+See the `official documentation <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ for more details.
+
 * ``-a ARCH``, ``--architecture ARCH`` -- Architecture to force when (de)compiling. Supported architectures: ``x86``, ``arm``, ``thumb``, ``mips``, ``pic32``, ``powerpc``.
 * ``-b``, ``--brief`` -- Print fewer information during the decompilation.
 * ``-c COMPILER``, ``--compiler COMPILER`` -- Compiler to use when compiling input C source files. Supported compilers: ``gcc``, ``clang``.
@@ -71,8 +73,6 @@ Options
 * ``--with-cg`` -- Generate a call graph when the decompilation ends.
 * ``--with-cfgs`` -- Generate call graphs for all functions when the decompilation ends.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
-
-See the `official documentation <https://retdec.com/api/docs/decompiler.html#decompilation-parameters>`_ for more details.
 
 Example
 ^^^^^^^

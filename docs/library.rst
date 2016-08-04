@@ -34,7 +34,7 @@ An advantage of the environment variable is that you do not need to specify the 
 Error Handling
 --------------
 
-The library uses exceptions to signalize errors. Every custom exception raised by the library inherits from :class:`retdec.exceptions.RetdecError`, which you can use to catch all custom exceptions raised by the library:
+The library uses exceptions to signalize errors. The base class is :class:`retdec.exceptions.RetdecError`, which you can use to catch all custom exceptions raised by the library:
 
 .. code-block:: python
 
@@ -43,7 +43,7 @@ The library uses exceptions to signalize errors. Every custom exception raised b
     except retdec.exceptions.RetdecError as ex:
         # Handle the error.
 
-See the :mod:`retdec.exceptions` module for a list of all custom exceptions.
+You can also catch specific exceptions, e.g. :class:`retdec.exceptions.AuthenticationError`, and react on them. See the :mod:`retdec.exceptions` module for a list of all custom exceptions.
 
 Decompiler
 ----------
@@ -62,7 +62,7 @@ The decompiler is represented by the :class:`retdec.decompiler.Decompiler` class
 Starting a Decompilation
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-To start a decompilation of a file, call :func:`~retdec.decompiler.Decompiler.start_decompilation()`:
+To start a decompilation of a file, call :func:`~retdec.decompiler.Decompiler.start_decompilation()` on the created decompiler:
 
 .. code-block:: python
 
