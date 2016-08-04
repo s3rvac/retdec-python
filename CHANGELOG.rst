@@ -4,6 +4,11 @@ Changelog
 dev
 ---
 
+* -
+
+0.4 (2016-08-04)
+----------------
+
 * Added support for decompilation of raw machine code (the ``raw`` mode).
 * Added support for generating and downloading of control-flow graphs.
 * Added support for generating and downloading of a call graph.

@@ -103,7 +103,7 @@ Documentation
 The documentation is available on `readthedocs.io <https://retdec-python.readthedocs.io>`_:
 
 * `latest (master) <https://retdec-python.readthedocs.io/en/latest/>`_
-* `stable (0.3) <https://retdec-python.readthedocs.io/en/stable/>`_
+* `stable (0.4) <https://retdec-python.readthedocs.io/en/stable/>`_
 
 Contact and Support
 -------------------
