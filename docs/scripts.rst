@@ -135,5 +135,5 @@ Example
     Entry point offset       : 0x8e0
     Entry point section name : .text
     Entry point section index: 0
-    Bytes on entry point     : 31ed5e89e183e4f05054526860c1040868f0c00408515668babd0408e8bffffffff466906690669066906690669066908b1c
-    Detected compiler/packer : GCC (x86_64-unknown-linux-gnu) (4.7.2) (100%) (51 from 51 significant nibbles)
+    Bytes on entry point     : 31ed5e89e183e4f05054526860c1040868f0c00408515668
+    Detected compiler/packer : GCC (x86_64-unknown-linux-gnu) (4.7.2) (100%)
