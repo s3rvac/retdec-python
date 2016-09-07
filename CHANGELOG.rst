@@ -4,7 +4,8 @@ Changelog
 dev
 ---
 
-* -
+* Dropped support for Python 3.2 (the ``requests`` module, which is used for
+  HTTPS communication, no longer supports it).
 
 0.4 (2016-08-04)
 ----------------

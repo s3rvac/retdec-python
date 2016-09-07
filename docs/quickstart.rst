@@ -8,7 +8,7 @@ This page gives an overview of the library and tools to get you started.
 Requirements
 ------------
 
-* Python >= 3.2 or PyPy3 >= 2.4
+* Python >= 3.3 or PyPy3 >= 2.4
 * `requests <http://docs.python-requests.org>`_ module for making HTTPS calls to the `retdec.com API <https://retdec.com/api/>`_
 
 Installation
