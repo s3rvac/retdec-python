@@ -13,6 +13,10 @@ retdec-python
     :target: https://coveralls.io/r/s3rvac/retdec-python
     :alt: Code Coverage Status
 
+.. image:: https://badge.fury.io/py/retdec-python.svg
+    :target: https://pypi.python.org/pypi/retdec-python
+    :alt: PyPI Version
+
 A Python library and tools providing easy access to the `retdec.com
 <https://retdec.com>`_ decompilation service through their public `REST API
 <https://retdec.com/api/>`_.
