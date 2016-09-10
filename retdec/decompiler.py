@@ -133,7 +133,7 @@ class Decompiler(Service):
         self._add_param_when_given('comp_compiler', params, kwargs)
         self._add_param_when_given('comp_debug', params, kwargs)
         self._add_param_when_given('comp_strip', params, kwargs)
-        self._add_comp_optimizations_param_when_given(params, kwargs)
+        self._add_param_when_given('comp_optimizations', params, kwargs)
         self._add_sel_decomp_funcs_param_when_given(params, kwargs)
         self._add_sel_decomp_ranges_param_when_given(params, kwargs)
         self._add_param_when_given('sel_decomp_decoding', params, kwargs)
@@ -179,19 +179,6 @@ class Decompiler(Service):
         value = kwargs.get(param, None)
         if value is not None:
             params[param] = value
-
-    def _add_comp_optimizations_param_when_given(self, params, kwargs):
-        """Adds the ``comp_optimizations`` parameter to `params` when given in
-        `kwargs`.
-        """
-        value = kwargs.get('comp_optimizations', None)
-        if value is not None:
-            # The retdec.com API expects the optimization level to start with a
-            # dash (e.g. "-O1" instead of just "O1"). To be user-friendly,
-            # allow passing just "O1" and add the dash automatically.
-            if not value.startswith('-'):
-                value = '-' + value
-            params['comp_optimizations'] = value
 
     def _add_sel_decomp_funcs_param_when_given(self, params, kwargs):
         """Adds the ``sel_decomp_funcs`` parameter to `params` when given in

@@ -233,15 +233,6 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(comp_strip=True)
         )
 
-    def test_adds_leading_dash_to_comp_optimizations_when_missing(self):
-        self.start_decompilation_with_any_input_file(
-            comp_optimizations='O1'
-        )
-
-        self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(comp_optimizations='-O1')
-        )
-
     def test_sel_decomp_funcs_is_passed_directly_when_given_as_str(self):
         self.start_decompilation_with_any_input_file(
             sel_decomp_funcs='func1,func2'

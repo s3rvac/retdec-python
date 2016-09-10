@@ -4,6 +4,8 @@ Changelog
 dev
 ---
 
+* Compiler-optimization levels can now be also specified without the leading
+  dash (e.g. you can pass ``O1`` instead of ``-O1``). New since RetDec 2.2.
 * Dropped support for Python 3.2 (the ``requests`` module, which is used for
   HTTPS communication, no longer supports it).
 
