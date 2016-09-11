@@ -46,7 +46,6 @@ The decompilation service.
     * `Parameters for the raw mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-raw-mode>`_ ✔
 
         * ``architecture`` ✔
-        * ``file_format`` ✔
         * ``raw_endian`` ✔
         * ``raw_entry_point`` ✔
         * ``raw_section_vma`` ✔

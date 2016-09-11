@@ -4,6 +4,8 @@ Changelog
 dev
 ---
 
+* It is no longer required to set ``file_format`` in raw decompilations. When
+  given, it will be ignored. New since RetDec 2.2.
 * Compiler-optimization levels can now be also specified without the leading
   dash (e.g. you can pass ``O1`` instead of ``-O1``). New since RetDec 2.2.
 * Dropped support for Python 3.2 (the ``requests`` module, which is used for

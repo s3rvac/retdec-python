@@ -44,8 +44,8 @@ class Decompiler(Service):
         :param architecture: Architecture. The precise meaning depends on the
             used `mode`.
         :type architecture: str
-        :param file_format: File format. The precise meaning depends on the
-            used `mode`.
+        :param file_format: File format. File format to be used when compiling
+            input C source files.
         :type file_format: str
         :param comp_compiler: Compiler to be used when compiling input C source
             files.

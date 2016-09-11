@@ -49,7 +49,7 @@ See the `official documentation <https://retdec.com/api/docs/decompiler.html#dec
 * ``-b``, ``--brief`` -- Print fewer information during the decompilation.
 * ``-c COMPILER``, ``--compiler COMPILER`` -- Compiler to use when compiling input C source files. Supported compilers: ``gcc``, ``clang``.
 * ``-C LEVEL``, ``--compiler-optimizations LEVEL`` -- Optimization level to use when compiling input C source files. Supported levels: ``O0``, ``O1``, ``O2``, ``O3``.
-* ``-f FORMAT``, ``--file-format FORMAT`` -- File format to force when compiling input C source files or when decompiling raw machine code. Supported formats: ``elf``, ``pe``.
+* ``-f FORMAT``, ``--file-format FORMAT`` -- File format to force when compiling input C source files. Supported formats: ``elf``, ``pe``.
 * ``-g``, ``--compiler-debug`` -- Compile the input C file with debugging information (i.e. passes the ``-g`` flag to the used compiler).
 * ``-s``, ``--compiler-strip`` -- Strip the compiled C file prior its decompilation.
 * ``-k KEY``, ``--api-key KEY`` -- Specifies the API key to be used.
