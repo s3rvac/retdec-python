@@ -50,7 +50,7 @@ class Service:
         if api_key is not None:
             return api_key
 
-        api_key = os.environ.get('RETDEC_API_KEY', None)
+        api_key = os.environ.get('RETDEC_API_KEY')
         if api_key is not None:
             return api_key
 

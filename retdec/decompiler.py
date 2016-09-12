@@ -155,7 +155,7 @@ class Decompiler(Service):
 
     def _add_pdb_file_when_given(self, files, kwargs):
         """Adds a PDB file to `files` when it was given."""
-        pdb_file = kwargs.get('pdb_file', None)
+        pdb_file = kwargs.get('pdb_file')
         if pdb_file is not None:
             files['pdb'] = File(pdb_file)
 
@@ -176,7 +176,7 @@ class Decompiler(Service):
 
     def _add_param_when_given(self, param, params, kwargs):
         """Adds `param` to `params` when given in `kwargs`."""
-        value = kwargs.get(param, None)
+        value = kwargs.get(param)
         if value is not None:
             params[param] = value
 
@@ -184,7 +184,7 @@ class Decompiler(Service):
         """Adds the ``sel_decomp_funcs`` parameter to `params` when given in
         `kwargs`.
         """
-        value = kwargs.get('sel_decomp_funcs', None)
+        value = kwargs.get('sel_decomp_funcs')
         if value is not None:
             if not isinstance(value, str):
                 value = ','.join(value)
@@ -212,7 +212,7 @@ class Decompiler(Service):
                 return hex(address)
             return str(address)
 
-        value = kwargs.get('sel_decomp_ranges', None)
+        value = kwargs.get('sel_decomp_ranges')
         if value is not None:
             if not isinstance(value, str):
                 value = ranges2str(value)
@@ -223,7 +223,7 @@ class Decompiler(Service):
         """
         # Since RetDec 2.2, the 'raw_endian' parameter has been renamed to
         # 'endian'. However, the original name should still be supported.
-        endian = kwargs.get('endian', kwargs.get('raw_endian', None))
+        endian = kwargs.get('endian', kwargs.get('raw_endian'))
         if endian is not None:
             params['endian'] = endian
 
