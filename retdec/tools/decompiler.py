@@ -333,6 +333,14 @@ def parse_args(argv):
              'Choices: %(choices)s. Default: elf.'
     )
     parser.add_argument(
+        '--endian',
+        dest='endian',
+        metavar='ENDIAN',
+        choices=['little', 'big'],
+        help='Endianness of the machine code (bin and raw modes only). '
+             'Choices: %(choices)s. Default: little.'
+    )
+    parser.add_argument(
         '-l', '--target-language',
         dest='target_language',
         metavar='LANGUAGE',
@@ -425,14 +433,6 @@ def parse_args(argv):
         choices=['everything', 'only'],
         help='What should be decoded in a selective decompilation? '
              'Choices: %(choices)s. Default: everything.'
-    )
-    parser.add_argument(
-        '--endian',
-        dest='endian',
-        metavar='ENDIAN',
-        choices=['little', 'big'],
-        help='Endianness of the machine code (raw mode only). '
-             'Choices: %(choices)s. Default: little.'
     )
     parser.add_argument(
         '--raw-entry-point',

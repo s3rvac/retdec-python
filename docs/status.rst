@@ -39,6 +39,7 @@ The decompilation service.
     * `Parameters for the bin mode <https://retdec.com/api/docs/decompiler.html#parameters-only-for-the-bin-mode>`_ ✔
 
         * ``architecture`` ✔
+        * ``endian`` ✔
         * ``sel_decomp_funcs`` ✔
         * ``sel_decomp_ranges`` ✔
         * ``sel_decomp_decoding`` ✔

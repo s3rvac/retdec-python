@@ -4,6 +4,9 @@ Changelog
 dev
 ---
 
+* Added support for decompilation of files in the Intel HEX format. To
+  decompile such files, use the ``bin`` mode and pass the architecture and
+  endianness of the machine code inside the file. New since RetDec 2.2.
 * The ``raw_entry_point`` and ``raw_section_vma`` parameters in ``raw``
   decompilations no longer accept the ``default`` value. In both cases, you
   have to explicitly pass an address. New since RetDec 2.2.
