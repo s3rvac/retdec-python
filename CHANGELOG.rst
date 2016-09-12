@@ -4,6 +4,9 @@ Changelog
 dev
 ---
 
+* The ``raw_entry_point`` and ``raw_section_vma`` parameters in ``raw``
+  decompilations no longer accept the ``default`` value. In both cases, you
+  have to explicitly pass an address. New since RetDec 2.2.
 * The ``raw_endian`` parameter was renamed to ``endian``. Use of the original
   name is still supported, but it is deprecated. New since RetDec 2.2.
 * It is no longer possible to force an architecture when decompiling a file in
