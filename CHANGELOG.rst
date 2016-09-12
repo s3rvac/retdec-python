@@ -4,6 +4,9 @@ Changelog
 dev
 ---
 
+* It is no longer possible to force an architecture when decompiling a file in
+  the ``bin`` mode. The architecture is now detected automatically from the
+  input file. New since RetDec 2.2.
 * It is no longer required to set ``file_format`` in raw decompilations. When
   given, it will be ignored. New since RetDec 2.2.
 * Compiler-optimization levels can now be also specified without the leading
