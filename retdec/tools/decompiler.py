@@ -427,8 +427,8 @@ def parse_args(argv):
              'Choices: %(choices)s. Default: everything.'
     )
     parser.add_argument(
-        '--raw-endian',
-        dest='raw_endian',
+        '--endian',
+        dest='endian',
         metavar='ENDIAN',
         choices=['little', 'big'],
         help='Endianness of the machine code (raw mode only). '
@@ -558,7 +558,7 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'sel_decomp_funcs')
     add_decompilation_param_when_given(args, params, 'sel_decomp_ranges')
     add_decompilation_param_when_given(args, params, 'sel_decomp_decoding')
-    add_decompilation_param_when_given(args, params, 'raw_endian')
+    add_decompilation_param_when_given(args, params, 'endian')
     add_decompilation_param_when_given(args, params, 'raw_entry_point')
     add_decompilation_param_when_given(args, params, 'raw_section_vma')
     add_decompilation_param_when_given(args, params, 'generate_cg')

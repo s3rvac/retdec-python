@@ -71,9 +71,9 @@ class Decompiler(Service):
         :param sel_decomp_decoding: What instructions should be decoded when
             either `sel_decomp_funcs` or `sel_decomp_ranges` is given?
         :type sel_decomp_decoding: str
-        :param raw_endian: Endianness of the raw machine code (``'little'`` or
+        :param endian: Endianness of the machine code (``'little'`` or
             ``'big'``). Only for the ``raw`` `mode`.
-        :type raw_endian: str
+        :type endian: str
         :param raw_entry_point: Virtual memory address where execution
             flow should start in the raw machine code. Only for the ``raw``
             `mode`.
@@ -137,7 +137,7 @@ class Decompiler(Service):
         self._add_sel_decomp_funcs_param_when_given(params, kwargs)
         self._add_sel_decomp_ranges_param_when_given(params, kwargs)
         self._add_param_when_given('sel_decomp_decoding', params, kwargs)
-        self._add_param_when_given('raw_endian', params, kwargs)
+        self._add_endian_param_when_given(params, kwargs)
         self._add_param_when_given('raw_entry_point', params, kwargs)
         self._add_param_when_given('raw_section_vma', params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
@@ -217,6 +217,15 @@ class Decompiler(Service):
             if not isinstance(value, str):
                 value = ranges2str(value)
             params['sel_decomp_ranges'] = value
+
+    def _add_endian_param_when_given(self, params, kwargs):
+        """Adds the ``endian`` parameter to `params` when given in `kwargs`.
+        """
+        # Since RetDec 2.2, the 'raw_endian' parameter has been renamed to
+        # 'endian'. However, the original name should still be supported.
+        endian = kwargs.get('endian', kwargs.get('raw_endian', None))
+        if endian is not None:
+            params['endian'] = endian
 
     def __repr__(self):
         return '<{} api_url={!r}>'.format(

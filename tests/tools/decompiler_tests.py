@@ -471,10 +471,10 @@ class ParseArgsTests(ToolTestsBase):
 
         self.assertEqual(args.sel_decomp_decoding, 'only')
 
-    def test_decomp_raw_endian_is_parsed_correctly_long_form(self):
-        args = parse_args(['decompiler.py', '--raw-endian', 'big', 'prog.exe'])
+    def test_decomp_endian_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--endian', 'big', 'prog.exe'])
 
-        self.assertEqual(args.raw_endian, 'big')
+        self.assertEqual(args.endian, 'big')
 
     def test_decomp_raw_entry_point_is_parsed_correctly_long_form(self):
         args = parse_args(['decompiler.py', '--raw-entry-point', '0x8000', 'prog.exe'])
@@ -804,13 +804,13 @@ class MainTests(ToolTestsBase):
             sel_decomp_decoding='only'
         )
 
-    def test_sets_raw_endian_when_given(self):
+    def test_sets_endian_when_given(self):
         self.call_main_with_standard_arguments_and(
-            '--raw-endian', 'big'
+            '--endian', 'big'
         )
 
         self.assert_decompilation_was_started_also_with(
-            raw_endian='big'
+            endian='big'
         )
 
     def test_sets_raw_entry_point_when_given(self):

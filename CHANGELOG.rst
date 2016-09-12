@@ -4,6 +4,8 @@ Changelog
 dev
 ---
 
+* The ``raw_endian`` parameter was renamed to ``endian``. Use of the original
+  name is still supported, but it is deprecated. New since RetDec 2.2.
 * It is no longer possible to force an architecture when decompiling a file in
   the ``bin`` mode. The architecture is now detected automatically from the
   input file. New since RetDec 2.2.

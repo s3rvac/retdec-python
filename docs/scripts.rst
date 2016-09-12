@@ -67,7 +67,7 @@ See the `official documentation <https://retdec.com/api/docs/decompiler.html#dec
 * ``--only-ranges'`` -- Decompile only the given address ranges (a comma-separated list of address ranges, e.g. ``0x100-0x200,0x500-0x600``).
 * ``--decoding`` -- What should be decoded in a selective decompilation? Supported types: ``everything``, ``only``.
 * ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
-* ``--raw-endian`` -- Endianness of the machine code (``raw`` mode only). Supported endians: ``little``, ``big``.
+* ``--endian`` -- Endianness of the machine code (``raw`` mode only). Supported endians: ``little``, ``big``.
 * ``--raw-entry-point`` -- Virtual memory address where execution flow should start in the machine code (``raw`` mode only).
 * ``--raw-section-vma`` -- Address where the section created from the machine code will be placed in virtual memory (``raw`` mode only).
 * ``--with-cg`` -- Generate a call graph when the decompilation ends.
