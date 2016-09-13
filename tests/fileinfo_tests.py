@@ -67,7 +67,7 @@ class FileinfoStartAnalysisTests(BaseServiceTests):
             params=AnyParamsWith(verbose=False)
         )
 
-    def test_verbose_is_set_to_False_when_given_but_false(self):
+    def test_verbose_is_set_to_false_when_given_but_false(self):
         self.fileinfo.start_analysis(
             input_file=self.input_file,
             verbose=False
