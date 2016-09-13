@@ -20,6 +20,8 @@ class Fileinfo(Service):
 
         :param input_file: File to be analyzed (**required**).
         :type input_file: str or file-like object
+        :param output_format: Format of the output from the analysis.
+        :type output_format: str
         :param verbose: Should the analysis produce a detailed output?
             Default: ``False``.
         :type verbose: bool
@@ -45,6 +47,7 @@ class Fileinfo(Service):
         params = {
             'verbose': self._get_verbose_param(kwargs)
         }
+        self._add_param_when_given('output_format', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
 

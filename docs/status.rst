@@ -95,6 +95,7 @@ The file-analyzing service.
 * `Starting a new analysis <https://retdec.com/api/docs/fileinfo.html#starting-a-new-analysis>`_ ✔
 * `Optional parameters <https://retdec.com/api/docs/fileinfo.html#optional-parameters>`_ ✔
 
+    * ``output_format`` ✔
     * ``verbose`` ✔
 
 * `Checking status <https://retdec.com/api/docs/fileinfo.html#checking-status>`__ ✔

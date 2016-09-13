@@ -87,6 +87,16 @@ class FileinfoStartAnalysisTests(BaseServiceTests):
             params=AnyParamsWith(verbose=True)
         )
 
+    def test_output_format_is_set_when_given(self):
+        self.fileinfo.start_analysis(
+            input_file=self.input_file,
+            output_format='json'
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(output_format='json')
+        )
+
     def test_uses_returned_id_to_initialize_analysis(self):
         self.conn.send_post_request.return_value = {'id': 'ID'}
 

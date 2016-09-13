@@ -4,6 +4,8 @@ Changelog
 dev
 ---
 
+* Added a new optional parameter ``output_format`` to the ``fileinfo`` service.
+  You can use it to obtain the output in the JSON format. New since RetDec 2.2.
 * Added support for decompilation of files in the Intel HEX format. To
   decompile such files, use the ``bin`` mode and pass the architecture and
   endianness of the machine code inside the file. New since RetDec 2.2.
