@@ -48,6 +48,16 @@ class ParseArgsTests(ToolTestsBase):
 
         self.assertEqual(args.api_url, 'URL')
 
+    def test_output_format_is_parsed_correctly_short_form(self):
+        args = parse_args(['fileinfo.py', '-f', 'json', 'prog.exe'])
+
+        self.assertEqual(args.output_format, 'json')
+
+    def test_output_format_is_parsed_correctly_long_form(self):
+        args = parse_args(['fileinfo.py', '--output-format', 'json', 'prog.exe'])
+
+        self.assertEqual(args.output_format, 'json')
+
     def test_verbose_is_parsed_correctly_short_form(self):
         args = parse_args(['fileinfo.py', '-v', 'prog.exe'])
 
@@ -97,6 +107,7 @@ class MainTests(ToolTestsBase):
         # Analysis is started with correct arguments.
         self.fileinfo.start_analysis.assert_called_once_with(
             input_file='prog.exe',
+            output_format='plain',
             verbose=False
         )
 

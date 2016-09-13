@@ -115,6 +115,7 @@ Options
 ^^^^^^^
 
 * ``-k KEY``, ``--api-key KEY`` -- Specifies the API key to be used.
+* ``-f FORMAT``, ``--output-format`` -- Format in which the output should be printed. Available formats are ``plain`` (plain text; the default) and ``json`` (`JSON <https://en.wikipedia.org/wiki/JSON>`_).
 * ``-v``, ``--verbose`` -- Print all available information about the file.
 * ``-V``, ``--version`` -- Print the script and library version.
 
