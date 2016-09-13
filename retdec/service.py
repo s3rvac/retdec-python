@@ -87,3 +87,10 @@ class Service:
             raise InvalidValueError(name, value)
 
         return value
+
+    @staticmethod
+    def _add_param_when_given(param, params, kwargs):
+        """Adds `param` to `params` when given in `kwargs`."""
+        value = kwargs.get(param)
+        if value is not None:
+            params[param] = value

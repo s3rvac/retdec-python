@@ -174,12 +174,6 @@ class Decompiler(Service):
         """
         return 'c' if input_file.name.lower().endswith('.c') else 'bin'
 
-    def _add_param_when_given(self, param, params, kwargs):
-        """Adds `param` to `params` when given in `kwargs`."""
-        value = kwargs.get(param)
-        if value is not None:
-            params[param] = value
-
     def _add_sel_decomp_funcs_param_when_given(self, params, kwargs):
         """Adds the ``sel_decomp_funcs`` parameter to `params` when given in
         `kwargs`.
