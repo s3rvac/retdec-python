@@ -31,6 +31,15 @@ def parse_args(argv):
         help='File to analyze.'
     )
     parser.add_argument(
+        '-f', '--output-format',
+        dest='output_format',
+        metavar='FORMAT',
+        choices=['plain', 'json'],
+        default='plain',
+        help='Format of the output from the analysis. '
+             'Choices: %(choices)s. Default: %(default)s.'
+    )
+    parser.add_argument(
         '-v', '--verbose',
         dest='verbose',
         action='store_true',
@@ -53,6 +62,7 @@ def main(argv=None):
     )
     analysis = fileinfo.start_analysis(
         input_file=args.input_file,
+        output_format=args.output_format,
         verbose=args.verbose
     )
     analysis.wait_until_finished()

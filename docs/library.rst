@@ -136,7 +136,10 @@ To start an analysis of a file, call :func:`~retdec.fileinfo.Fileinfo.start_anal
 
     analysis = fileinfo.start_analysis(input_file=FILE)
 
-``FILE`` is either a path to the file or a file-like object. Optionally, you can pass the ``verbose=True`` argument, which makes the analysis obtain all available information about the file.
+``FILE`` is either a path to the file or a file-like object. Optionally, you can pass the following parameters:
+
+* ``verbose=True`` -- makes the analysis obtain all available information about the file.
+* ``output_format=json`` -- causes the output from the analysis to be in the `JSON <https://en.wikipedia.org/wiki/JSON>`_ format instead of in the plain format.
 
 The returned object is an instance of :class:`retdec.analysis.Analysis`.
 
