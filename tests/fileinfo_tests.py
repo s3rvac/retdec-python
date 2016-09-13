@@ -60,14 +60,7 @@ class FileinfoStartAnalysisTests(BaseServiceTests):
         with self.assertRaises(MissingParameterError):
             self.fileinfo.start_analysis()
 
-    def test_verbose_is_set_to_false_when_not_given(self):
-        self.fileinfo.start_analysis(input_file=self.input_file)
-
-        self.assert_post_request_was_sent_with(
-            params=AnyParamsWith(verbose=False)
-        )
-
-    def test_verbose_is_set_to_false_when_given_but_false(self):
+    def test_verbose_is_set_to_false_when_given_as_false(self):
         self.fileinfo.start_analysis(
             input_file=self.input_file,
             verbose=False
@@ -77,7 +70,7 @@ class FileinfoStartAnalysisTests(BaseServiceTests):
             params=AnyParamsWith(verbose=False)
         )
 
-    def test_verbose_is_set_to_true_when_given_and_true(self):
+    def test_verbose_is_set_to_true_when_given_as_true(self):
         self.fileinfo.start_analysis(
             input_file=self.input_file,
             verbose=True

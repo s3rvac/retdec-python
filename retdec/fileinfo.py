@@ -23,7 +23,6 @@ class Fileinfo(Service):
         :param output_format: Format of the output from the analysis.
         :type output_format: str
         :param verbose: Should the analysis produce a detailed output?
-            Default: ``False``.
         :type verbose: bool
 
         :returns: Started analysis (:class:`~retdec.analysis.Analysis`).
@@ -44,22 +43,11 @@ class Fileinfo(Service):
         files = {
             'input': self._get_input_file(kwargs),
         }
-        params = {
-            'verbose': self._get_verbose_param(kwargs)
-        }
+        params = {}
         self._add_param_when_given('output_format', params, kwargs)
+        self._add_param_when_given('verbose', params, kwargs)
         response = conn.send_post_request(files=files, params=params)
         return response['id']
-
-    def _get_verbose_param(self, kwargs):
-        """Returns the value of the ``verbose`` parameter to be used when
-        starting an analysis.
-        """
-        return self._get_param(
-            'verbose',
-            kwargs,
-            default=False
-        )
 
     def _get_input_file(self, kwargs):
         """Returns the input file to be analyzed."""
