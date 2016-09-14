@@ -4,6 +4,10 @@ Changelog
 dev
 ---
 
+* Added support for decompilation of files in archives (`ar` format). Archives
+  are statically linked libraries, commonly ending with `.a` or `.lib`. To
+  decompile a file from an archive, use the `bin` mode and pass either the
+  index of the file in the archive (`ar_index`) or its name (`ar_name`).
 * Added a new optional parameter ``output_format`` to the ``fileinfo`` service.
   You can use it to obtain the output in the JSON format. New since RetDec 2.2.
 * Added support for decompilation of files in the Intel HEX format. To

@@ -82,6 +82,12 @@ class Decompiler(Service):
             machine code will be placed in virtual memory. Only for the
             ``raw`` `mode`.
         :type raw_section_vma: str
+        :param ar_index: Index of the object file in the input archive to be
+            decompiled when decompiling an archive.
+        :type ar_index: int/str
+        :param ar_name: Name of the object file in the input archive to be
+            decompiled when decompiling an archive.
+        :type ar_name: str
         :param generate_cg: Should a call graph be generated?
         :type generate_cg: bool
         :param generate_cfgs: Should control-flow graphs for all functions be
@@ -140,6 +146,8 @@ class Decompiler(Service):
         self._add_endian_param_when_given(params, kwargs)
         self._add_param_when_given('raw_entry_point', params, kwargs)
         self._add_param_when_given('raw_section_vma', params, kwargs)
+        self._add_param_when_given('ar_index', params, kwargs)
+        self._add_param_when_given('ar_name', params, kwargs)
         self._add_param_when_given('generate_archive', params, kwargs)
         self._add_param_when_given('generate_cg', params, kwargs)
         self._add_param_when_given('generate_cfgs', params, kwargs)

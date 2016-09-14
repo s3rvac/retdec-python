@@ -338,6 +338,24 @@ class DecompilerStartDecompilationTests(BaseServiceTests):
             params=AnyParamsWith(raw_section_vma='0x400000')
         )
 
+    def test_ar_index_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            ar_index=1
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(ar_index=1)
+        )
+
+    def test_ar_name_is_set_to_correct_value_when_given(self):
+        self.start_decompilation_with_any_input_file(
+            ar_name=1
+        )
+
+        self.assert_post_request_was_sent_with(
+            params=AnyParamsWith(ar_name=1)
+        )
+
     def test_generate_cg_is_set_to_correct_value_when_given(self):
         self.start_decompilation_with_any_input_file(
             generate_cg=True
