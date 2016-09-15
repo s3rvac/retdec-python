@@ -70,6 +70,8 @@ See the `official documentation <https://retdec.com/api/docs/decompiler.html#dec
 * ``--no-addresses`` -- Disable the emission of addresses in comments in the generated code.
 * ``--raw-entry-point`` -- Virtual memory address where execution flow should start in the machine code (``raw`` mode only).
 * ``--raw-section-vma`` -- Address where the section created from the machine code will be placed in virtual memory (``raw`` mode only).
+* ``--ar-index`` -- Index of the object file in the input archive to be decompiled when decompiling an archive.
+* ``--ar-name`` -- Name of the object file in the input archive to be decompiled when decompiling an archive.
 * ``--with-cg`` -- Generate a call graph when the decompilation ends.
 * ``--with-cfgs`` -- Generate call graphs for all functions when the decompilation ends.
 * ``--with-archive`` -- Generate an archive containing all decompilation outputs when the decompilation ends.
