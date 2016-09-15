@@ -4,6 +4,11 @@ Changelog
 dev
 ---
 
+* -
+
+0.5 (2016-09-15)
+----------------
+
 * Added support for decompilation of files in archives (`ar` format). Archives
   are statically linked libraries, commonly ending with `.a` or `.lib`. To
   decompile a file from an archive, use the `bin` mode and pass either the
