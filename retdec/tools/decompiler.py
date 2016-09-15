@@ -449,6 +449,20 @@ def parse_args(argv):
              'code will be placed in virtual memory (raw mode only).'
     )
     parser.add_argument(
+        '--ar-index',
+        dest='ar_index',
+        metavar='INDEX',
+        help='Index of the object file in the input archive to be '
+             'decompiled when decompiling an archive.'
+    )
+    parser.add_argument(
+        '--ar-name',
+        dest='ar_name',
+        metavar='NAME',
+        help='Name of the object file in the input archive to be '
+             'decompiled when decompiling an archive.'
+    )
+    parser.add_argument(
         '--with-cg',
         dest='generate_cg',
         action='store_true',
@@ -561,6 +575,8 @@ def main(argv=None):
     add_decompilation_param_when_given(args, params, 'endian')
     add_decompilation_param_when_given(args, params, 'raw_entry_point')
     add_decompilation_param_when_given(args, params, 'raw_section_vma')
+    add_decompilation_param_when_given(args, params, 'ar_index')
+    add_decompilation_param_when_given(args, params, 'ar_name')
     add_decompilation_param_when_given(args, params, 'generate_cg')
     add_decompilation_param_when_given(args, params, 'generate_cfgs')
     add_decompilation_param_when_given(args, params, 'generate_archive')

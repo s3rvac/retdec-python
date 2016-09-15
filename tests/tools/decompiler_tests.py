@@ -486,6 +486,16 @@ class ParseArgsTests(ToolTestsBase):
 
         self.assertEqual(args.raw_section_vma, '0x8000')
 
+    def test_ar_index_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--ar-index', '1', 'prog.exe'])
+
+        self.assertEqual(args.ar_index, '1')
+
+    def test_ar_name_is_parsed_correctly_long_form(self):
+        args = parse_args(['decompiler.py', '--ar-name', 'file.o', 'prog.exe'])
+
+        self.assertEqual(args.ar_name, 'file.o')
+
     def test_generate_archive_is_set_to_true_when_with_archive_given(self):
         args = parse_args(['decompiler.py', '--with-archive', 'prog.exe'])
 
@@ -829,6 +839,24 @@ class MainTests(ToolTestsBase):
 
         self.assert_decompilation_was_started_also_with(
             raw_section_vma='0x8000'
+        )
+
+    def test_sets_ar_index_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--ar-index', '1'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            ar_index='1'
+        )
+
+    def test_sets_ar_name_when_given(self):
+        self.call_main_with_standard_arguments_and(
+            '--ar-name', '1'
+        )
+
+        self.assert_decompilation_was_started_also_with(
+            ar_name='1'
         )
 
     def test_generates_and_saves_cg_when_requested(self):
