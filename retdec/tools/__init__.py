@@ -16,14 +16,19 @@ def _add_arguments_shared_by_all_tools(parser):
         '-k', '--api-key',
         dest='api_key',
         metavar='KEY',
+        # It is important to set the API key to None by default because it
+        # enables the use of the RETDEC_API_KEY environment variable.
+        default=None,
         help='API key to be used.'
     )
     parser.add_argument(
         '-u', '--api-url',
         dest='api_url',
         metavar='URL',
-        default=DEFAULT_API_URL,
-        help='URL to the API. Default: %(default)s.'
+        # It is important to set the URL to None by default because it enables
+        # the use of the RETDEC_API_URL environment variable.
+        default=None,
+        help='URL to the API. Default: {}.'.format(DEFAULT_API_URL)
     )
     parser.add_argument(
         '-V', '--version',

@@ -4,7 +4,12 @@ Changelog
 dev
 ---
 
-* -
+* Emit a warning instead of an error when a call graph, control-flow graph, or
+  archive fails to be generated. This makes the ``decompiler`` tool continue
+  downloading all the requested outputs instead of giving up on the first
+  failure.
+* Fixed the use of environment variable ``RETDEC_API_URL`` to override the
+  default API URL. Previously, the URL was not overridden, even when given.
 
 0.5 (2016-09-15)
 ----------------

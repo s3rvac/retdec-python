@@ -6,7 +6,6 @@
 
 """Tests for the :mod:`retdec.tools.fileinfo` module."""
 
-from retdec import DEFAULT_API_URL
 from retdec import __version__
 from retdec.fileinfo import Fileinfo
 from retdec.tools.fileinfo import main
@@ -38,6 +37,13 @@ class ParseArgsTests(ToolTestsBase):
 
         self.assertEqual(args.api_key, 'KEY')
 
+    def test_api_key_is_none_when_not_given(self):
+        # This is important because it enables the use of the RETDEC_API_KEY
+        # environment variable.
+        args = parse_args(['decompiler.py', 'prog.exe'])
+
+        self.assertIsNone(args.api_key)
+
     def test_api_url_is_parsed_correctly_short_form(self):
         args = parse_args(['fileinfo.py', '-u', 'URL', 'prog.exe'])
 
@@ -47,6 +53,13 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['fileinfo.py', '--api-url', 'URL', 'prog.exe'])
 
         self.assertEqual(args.api_url, 'URL')
+
+    def test_api_url_is_none_when_not_given(self):
+        # This is important because it enables the use of the RETDEC_API_URL
+        # environment variable.
+        args = parse_args(['fileinfo.py', 'prog.exe'])
+
+        self.assertIsNone(args.api_url)
 
     def test_output_format_is_parsed_correctly_short_form(self):
         args = parse_args(['fileinfo.py', '-f', 'json', 'prog.exe'])
@@ -100,7 +113,7 @@ class MainTests(ToolTestsBase):
 
         # Fileinfo is instantiated with correct arguments.
         self.FileinfoMock.assert_called_once_with(
-            api_url=DEFAULT_API_URL,
+            api_url=None,
             api_key='API-KEY'
         )
 

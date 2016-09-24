@@ -31,6 +31,9 @@ import os
 import sys
 
 from retdec.decompiler import Decompiler
+from retdec.exceptions import ArchiveGenerationFailedError
+from retdec.exceptions import CFGGenerationFailedError
+from retdec.exceptions import CGGenerationFailedError
 from retdec.tools import _add_arguments_shared_by_all_tools
 
 
@@ -45,6 +48,13 @@ class ProgressDisplayer(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def display_download_progress(self, file_name):
         """Displays progress of downloading file with the given name."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def display_generation_failure(self, what, reason):
+        """Displays a warning message that `what` failed to be generated
+        because of `reason`.
+        """
         raise NotImplementedError
 
     def __repr__(self):
@@ -93,6 +103,10 @@ class ProgressBarDisplayer(ProgressDisplayer):
         sys.stdout.flush()
 
     def display_download_progress(self, file_name):
+        # Do not display anything.
+        pass
+
+    def display_generation_failure(self, what, reason):
         # Do not display anything.
         pass
 
@@ -246,6 +260,18 @@ class ProgressLogDisplayer(ProgressDisplayer):
         # Make the output available as soon as possible.
         sys.stdout.flush()
 
+    def display_generation_failure(self, what, reason):
+        # Example:
+        #
+        #   Warning: Generation of the archive failed: Archive is too big.
+        #
+        self._print_warning(
+            'Generation of the {} failed: {}'.format(what, reason)
+        )
+
+        # Make the output available as soon as possible.
+        sys.stdout.flush()
+
     def _print_download_header_unless_already_printed(self):
         """Prints the "downloading" header (unless it has been already
         printed).
@@ -262,6 +288,9 @@ class NoProgressDisplayer(ProgressDisplayer):
         pass
 
     def display_download_progress(self, file):
+        pass
+
+    def display_generation_failure(self, what, reason):
         pass
 
 
@@ -601,20 +630,31 @@ def main(argv=None):
         display_download_progress(displayer, file_path)
 
     if args.generate_cg:
-        decompilation.wait_until_cg_is_generated()
-        file_path = decompilation.save_cg(output_dir)
-        display_download_progress(displayer, file_path)
+        try:
+            decompilation.wait_until_cg_is_generated()
+            file_path = decompilation.save_cg(output_dir)
+            display_download_progress(displayer, file_path)
+        except CGGenerationFailedError as ex:
+            displayer.display_generation_failure('call graph', str(ex))
 
     if args.generate_cfgs:
         for func in decompilation.funcs_with_cfg:
-            decompilation.wait_until_cfg_is_generated(func)
-            file_path = decompilation.save_cfg(func, output_dir)
-            display_download_progress(displayer, file_path)
+            try:
+                decompilation.wait_until_cfg_is_generated(func)
+                file_path = decompilation.save_cfg(func, output_dir)
+                display_download_progress(displayer, file_path)
+            except CFGGenerationFailedError as ex:
+                displayer.display_generation_failure(
+                    'control-flow graph for {}'.format(func), str(ex)
+                )
 
     if args.generate_archive:
-        decompilation.wait_until_archive_is_generated()
-        file_path = decompilation.save_archive(output_dir)
-        display_download_progress(displayer, file_path)
+        try:
+            decompilation.wait_until_archive_is_generated()
+            file_path = decompilation.save_archive(output_dir)
+            display_download_progress(displayer, file_path)
+        except ArchiveGenerationFailedError as ex:
+            displayer.display_generation_failure('archive', str(ex))
 
     return 0
 
