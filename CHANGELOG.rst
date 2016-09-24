@@ -4,6 +4,11 @@ Changelog
 dev
 ---
 
+* -
+
+0.5.1 (2016-09-24)
+------------------
+
 * Emit a warning instead of an error when a call graph, control-flow graph, or
   archive fails to be generated. This makes the ``decompiler`` tool continue
   downloading all the requested outputs instead of giving up on the first
