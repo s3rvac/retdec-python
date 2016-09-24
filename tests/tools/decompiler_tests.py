@@ -13,6 +13,9 @@ from retdec import __version__
 from retdec.decompilation import Decompilation
 from retdec.decompilation import DecompilationPhase
 from retdec.decompiler import Decompiler
+from retdec.exceptions import ArchiveGenerationFailedError
+from retdec.exceptions import CFGGenerationFailedError
+from retdec.exceptions import CGGenerationFailedError
 from retdec.tools.decompiler import NoProgressDisplayer
 from retdec.tools.decompiler import ProgressBarDisplayer
 from retdec.tools.decompiler import ProgressLogDisplayer
@@ -22,6 +25,7 @@ from retdec.tools.decompiler import get_progress_displayer
 from retdec.tools.decompiler import main
 from retdec.tools.decompiler import parse_args
 from tests import mock
+from tests.matchers import Anything
 from tests.tools import ToolTestsBase
 
 
@@ -62,6 +66,13 @@ class ProgressBarDisplayerTests(ToolTestsBase):
         displayer = ProgressBarDisplayer()
 
         displayer.display_download_progress('test.out.c')
+
+        self.assertEqual(self.stdout.getvalue(), '')
+
+    def test_display_generation_failure_does_nothing(self):
+        displayer = ProgressBarDisplayer()
+
+        displayer.display_generation_failure('archive', 'Archive is too big.')
 
         self.assertEqual(self.stdout.getvalue(), '')
 
@@ -227,6 +238,16 @@ Warning: warning2
              ' - test.out.c\n')
         )
 
+    def test_display_generation_failure_displays_correct_value(self):
+        displayer = ProgressLogDisplayer()
+
+        displayer.display_generation_failure('archive', 'Archive is too big.')
+
+        self.assertEqual(
+            self.stdout.getvalue(),
+            'Warning: Generation of the archive failed: Archive is too big.\n'
+        )
+
     def test_repr_returns_correct_value(self):
         displayer = ProgressLogDisplayer()
 
@@ -250,6 +271,13 @@ class NoProgressDisplayerTests(ToolTestsBase):
         displayer = NoProgressDisplayer()
 
         displayer.display_download_progress('test.out.c')
+
+        self.assertEqual(self.stdout.getvalue(), '')
+
+    def test_display_generation_failure_does_nothing(self):
+        displayer = NoProgressDisplayer()
+
+        displayer.display_generation_failure('archive', 'Archive is too big.')
 
         self.assertEqual(self.stdout.getvalue(), '')
 
@@ -884,6 +912,22 @@ class MainTests(ToolTestsBase):
         decompilation.wait_until_cg_is_generated.assert_called_once_with()
         decompilation.save_cg.assert_called_once_with(os.getcwd())
 
+    def test_prints_generation_failure_warning_when_cg_fails_to_generate(self):
+        def raise_error():
+            raise CGGenerationFailedError('Graph is too big.')
+        decompilation = self.decompiler.start_decompilation()
+        decompilation.wait_until_cg_is_generated = raise_error
+
+        self.call_main_with_standard_arguments_and(
+            '--with-cg'
+        )
+
+        self.assertRegex(
+            self.stdout.getvalue(),
+            '.*Warning: .*call graph.*: Graph is too big\.'
+        )
+        self.assertFalse(decompilation.save_cg.called)
+
     def test_generates_and_saves_cfgs_when_requested(self):
         self.decompiler.start_decompilation().funcs_with_cfg = ['f1', 'f2']
         self.call_main_with_standard_arguments_and(
@@ -899,6 +943,37 @@ class MainTests(ToolTestsBase):
         decompilation.wait_until_cfg_is_generated.assert_any_call('f2')
         decompilation.save_cfg.assert_any_call('f2', os.getcwd())
 
+    def test_prints_generation_failure_warning_when_cfg_fails_to_generate(self):
+        def raise_error(func):
+            raise CFGGenerationFailedError('Graph is too big.')
+        decompilation = self.decompiler.start_decompilation()
+        decompilation.wait_until_cfg_is_generated = raise_error
+        decompilation.funcs_with_cfg = ['my_func']
+
+        self.call_main_with_standard_arguments_and(
+            '--with-cfgs'
+        )
+
+        self.assertRegex(
+            self.stdout.getvalue(),
+            '.*Warning: .*control-flow graph.*my_func.*: Graph is too big\.'
+        )
+        self.assertFalse(decompilation.save_cfg.called)
+
+    def test_saves_second_cfg_even_when_first_cfg_failed_to_generate(self):
+        def raise_error_on_f1(func):
+            if func == 'f1':
+                raise CFGGenerationFailedError('Graph is too big.')
+        decompilation = self.decompiler.start_decompilation()
+        decompilation.wait_until_cfg_is_generated = raise_error_on_f1
+        decompilation.funcs_with_cfg = ['f1', 'f2']
+
+        self.call_main_with_standard_arguments_and(
+            '--with-cfgs'
+        )
+
+        decompilation.save_cfg.assert_called_once_with('f2', Anything())
+
     def test_generates_and_saves_archive_when_requested(self):
         self.call_main_with_standard_arguments_and(
             '--with-archive'
@@ -910,6 +985,22 @@ class MainTests(ToolTestsBase):
         decompilation = self.get_started_decompilation()
         decompilation.wait_until_archive_is_generated.assert_called_once_with()
         decompilation.save_archive.assert_called_once_with(os.getcwd())
+
+    def test_prints_generation_failure_warning_when_archive_fails_to_generate(self):
+        def raise_error():
+            raise ArchiveGenerationFailedError('Archive is too big.')
+        decompilation = self.decompiler.start_decompilation()
+        decompilation.wait_until_archive_is_generated = raise_error
+
+        self.call_main_with_standard_arguments_and(
+            '--with-archive'
+        )
+
+        self.assertRegex(
+            self.stdout.getvalue(),
+            '.*Warning: .*archive.*: Archive is too big\.'
+        )
+        self.assertFalse(decompilation.save_archive.called)
 
     def test_saves_output_compiled_binary_when_mode_is_c(self):
         main([
