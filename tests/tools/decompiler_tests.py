@@ -9,7 +9,6 @@
 import os
 import unittest
 
-from retdec import DEFAULT_API_URL
 from retdec import __version__
 from retdec.decompilation import Decompilation
 from retdec.decompilation import DecompilationPhase
@@ -286,6 +285,13 @@ class ParseArgsTests(ToolTestsBase):
 
         self.assertEqual(args.api_key, 'KEY')
 
+    def test_api_key_is_none_when_not_given(self):
+        # This is important because it enables the use of the RETDEC_API_KEY
+        # environment variable.
+        args = parse_args(['decompiler.py', 'prog.exe'])
+
+        self.assertIsNone(args.api_key)
+
     def test_api_url_is_parsed_correctly_short_form(self):
         args = parse_args(['decompiler.py', '-u', 'URL', 'prog.exe'])
 
@@ -295,6 +301,13 @@ class ParseArgsTests(ToolTestsBase):
         args = parse_args(['decompiler.py', '--api-url', 'URL', 'prog.exe'])
 
         self.assertEqual(args.api_url, 'URL')
+
+    def test_api_url_is_none_when_not_given(self):
+        # This is important because it enables the use of the RETDEC_API_URL
+        # environment variable.
+        args = parse_args(['decompiler.py', 'prog.exe'])
+
+        self.assertIsNone(args.api_url)
 
     def test_mode_is_set_to_none_when_not_given(self):
         args = parse_args(['decompiler.py', 'prog.exe'])
@@ -635,7 +648,7 @@ class MainTests(ToolTestsBase):
 
         # Decompiler is instantiated with correct arguments.
         self.DecompilerMock.assert_called_once_with(
-            api_url=DEFAULT_API_URL,
+            api_url=None,
             api_key='API-KEY'
         )
 
