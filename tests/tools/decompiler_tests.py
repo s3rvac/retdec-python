@@ -654,6 +654,15 @@ class MainTests(ToolTestsBase):
     def setUp(self):
         super().setUp()
 
+        # Mock os.path.basename() because since Python 3.6, it fails with an
+        # error when a mock is passed to it ("TypeError: expected str, bytes or
+        # os.PathLike object, not MagicMock").
+        self.os_path_basename_mock = mock.Mock()
+        self.patch(
+            'retdec.tools.decompiler.os.path.basename',
+            self.os_path_basename_mock
+        )
+
         # Mock Decompiler so that when it is instantiated, it returns our
         # decompiler that can be used in the tests.
         self.decompiler = mock.MagicMock(spec_set=Decompiler)
