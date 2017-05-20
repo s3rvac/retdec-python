@@ -132,6 +132,8 @@ Access from Other Languages
 If you want to access the `retdec.com <https://retdec.com>`_ decompilation
 service from other languages, check out the following projects:
 
+* `retdec-rust <https://github.com/s3rvac/retdec-rust>`_ - A library and tools
+  for accessing the service from Rust.
 * `retdec-cpp <https://github.com/s3rvac/retdec-cpp>`_ - A library and tools
   for accessing the service from C++.
 * `retdec-sh <https://github.com/s3rvac/retdec-sh>`_ - Scripts for accessing
