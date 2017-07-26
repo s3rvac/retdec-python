@@ -7,6 +7,8 @@ dev
 * Added a `setup.py` check that the user runs at least the minimal required
   Python version (Python 3.3). This makes `pip` raise a helpful error message
   instead of a meaningless exception.
+* Made tests for the `retdec.conn` module work with the latest version of
+  `responses` (0.6.0).
 
 0.5.1 (2016-09-24)
 ------------------

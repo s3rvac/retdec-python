@@ -240,7 +240,7 @@ class APIConnectionTests(unittest.TestCase):
         self.setup_responses(
             method=responses.GET,
             url='https://retdec.com/service/api',
-            adding_headers={'Content-Disposition': 'filename=test.c'},
+            headers={'Content-Disposition': 'filename=test.c'},
             stream=True
         )
         conn = APIConnection('https://retdec.com/service/api', 'KEY')
@@ -256,7 +256,7 @@ class APIConnectionTests(unittest.TestCase):
             method=responses.GET,
             url='https://retdec.com/service/api',
             body='data',
-            adding_headers={
+            headers={
                 'Content-Disposition': 'attachment; filename=test.c'
             },
             stream=True
@@ -274,7 +274,7 @@ class APIConnectionTests(unittest.TestCase):
             method=responses.GET,
             url='https://retdec.com/service/api',
             body='data',
-            adding_headers={
+            headers={
                 'Content-Disposition': 'attachment; filename="test.c"'
             },
             stream=True
@@ -305,7 +305,7 @@ class APIConnectionTests(unittest.TestCase):
             method=responses.GET,
             url='https://retdec.com/service/api',
             body='data',
-            adding_headers={'Content-Disposition': 'attachment'},
+            headers={'Content-Disposition': 'attachment'},
             stream=True
         )
         conn = APIConnection('https://retdec.com/service/api', 'KEY')
