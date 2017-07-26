@@ -1,6 +1,6 @@
 #
 # Project:   retdec-python
-# Copyright: (c) 2015-2016 by Petr Zemek <s3rvac@gmail.com> and contributors
+# Copyright: (c) 2015-2017 by Petr Zemek <s3rvac@gmail.com> and contributors
 # License:   MIT, see the LICENSE file for more details
 #
 
@@ -9,7 +9,7 @@
 `REST API <https://retdec.com/api/>`_.
 """
 
-__version__ = '0.5.1'
+__version__ = '0.5.2-dev'
 
 #: Default API URL.
 DEFAULT_API_URL = 'https://retdec.com/service/api'

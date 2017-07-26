@@ -4,7 +4,9 @@ Changelog
 dev
 ---
 
-* -
+* Added a `setup.py` check that the user runs at least the minimal required
+  Python version (Python 3.3). This makes `pip` raise a helpful error message
+  instead of a meaningless exception.
 
 0.5.1 (2016-09-24)
 ------------------
