@@ -9,7 +9,15 @@
 import ast
 import os
 import re
+import sys
 from setuptools import setup
+
+
+# The project does not work on Python 2. In case someone tries to install it
+# via pip2, raise a helpful error (rather than meaningless "TypeError:
+# 'encoding' is an invalid keyword argument for this function").
+if sys.version_info[0] == 2:
+    sys.exit('Error: retdec-python does not support Python 2. Use Python 3.')
 
 
 # Utility function to read the contents of the given file.
