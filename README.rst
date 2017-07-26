@@ -79,7 +79,7 @@ page in the documentation.
 Requirements
 ------------
 
-* Python >= 3.3 or PyPy3 >= 2.4
+* Python >= 3.3 (CPython or PyPy)
 * `requests <http://docs.python-requests.org>`_ module for making HTTPS calls
   to the `retdec.com API <https://retdec.com/api/>`_
 
