@@ -50,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'retdec-python'
-copyright = '2015-2017, Petr Zemek <s3rvac@gmail.com> and contributors'
+copyright = '2015, Petr Zemek <s3rvac@gmail.com> and contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
