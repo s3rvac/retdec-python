@@ -9,7 +9,7 @@
 `REST API <https://retdec.com/api/>`_.
 """
 
-__version__ = '0.5.2'
+__version__ = '0.6-dev'
 
 #: Default API URL.
 DEFAULT_API_URL = 'https://retdec.com/service/api'
