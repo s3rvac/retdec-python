@@ -4,7 +4,10 @@ Changelog
 dev
 ---
 
-* -
+* Dropped support for Python 3.3 as `it is after its end-of-life
+  <https://devguide.python.org/#branchstatus>`_ (`#6
+  <https://github.com/s3rvac/retdec-python/issues/6>`_). The minimal required
+  Python version is now 3.4.
 
 0.5.2 (2017-07-26)
 ------------------

@@ -18,10 +18,10 @@ from setuptools import setup
 # 'encoding' is an invalid keyword argument for this function").
 if sys.version_info[0] == 2:
     sys.exit('Error: retdec-python does not support Python 2. Use Python 3.')
-# Additionally, check that the user runs at least Python 3.3 as this is the
+# Additionally, check that the user runs at least Python 3.4 as this is the
 # minimal required version.
-if sys.version_info < (3, 3):
-    sys.exit('Error: retdec-python requires at least Python 3.3.')
+if sys.version_info < (3, 4):
+    sys.exit('Error: retdec-python requires at least Python 3.4.')
 
 
 # Utility function to read the contents of the given file.
@@ -62,7 +62,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
