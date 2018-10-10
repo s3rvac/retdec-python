@@ -22,7 +22,7 @@ WARNING
 
 The `retdec.com <https://retdec.com>`_ decompilation service is to be disabled
 (see the `official announcement
-<https://retdec.com/news/?2018-06-07-New-Version-3-1>`_). This will render the
+<https://retdec.com/news/2018-06-07-new-version-3-1/>`_). This will render the
 library and tools in the present repository non-functional. I will keep the
 repository online in case it is helpful to anyone.
 
